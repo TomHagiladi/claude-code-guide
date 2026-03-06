@@ -1,0 +1,3950 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code - המדריך המלא</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Noto+Sans+Hebrew:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   CSS VARIABLES & RESET
+   ═══════════════════════════════════════════ */
+:root {
+  --bg-void: #06080d;
+  --bg-deep: #0a0e18;
+  --bg-surface: #111827;
+  --bg-card: #1a2235;
+  --bg-card-hover: #1f2a40;
+  --bg-elevated: #243049;
+  --border-dim: rgba(99, 140, 255, 0.08);
+  --border-glow: rgba(99, 140, 255, 0.2);
+  --border-bright: rgba(99, 140, 255, 0.4);
+  --accent-primary: #638cff;
+  --accent-secondary: #a78bfa;
+  --accent-tertiary: #34d399;
+  --accent-warm: #f59e0b;
+  --accent-rose: #f472b6;
+  --accent-cyan: #22d3ee;
+  --text-primary: #e8ecf4;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-bright: #ffffff;
+  --glow-soft: 0 0 30px rgba(99, 140, 255, 0.08);
+  --glow-medium: 0 0 40px rgba(99, 140, 255, 0.12);
+  --glow-strong: 0 0 60px rgba(99, 140, 255, 0.18);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --font-display: 'Heebo', sans-serif;
+  --font-body: 'Noto Sans Hebrew', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-primary) var(--bg-deep);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-void);
+  color: var(--text-primary);
+  line-height: 1.75;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--accent-primary); border-radius: 3px; }
+
+/* ═══════════════════════════════════════════
+   AMBIENT BACKGROUND
+   ═══════════════════════════════════════════ */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.3;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+
+.ambient-orb:nth-child(1) {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(99,140,255,0.15), transparent 70%);
+  top: -200px; right: -100px;
+  animation-delay: 0s;
+}
+
+.ambient-orb:nth-child(2) {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(167,139,250,0.12), transparent 70%);
+  bottom: -150px; left: -100px;
+  animation-delay: -7s;
+}
+
+.ambient-orb:nth-child(3) {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(52,211,153,0.08), transparent 70%);
+  top: 40%; left: 30%;
+  animation-delay: -14s;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.05); }
+  66% { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+/* Grid pattern overlay */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(99,140,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,140,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 2rem;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10, 14, 24, 0.8);
+  backdrop-filter: blur(20px) saturate(1.2);
+  border-bottom: 1px solid var(--border-dim);
+  transition: var(--transition-smooth);
+}
+
+.navbar.scrolled {
+  background: rgba(10, 14, 24, 0.95);
+  border-bottom-color: var(--border-glow);
+  box-shadow: var(--glow-soft);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-bright);
+}
+
+.nav-logo-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 18px;
+  color: white;
+  box-shadow: 0 0 20px rgba(99,140,255,0.3);
+}
+
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: var(--transition-fast);
+  position: relative;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--text-bright);
+  background: rgba(99,140,255,0.1);
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  right: 1rem;
+  left: 1rem;
+  height: 2px;
+  background: var(--accent-primary);
+  border-radius: 1px;
+}
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-glow);
+  color: var(--text-primary);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 2rem 80px;
+  position: relative;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 860px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(99,140,255,0.1);
+  border: 1px solid var(--border-glow);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  color: var(--accent-primary);
+  margin-bottom: 2rem;
+  font-weight: 500;
+  animation: fadeInUp 0.8s ease both;
+}
+
+.hero-badge .pulse {
+  width: 8px; height: 8px;
+  background: var(--accent-tertiary);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s ease 0.1s both;
+}
+
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.hero-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
+
+.hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 50%, rgba(99,140,255,0.05));
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.hero-card:hover {
+  border-color: var(--border-bright);
+  transform: translateY(-4px);
+  box-shadow: var(--glow-medium);
+}
+
+.hero-card:hover::before { opacity: 1; }
+
+.hero-card-icon {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  margin: 0 auto 1rem;
+  position: relative;
+}
+
+.hero-card:nth-child(1) .hero-card-icon {
+  background: rgba(99,140,255,0.15);
+  box-shadow: 0 0 30px rgba(99,140,255,0.15);
+}
+
+.hero-card:nth-child(2) .hero-card-icon {
+  background: rgba(52,211,153,0.15);
+  box-shadow: 0 0 30px rgba(52,211,153,0.15);
+}
+
+.hero-card:nth-child(3) .hero-card-icon {
+  background: rgba(167,139,250,0.15);
+  box-shadow: 0 0 30px rgba(167,139,250,0.15);
+}
+
+.hero-card:nth-child(4) .hero-card-icon {
+  background: rgba(245,158,11,0.15);
+  box-shadow: 0 0 30px rgba(245,158,11,0.15);
+}
+
+.hero-card:nth-child(5) .hero-card-icon {
+  background: rgba(244,114,182,0.15);
+  box-shadow: 0 0 30px rgba(244,114,182,0.15);
+}
+
+.hero-card:nth-child(6) .hero-card-icon {
+  background: rgba(34,211,238,0.15);
+  box-shadow: 0 0 30px rgba(34,211,238,0.15);
+}
+
+.hero-card:nth-child(7) .hero-card-icon {
+  background: rgba(99,140,255,0.12);
+  box-shadow: 0 0 30px rgba(99,140,255,0.12);
+}
+
+.hero-card:nth-child(8) .hero-card-icon {
+  background: rgba(52,211,153,0.12);
+  box-shadow: 0 0 30px rgba(52,211,153,0.12);
+}
+
+.hero-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   SECTIONS COMMON
+   ═══════════════════════════════════════════ */
+.section {
+  padding: 100px 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: none;
+}
+
+.section.active {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.section-header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 2px;
+  margin: 1.5rem auto 0;
+}
+
+/* ═══════════════════════════════════════════
+   CONTENT CARDS / BLOCKS
+   ═══════════════════════════════════════════ */
+.content-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  transition: var(--transition-smooth);
+}
+
+.content-block:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-soft);
+}
+
+.content-block h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: var(--text-bright);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.content-block h3 .icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.content-block h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--accent-primary);
+}
+
+.content-block p, .content-block li {
+  color: var(--text-secondary);
+  line-height: 1.85;
+  font-size: 0.95rem;
+}
+
+.content-block ul, .content-block ol {
+  padding-right: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.content-block li {
+  margin-bottom: 0.5rem;
+}
+
+.content-block li::marker {
+  color: var(--accent-primary);
+}
+
+/* Tags */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.tag-pro { background: rgba(52,211,153,0.15); color: var(--accent-tertiary); }
+.tag-con { background: rgba(244,114,182,0.15); color: var(--accent-rose); }
+.tag-warning { background: rgba(245,158,11,0.15); color: var(--accent-warm); }
+.tag-info { background: rgba(99,140,255,0.15); color: var(--accent-primary); }
+
+/* Pros/Cons lists */
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.pros-list, .cons-list {
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  list-style: none;
+}
+
+.pros-list {
+  background: rgba(52,211,153,0.05);
+  border: 1px solid rgba(52,211,153,0.15);
+}
+
+.cons-list {
+  background: rgba(244,114,182,0.05);
+  border: 1px solid rgba(244,114,182,0.15);
+}
+
+.pros-list .list-title, .cons-list .list-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  padding-right: 0;
+}
+
+.pros-list .list-title { color: var(--accent-tertiary); }
+.cons-list .list-title { color: var(--accent-rose); }
+
+.pros-list li::before { content: '✓ '; color: var(--accent-tertiary); font-weight: 700; }
+.cons-list li::before { content: '✗ '; color: var(--accent-rose); font-weight: 700; }
+
+.pros-list li, .cons-list li {
+  padding-right: 0;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+/* Code blocks */
+.code-block {
+  background: var(--bg-deep);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  direction: ltr;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-cyan);
+  overflow-x: auto;
+  position: relative;
+}
+
+.code-block .code-label {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  direction: rtl;
+}
+
+.code-block .copy-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-glow);
+  color: var(--text-secondary);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--transition-fast);
+}
+
+.code-block .copy-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* Steps */
+.steps {
+  counter-reset: step;
+  margin: 1.5rem 0;
+}
+
+.step {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  align-items: flex-start;
+}
+
+.step-num {
+  counter-increment: step;
+  width: 32px; height: 32px;
+  background: rgba(99,140,255,0.15);
+  border: 1px solid var(--border-glow);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content p {
+  margin-bottom: 0.5rem;
+}
+
+/* Comparison table */
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5rem 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-dim);
+  direction: rtl;
+}
+
+.comparison-table th {
+  background: var(--bg-elevated);
+  padding: 1rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-bright);
+  text-align: right;
+  border-bottom: 1px solid var(--border-glow);
+}
+
+.comparison-table td {
+  padding: 0.85rem 1rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-dim);
+  text-align: right;
+}
+
+.comparison-table tr:last-child td { border-bottom: none; }
+
+.comparison-table tr:hover td {
+  background: rgba(99,140,255,0.04);
+}
+
+/* Collapsible sections */
+.collapsible {
+  margin-bottom: 1rem;
+}
+
+.collapsible-header {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition-fast);
+  user-select: none;
+}
+
+.collapsible-header:hover {
+  border-color: var(--border-glow);
+  background: var(--bg-card-hover);
+}
+
+.collapsible-header h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+
+.collapsible-arrow {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.collapsible.open .collapsible-arrow {
+  transform: rotate(180deg);
+}
+
+.collapsible-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.collapsible.open .collapsible-body {
+  max-height: 5000px;
+}
+
+.collapsible-inner {
+  padding: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-dim);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.collapsible-inner p, .collapsible-inner li {
+  color: var(--text-secondary);
+  font-size: 0.93rem;
+  line-height: 1.85;
+}
+
+.collapsible-inner ul {
+  padding-right: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.collapsible-inner li { margin-bottom: 0.4rem; }
+.collapsible-inner li::marker { color: var(--accent-primary); }
+
+/* ═══════════════════════════════════════════
+   INSPIRATION BOARD
+   ═══════════════════════════════════════════ */
+.inspiration-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.inspiration-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.inspiration-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  opacity: 0;
+  transition: var(--transition-smooth);
+}
+
+.inspiration-card:hover {
+  border-color: var(--border-bright);
+  transform: translateY(-3px);
+  box-shadow: var(--glow-medium);
+}
+
+.inspiration-card:hover::before { opacity: 1; }
+
+.inspiration-card[data-category="web"]::before { background: var(--accent-primary); }
+.inspiration-card[data-category="game"]::before { background: var(--accent-rose); }
+.inspiration-card[data-category="automation"]::before { background: var(--accent-tertiary); }
+.inspiration-card[data-category="data"]::before { background: var(--accent-warm); }
+.inspiration-card[data-category="creative"]::before { background: var(--accent-secondary); }
+.inspiration-card[data-category="tool"]::before { background: var(--accent-cyan); }
+.inspiration-card[data-category="non-code"]::before { background: #fb923c; }
+
+.inspiration-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-self: flex-start;
+  margin-bottom: 1rem;
+}
+
+.inspiration-card[data-category="web"] .inspiration-category {
+  background: rgba(99,140,255,0.15); color: var(--accent-primary);
+}
+.inspiration-card[data-category="game"] .inspiration-category {
+  background: rgba(244,114,182,0.15); color: var(--accent-rose);
+}
+.inspiration-card[data-category="automation"] .inspiration-category {
+  background: rgba(52,211,153,0.15); color: var(--accent-tertiary);
+}
+.inspiration-card[data-category="data"] .inspiration-category {
+  background: rgba(245,158,11,0.15); color: var(--accent-warm);
+}
+.inspiration-card[data-category="creative"] .inspiration-category {
+  background: rgba(167,139,250,0.15); color: var(--accent-secondary);
+}
+.inspiration-card[data-category="tool"] .inspiration-category {
+  background: rgba(34,211,238,0.15); color: var(--accent-cyan);
+}
+.inspiration-card[data-category="non-code"] .inspiration-category {
+  background: rgba(251,146,60,0.15); color: #fb923c;
+}
+
+.inspiration-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-bright);
+}
+
+.inspiration-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  flex: 1;
+}
+
+.inspiration-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1rem;
+  color: var(--accent-primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.inspiration-link:hover {
+  color: var(--accent-cyan);
+}
+
+/* Filter buttons */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  border: 1px solid var(--border-dim);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.filter-btn:hover {
+  border-color: var(--border-glow);
+  color: var(--text-primary);
+}
+
+.filter-btn.active {
+  background: rgba(99,140,255,0.15);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* ═══════════════════════════════════════════
+   BACK TO TOP
+   ═══════════════════════════════════════════ */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 48px; height: 48px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition-smooth);
+  z-index: 50;
+  box-shadow: var(--glow-soft);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background: var(--accent-primary);
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+.footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border-dim);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.footer a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.footer a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hero-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 72px;
+    right: 0;
+    left: 0;
+    background: rgba(10,14,24,0.98);
+    border-bottom: 1px solid var(--border-glow);
+    padding: 1rem;
+  }
+
+  .mobile-toggle { display: block; }
+
+  .section { padding: 60px 1rem; }
+
+  .content-block { padding: 1.5rem; }
+
+  .pros-cons { grid-template-columns: 1fr; }
+
+  .inspiration-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-table {
+    font-size: 0.8rem;
+  }
+
+  .comparison-table th, .comparison-table td {
+    padding: 0.6rem 0.5rem;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   SPECIAL ELEMENTS
+   ═══════════════════════════════════════════ */
+.warning-box {
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.warning-box .warning-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.warning-box p {
+  color: var(--text-primary) !important;
+  font-size: 0.9rem;
+}
+
+.info-box {
+  background: rgba(99,140,255,0.08);
+  border: 1px solid rgba(99,140,255,0.2);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.info-box p {
+  color: var(--text-primary) !important;
+}
+
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.pricing-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.pricing-card:hover {
+  border-color: var(--border-glow);
+}
+
+.pricing-card.popular {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 30px rgba(99,140,255,0.1);
+}
+
+.pricing-card .price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-bright);
+  margin: 0.5rem 0;
+}
+
+.pricing-card .price span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.pricing-card .plan-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent-primary);
+}
+
+.pricing-card ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  text-align: right;
+}
+
+.pricing-card li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+
+.pricing-card li::before {
+  content: '✓ ';
+  color: var(--accent-tertiary);
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient Background -->
+<div class="ambient-bg">
+  <div class="ambient-orb"></div>
+  <div class="ambient-orb"></div>
+  <div class="ambient-orb"></div>
+</div>
+<div class="grid-overlay"></div>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-logo" onclick="showSection('home');return false;">
+    <div class="nav-logo-icon">&gt;_</div>
+    <span class="nav-logo-text">Claude Code</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" onclick="showSection('home')" class="active" data-section="home">דף הבית</a></li>
+    <li><a href="#what" onclick="showSection('what')" data-section="what">מה זה Claude Code?</a></li>
+    <li><a href="#install" onclick="showSection('install')" data-section="install">התקנה</a></li>
+    <li><a href="#inspiration" onclick="showSection('inspiration')" data-section="inspiration">לוח השראה</a></li>
+    <li><a href="#skills" onclick="showSection('skills')" data-section="skills">סקילים ופלאגינים</a></li>
+    <li><a href="#claudemd" onclick="showSection('claudemd')" data-section="claudemd">CLAUDE.md</a></li>
+    <li><a href="#tips" onclick="showSection('tips')" data-section="tips">טיפים ופקודות</a></li>
+
+    <li><a href="#faq" onclick="showSection('faq')" data-section="faq">שאלות נפוצות</a></li>
+  </ul>
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <a href="https://www.tomhagiladi.com/" target="_blank" rel="noopener"><img src="tom-hagiladi-logo.png" alt="Tom Hagiladi" style="height: 28px; opacity: 0.8;" class="nav-author-logo"></a>
+    <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="תפריט">☰</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HOME / HERO
+     ═══════════════════════════════════════════ -->
+<section class="hero" id="home-section">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      המדריך המלא בעברית — מעודכן ל-2026
+    </div>
+    <h1>
+      <span class="gradient-text">Claude Code</span><br>
+      הסוכן שכותב קוד בשבילך
+    </h1>
+    <p class="hero-subtitle">
+      Claude Code הוא כלי בינה מלאכותית שמבין את כל הפרויקט שלך, כותב קוד, מתקן באגים, מריץ פקודות ובונה תוכנה — הכל דרך שיחה בשפה טבעית. בין אם אתה מתכנת מנוסה או מתחיל לגמרי, המדריך הזה בשבילך.
+    </p>
+    <div class="hero-cards">
+      <a class="hero-card" onclick="showSection('what')">
+        <div class="hero-card-icon">🧠</div>
+        <h3>מה זה Claude Code?</h3>
+        <p>הסבר מקיף על הכלי, ההשוואה למתחרים, יתרונות, חסרונות וסיכונים</p>
+      </a>
+      <a class="hero-card" onclick="showSection('install')">
+        <div class="hero-card-icon">⚡</div>
+        <h3>מדריך התקנה</h3>
+        <p>כל דרכי ההתקנה בצעדים פשוטים — טרמינל, VS Code, אפליקציה ועוד</p>
+      </a>
+      <a class="hero-card" onclick="showSection('inspiration')">
+        <div class="hero-card-icon">✨</div>
+        <h3>לוח השראה</h3>
+        <p>פרויקטים אמיתיים שאנשים בנו עם Claude Code — מאתרים ועד משחקים</p>
+      </a>
+      <a class="hero-card" onclick="showSection('skills')">
+        <div class="hero-card-icon">🧩</div>
+        <h3>סקילים ופלאגינים</h3>
+        <p>הרחיבו את היכולות של Claude Code עם כלים מוכנים מהמדף או כאלה שתבנו בעצמכם</p>
+      </a>
+      <a class="hero-card" onclick="showSection('claudemd')">
+        <div class="hero-card-icon">📋</div>
+        <h3>CLAUDE.md</h3>
+        <p>קובץ ההגדרות האישי שלכם — ככה Claude יזכור את ההעדפות שלכם לתמיד</p>
+      </a>
+      <a class="hero-card" onclick="showSection('tips')">
+        <div class="hero-card-icon">⌨️</div>
+        <h3>טיפים ופקודות</h3>
+        <p>כל הפקודות השימושיות, קיצורי הדרך והטריקים שיעשו לכם את החיים קלים</p>
+      </a>
+      <a class="hero-card" onclick="showSection('faq')">
+        <div class="hero-card-icon">❓</div>
+        <h3>שאלות נפוצות</h3>
+        <p>תשובות לשאלות שכולם שואלים — אבטחה, עלויות, מגבלות ועוד</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1: WHAT IS CLAUDE CODE
+     ═══════════════════════════════════════════ -->
+<section class="section" id="what-section">
+  <div class="section-header">
+    <h2>🧠 מה זה Claude Code?</h2>
+    <p>הבנה מלאה של הכלי — מה הוא עושה, איך הוא עובד, ואיפה הוא עומד מול המתחרים</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- What is it -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(99,140,255,0.15)">🤖</span>
+      בקצרה — מה זה בכלל?
+    </h3>
+    <p>
+      <strong>Claude Code</strong> הוא כלי תוכנה שפותח על ידי חברת <strong>Anthropic</strong> (החברה שיצרה את Claude).
+      בניגוד לצ'אטבוט רגיל שרק עונה על שאלות, Claude Code הוא <strong>סוכן (Agent)</strong> — כלומר, הוא לא רק מדבר, אלא גם <strong>עושה דברים</strong>:
+    </p>
+    <ul>
+      <li>📂 <strong>קורא את כל הקבצים בפרויקט שלך</strong> — הוא מבין את המבנה, את הקוד, ואת ההקשר הכללי</li>
+      <li>✏️ <strong>כותב ועורך קוד</strong> — יוצר קבצים חדשים, מתקן באגים, מוסיף פיצ'רים</li>
+      <li>💻 <strong>מריץ פקודות בטרמינל</strong> — בדיקות, בניית פרויקט, ניהול Git ועוד</li>
+      <li>🌐 <strong>מחפש באינטרנט</strong> — מוצא תיעוד, מידע עדכני ופתרונות</li>
+      <li>🔗 <strong>מתחבר לכלים חיצוניים</strong> — Slack, GitHub, Google Drive ועוד דרך MCP</li>
+    </ul>
+    <div class="info-box">
+      <p>
+        💡 <strong>במילים פשוטות:</strong> תארו לעצמכם מתכנת מנוסה שיושב לידכם ויכול לקרוא את כל הפרויקט שלכם, לכתוב קוד, להריץ בדיקות ולתקן בעיות — כל זה רק על ידי שאתם מסבירים לו מה אתם רוצים בשפה רגילה. זה Claude Code.
+      </p>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(167,139,250,0.15)">⚙️</span>
+      איך זה עובד? — הלולאה האגנטית
+    </h3>
+    <p>
+      כשנותנים ל-Claude Code משימה, הוא עובד בשלושה שלבים שחוזרים על עצמם עד שהמשימה מושלמת:
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <p><strong>איסוף הקשר (Context Gathering)</strong></p>
+          <p>Claude קורא קבצים, מחפש בפרויקט, ומבין מה קורה בקוד. הוא לא רואה רק את הקובץ הפתוח — הוא יכול לנווט בכל הפרויקט.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <p><strong>ביצוע פעולה (Taking Action)</strong></p>
+          <p>Claude כותב קוד, עורך קבצים, מריץ פקודות, או מבצע כל פעולה שנדרשת.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <p><strong>בדיקה ואימות (Verification)</strong></p>
+          <p>Claude מריץ בדיקות, בודק שהקוד עובד, ומתקן בעיות שהוא מוצא — עד שהתוצאה תקינה.</p>
+        </div>
+      </div>
+    </div>
+    <p>
+      תהליך זה נקרא <strong>"הלולאה האגנטית" (Agentic Loop)</strong>.
+      Claude ממשיך לחזור על הצעדים האלה, לפעמים עשרות פעמים, עד שהמשימה מושלמת. ובכל שלב אפשר לעצור אותו ולתת לו כיוון אחר.
+    </p>
+  </div>
+
+  <!-- Where it runs -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(52,211,153,0.15)">🖥️</span>
+      איפה אפשר להשתמש ב-Claude Code?
+    </h3>
+    <p>Claude Code זמין במגוון סביבות — כולן מתחברות לאותו מנוע מאחורי הקלעים:</p>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>סביבה</th>
+          <th>תיאור</th>
+          <th>למי מתאים?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>טרמינל (CLI)</strong></td>
+          <td>שורת פקודה עם כל הפיצ'רים</td>
+          <td>מתכנתים, משתמשים מתקדמים</td>
+        </tr>
+        <tr>
+          <td><strong>VS Code</strong></td>
+          <td>תוסף עם ממשק ויזואלי בתוך העורך</td>
+          <td>מתכנתים שעובדים ב-VS Code</td>
+        </tr>
+        <tr>
+          <td><strong>JetBrains</strong></td>
+          <td>פלאגין ל-IntelliJ, PyCharm ועוד</td>
+          <td>מפתחי Java, Python ועוד</td>
+        </tr>
+        <tr>
+          <td><strong>אפליקציית דסקטופ</strong></td>
+          <td>אפליקציה עצמאית עם ממשק ויזואלי</td>
+          <td>כל אחד, במיוחד מתחילים</td>
+        </tr>
+        <tr>
+          <td><strong>דפדפן (Web)</strong></td>
+          <td>שימוש דרך claude.ai/code ללא התקנה</td>
+          <td>מי שרוצה לנסות מהר</td>
+        </tr>
+        <tr>
+          <td><strong>Slack</strong></td>
+          <td>שליחת משימות ל-Claude דרך צ'אט הצוות</td>
+          <td>צוותים בארגונים</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Competitors -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(245,158,11,0.15)">⚔️</span>
+      השוואה למתחרים
+    </h3>
+    <p>Claude Code הוא לא הכלי היחיד בתחום. הנה השוואה לכלים הפופולריים ביותר:</p>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>כלי</th>
+          <th>סוג</th>
+          <th>מחיר</th>
+          <th>נקודת חוזק</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Claude Code</strong></td>
+          <td>סוכן בטרמינל / IDE</td>
+          <td>$20-$200/חודש</td>
+          <td>הכי טוב במשימות מורכבות ורב-קבציות</td>
+        </tr>
+        <tr>
+          <td><strong>GitHub Copilot</strong></td>
+          <td>תוסף ל-IDE</td>
+          <td>$0-$39/חודש</td>
+          <td>השלמת קוד אוטומטית תוך כדי כתיבה</td>
+        </tr>
+        <tr>
+          <td><strong>Cursor</strong></td>
+          <td>עורך קוד עצמאי</td>
+          <td>$0-$40/חודש</td>
+          <td>חוויית עריכה מתקדמת עם AI</td>
+        </tr>
+        <tr>
+          <td><strong>Windsurf</strong></td>
+          <td>עורך קוד עצמאי</td>
+          <td>$0-$35/חודש</td>
+          <td>ממשק ידידותי, תוכנית חינמית נדיבה</td>
+        </tr>
+        <tr>
+          <td><strong>Amazon Q</strong></td>
+          <td>תוסף + CLI</td>
+          <td>$0-$19/חודש</td>
+          <td>אינטגרציה עם שירותי AWS</td>
+        </tr>
+        <tr>
+          <td><strong>Aider</strong></td>
+          <td>CLI (קוד פתוח)</td>
+          <td>חינם (+ מפתח API)</td>
+          <td>קוד פתוח, גמישות מלאה</td>
+        </tr>
+        <tr>
+          <td><strong>Cline</strong></td>
+          <td>תוסף ל-VS Code</td>
+          <td>חינם (+ מפתח API)</td>
+          <td>קוד פתוח, עובד עם כל מודל</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warning-box">
+      <span class="warning-icon">⚠️</span>
+      <p>
+        <strong>שימו לב:</strong> המחירים בטבלה מעודכנים למרץ 2026 ועשויים להשתנות. מומלץ לבדוק את האתר הרשמי של כל כלי למחירים עדכניים.
+      </p>
+    </div>
+    <div class="info-box">
+      <p>
+        💡 <strong>טיפ:</strong> הרבה מפתחים משתמשים בשני כלים במקביל — Claude Code למשימות מורכבות ו-Copilot או Cursor להשלמת קוד מהירה תוך כדי עבודה.
+      </p>
+    </div>
+  </div>
+
+  <!-- Advantages -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(52,211,153,0.15)">💪</span>
+      יתרונות Claude Code
+    </h3>
+    <ul>
+      <li><strong>הבנה עמוקה של פרויקטים שלמים</strong> — Claude Code קורא ומבין את כל הקבצים בפרויקט, לא רק את הקובץ הפתוח. הוא מזהה קשרים בין רכיבים ויכול לעבוד על כמה קבצים במקביל.</li>
+      <li><strong>עבודה אוטונומית</strong> — נותנים לו משימה והוא עובד לבד: מתכנן, כותב, בודק ומתקן. לא צריך להגיד לו צעד-צעד מה לעשות.</li>
+      <li><strong>ללא נעילה לעורך מסוים</strong> — עובד בטרמינל, אז אפשר להשתמש בו עם כל עורך קוד (VS Code, Neovim, JetBrains ועוד).</li>
+      <li><strong>איכות חשיבה גבוהה</strong> — המודל של Claude נחשב מהחזקים בעולם בהבנת קוד, דיבאגינג, ופתרון בעיות מורכבות.</li>
+      <li><strong>זיכרון בין-שיחתי</strong> — דרך קבצי CLAUDE.md ו-Auto Memory, הוא זוכר העדפות, מוסכמות וסטנדרטים של הפרויקט.</li>
+      <li><strong>הרחבה אינסופית</strong> — אפשר לחבר כלים חיצוניים (MCP), ליצור סקילים מותאמים, Hooks ותת-סוכנים.</li>
+      <li><strong>שקיפות בעלויות</strong> — רואים בדיוק כמה טוקנים (tokens) נצרכו ומה העלות.</li>
+      <li><strong>מתאים גם ללא-מתכנתים</strong> — אפשר לבנות אתרים, לנהל קבצים, לנתח נתונים ולאוטמט משימות — בלי לדעת לכתוב שורת קוד אחת.</li>
+    </ul>
+  </div>
+
+  <!-- Disadvantages -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(244,114,182,0.15)">⚠️</span>
+      חסרונות ומגבלות
+    </h3>
+    <ul>
+      <li><strong>עלות גבוהה יחסית</strong> — מנוי Pro ($20/חודש) כולל גישה ל-Claude Code עם מגבלות שימוש. לשימוש אינטנסיבי צריך Max ($100-$200/חודש). בשימוש דרך API, עלות יומית ממוצעת של $6 למפתח, שיכולה להגיע ל-$12+ בימים אינטנסיביים.</li>
+      <li><strong>עקומת למידה בטרמינל</strong> — הממשק העיקרי הוא שורת פקודה. למי שלא רגיל לטרמינל, זה יכול להיות מאיים בהתחלה (אבל אפשר גם דרך VS Code או אפליקציית דסקטופ).</li>
+      <li><strong>אין השלמה אוטומטית בזמן אמת</strong> — בניגוד ל-Copilot, Claude Code לא מציע הצעות תוך כדי כתיבה. צריך לבקש ממנו במפורש.</li>
+      <li><strong>דורש חיבור לאינטרנט</strong> — Claude רץ בענן. אי אפשר לעבוד איתו אופליין.</li>
+      <li><strong>הקשר מוגבל (Context Window)</strong> — בפרויקטים מאוד גדולים, Claude עלול לאבד מידע משיחות ארוכות. צריך לנהל את ההקשר בחכמה.</li>
+      <li><strong>לא תמיד מדויק</strong> — כמו כל AI, הוא יכול לטעות, להמציא דברים (הזיות / Hallucinations), או לכתוב קוד שנראה נכון אבל מכיל באגים עדינים.</li>
+    </ul>
+  </div>
+
+  <!-- Dangers -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(239,68,68,0.15)">🛡️</span>
+      סיכונים וסכנות — מה חשוב לדעת
+    </h3>
+    <p>שימוש בכלי AI לכתיבת קוד מגיע עם סיכונים שחשוב להכיר:</p>
+
+    <h4>🔒 אבטחה</h4>
+    <ul>
+      <li><strong>הרצת פקודות לא בטוחות</strong> — Claude Code יכול להריץ כל פקודה בטרמינל. במצב "אישור אוטומטי" הסיכון גדל. תמיד כדאי לבדוק מה הוא מתכוון להריץ.</li>
+      <li><strong>פגיעויות אבטחה בקוד</strong> — AI יכול לכתוב קוד עם חולשות אבטחה (SQL Injection, XSS וכו'). מחקר של סטנפורד מצא שמפתחים שהשתמשו ב-AI כתבו קוד פחות מאובטח.</li>
+      <li><strong>חשיפת מידע רגיש</strong> — הקוד שלכם נשלח לשרתים של Anthropic לעיבוד. לארגונים עם קוד רגיש, זה דורש שיקול.</li>
+      <li><strong>מאגרי קוד זדוניים</strong> — בפברואר 2026 התגלו פגיעויות קריטיות: פתיחת פרויקט זדוני יכלה להוביל להרצת קוד זדוני ולגניבת מפתחות API.</li>
+    </ul>
+
+    <h4>🧠 תלות ולמידה</h4>
+    <ul>
+      <li><strong>אובדן מיומנויות</strong> — הסתמכות יתר על AI עלולה למנוע פיתוח (או לגרום לאיבוד) של יכולת לדבג, לכתוב ולהבין קוד באופן עצמאי.</li>
+      <li><strong>ביטחון מופרז</strong> — AI נותן הסברים בביטחון מלא, גם כשהוא טועה. זה יכול להוביל מתחילים לסמוך על קוד שהם לא באמת מבינים.</li>
+    </ul>
+
+    <h4>⚖️ משפטי וזכויות יוצרים</h4>
+    <ul>
+      <li><strong>זכויות יוצרים</strong> — מודלי AI אומנו על קוד פתוח. יש תביעות משפטיות בנוגע לשימוש בקוד שעלול להפר רישיונות.</li>
+      <li><strong>עלות בלתי צפויה</strong> — במיוחד עם תשלום לפי טוקנים, משימה לא מוגדרת היטב יכולה לצרוך הרבה כסף.</li>
+    </ul>
+
+    <div class="warning-box">
+      <span class="warning-icon">⚠️</span>
+      <p>
+        <strong>שורה תחתונה:</strong> Claude Code הוא כלי חזק מאוד, אבל הוא לא מושלם. תמיד כדאי לבדוק את הקוד שהוא כותב, לא לאשר פקודות בעיניים עצומות, ולשמור על גיבויים. חשבו עליו כעוזר חכם שצריך פיקוח — לא כמתכנת אוטונומי שאפשר לסמוך עליו ב-100%.
+      </p>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(34,211,238,0.15)">💰</span>
+      תמחור ועלויות
+    </h3>
+    <p>Claude Code זמין במספר תוכניות מנוי:</p>
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <div class="plan-name">Pro</div>
+        <div class="price">$20<span>/חודש</span></div>
+        <ul>
+          <li>גישה ל-Claude באתר ובאפליקציה</li>
+          <li>כולל Claude Code עם מגבלות שימוש</li>
+          <li>מתאים למתחילים ושימוש קל</li>
+        </ul>
+      </div>
+      <div class="pricing-card popular">
+        <div class="plan-name">Max 5x</div>
+        <div class="price">$100<span>/חודש</span></div>
+        <ul>
+          <li>כולל Claude Code מלא</li>
+          <li>פי 5 יותר שימוש מ-Pro</li>
+          <li>עדיפות גבוהה בתור</li>
+          <li>מומלץ לרוב המשתמשים</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Max 20x</div>
+        <div class="price">$200<span>/חודש</span></div>
+        <ul>
+          <li>כולל Claude Code מלא</li>
+          <li>פי 20 יותר שימוש מ-Pro</li>
+          <li>עדיפות מקסימלית</li>
+          <li>לשימוש אינטנסיבי</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">API</div>
+        <div class="price">לפי שימוש</div>
+        <ul>
+          <li>תשלום לפי טוקנים</li>
+          <li>ממוצע ~$6 ליום</li>
+          <li>$100-200 לחודש למפתח</li>
+          <li>שליטה מלאה בעלויות</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2: INSTALLATION
+     ═══════════════════════════════════════════ -->
+<section class="section" id="install-section">
+  <div class="section-header">
+    <h2>⚡ מדריך התקנה</h2>
+    <p>כל הדרכים להתקין ולהתחיל לעבוד עם Claude Code — בחרו את המתאימה לכם</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- Prerequisites -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background:rgba(99,140,255,0.15)">📋</span>
+      לפני שמתחילים — דרישות מערכת
+    </h3>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>דרישה</th>
+          <th>פרטים</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>מערכת הפעלה</strong></td><td>Windows 10+, macOS 10.15+, Linux (Ubuntu 20.04+)</td></tr>
+        <tr><td><strong>חשבון</strong></td><td>מנוי Claude — Pro ($20/חודש), Max ($100+/חודש), או חשבון API ב-Anthropic Console</td></tr>
+        <tr><td><strong>אינטרנט</strong></td><td>חיבור יציב (Claude רץ בענן)</td></tr>
+        <tr><td><strong>Windows בלבד</strong></td><td>Git for Windows (מומלץ להתקין מראש)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Method 1: Terminal -->
+  <div class="collapsible open" id="install-terminal">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>
+        <span class="icon" style="background:rgba(52,211,153,0.15)">💻</span>
+        התקנה דרך הטרמינל (CLI) — מומלץ
+      </h3>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>זו הדרך הרשמית והמלאה ביותר. מתאימה למי שרוצה את כל הפיצ'רים של Claude Code.</p>
+
+        <div class="info-box">
+          <p>
+            💡 <strong>מה זה "טרמינל"?</strong> טרמינל (Terminal) הוא חלון טקסט שבו אפשר לתת פקודות למחשב. במקום ללחוץ על כפתורים, כותבים פקודות טקסט והמחשב מבצע אותן. זה נשמע מאיים, אבל בפועל מדובר בלהעתיק שורה אחת ולהדביק אותה — זה הכל!
+          </p>
+        </div>
+
+        <h4>שלב 0 — איך פותחים טרמינל?</h4>
+        <ul>
+          <li><strong>Windows:</strong> לחצו על מקש Windows במקלדת, הקלידו <code>PowerShell</code> ולחצו Enter. ייפתח חלון כחול-כהה — זה הטרמינל שלכם!</li>
+          <li><strong>macOS:</strong> לחצו <code>Cmd+רווח</code>, הקלידו <code>Terminal</code> ולחצו Enter.</li>
+          <li><strong>Linux:</strong> לחצו <code>Ctrl+Alt+T</code> — טרמינל ייפתח מיד.</li>
+        </ul>
+
+        <h4>שלב 1 — ב-Windows: התקנת Git for Windows (דרישה מוקדמת)</h4>
+        <p>לפני שמתקינים את Claude Code ב-Windows, צריך להתקין תוכנה בשם <strong>Git</strong>. Git היא תוכנה לניהול גרסאות של קבצים (כמו "שמור גרסה" מתקדם). Claude Code צריך אותה כדי לעבוד כמו שצריך.</p>
+        <ul>
+          <li>גשו לכתובת <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener" style="color:var(--accent-primary)">git-scm.com/downloads/win</a></li>
+          <li>הורידו את הקובץ ולחצו "Next" בכל השלבים עד שההתקנה מסתיימת</li>
+          <li>אם Git כבר מותקן אצלכם — דלגו על שלב זה</li>
+        </ul>
+
+        <h4>שלב 2 — התקנת Claude Code</h4>
+        <p>עכשיו מגיע הרגע המרכזי! פתחו את הטרמינל (כמו שהוסבר למעלה) והעתיקו-הדביקו את הפקודה המתאימה למערכת ההפעלה שלכם:</p>
+
+        <p><strong>Windows — PowerShell:</strong></p>
+        <div class="code-block">
+          <span class="code-label">PowerShell</span>
+          <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+          irm https://claude.ai/install.ps1 | iex
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted);">מה הפקודה הזו עושה? היא מורידה את סקריפט ההתקנה מאתר Claude ומריצה אותו. כמו ללחוץ "הורד והתקן" — רק בשורת טקסט אחת.</p>
+
+        <p><strong>Windows — CMD (שורת הפקודה הישנה):</strong></p>
+        <div class="code-block">
+          <span class="code-label">CMD</span>
+          <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+          curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+        </div>
+
+        <p><strong>macOS / Linux:</strong></p>
+        <div class="code-block">
+          <span class="code-label">Bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+          curl -fsSL https://claude.ai/install.sh | bash
+        </div>
+
+        <p><strong>אפשרות חלופית — Homebrew (macOS/Linux בלבד):</strong></p>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Homebrew הוא "חנות אפליקציות" לטרמינל ב-Mac ו-Linux. אם כבר מותקן אצלכם, אפשר להשתמש בו:</p>
+        <div class="code-block">
+          <span class="code-label">Homebrew</span>
+          <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+          brew install --cask claude-code
+        </div>
+
+        <h4>שלב 3 — הפעלה ראשונה</h4>
+        <p>ההתקנה הסתיימה! עכשיו בואו נפעיל את Claude Code:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p><strong>נווטו לתיקיית הפרויקט</strong> — כתבו בטרמינל את הפקודה הבאה (שנו את הנתיב לתיקייה שלכם). הפקודה <code>cd</code> (קיצור של Change Directory) אומרת למחשב "עבור לתיקייה הזו":</p>
+              <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                cd your-project
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p><strong>הפעילו את Claude Code</strong> — כתבו פשוט:</p>
+              <div class="code-block">
+                <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                claude
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-muted);">זהו! מילה אחת והוא מתעורר לחיים.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p><strong>התחברו לחשבון</strong> — בפעם הראשונה, הדפדפן ייפתח אוטומטית ויבקש מכם להתחבר עם חשבון Claude שלכם (Pro, Max, או API). זה קורה רק פעם אחת.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content"><p><strong>התחילו לעבוד!</strong> — עכשיו אפשר פשוט לכתוב מה שאתם רוצים בשפה רגילה, למשל: "תבנה לי אתר אישי עם העיצוב שלך" — ו-Claude יעשה את הכל בשבילכם.</p></div>
+          </div>
+        </div>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>כל הפיצ'רים זמינים — הגרסה המלאה ביותר</li>
+            <li>מתעדכן אוטומטית (בהתקנה ישירה)</li>
+            <li>עובד עם כל עורך קוד</li>
+            <li>מתאים לאוטומציה ו-CI/CD</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>דורש נוחות עם שורת פקודה</li>
+            <li>אין ממשק גרפי — הכל טקסט</li>
+            <li>ב-Windows — צריך Git for Windows</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 2: VS Code -->
+  <div class="collapsible" id="install-vscode">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>
+        <span class="icon" style="background:rgba(99,140,255,0.15)">📝</span>
+        התקנה דרך VS Code — הכי ויזואלי
+      </h3>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <div class="info-box">
+          <p>
+            💡 <strong>מה זה VS Code?</strong> Visual Studio Code (בקיצור VS Code) הוא עורך קוד חינמי שפותח על ידי מיקרוסופט. חשבו עליו כמו Word, אבל במקום מסמכי טקסט — הוא מיועד לכתיבת קוד. הוא העורך הפופולרי ביותר בעולם, והוא חינמי לגמרי. גם אם אתם לא מתכנתים, הוא סביבה נוחה לעבודה עם Claude Code כי הוא מציג את השינויים שClaud עושה בצורה ויזואלית ברורה.
+          </p>
+        </div>
+
+        <h4>שלב א' — התקנת VS Code (אם עוד לא מותקן)</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>הורידו את VS Code</strong> — גשו לכתובת <a href="https://code.visualstudio.com" target="_blank" rel="noopener" style="color:var(--accent-primary)">code.visualstudio.com</a> ולחצו על כפתור ההורדה הגדול. האתר מזהה אוטומטית את מערכת ההפעלה שלכם.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>התקינו</strong> — הריצו את קובץ ההתקנה שהורדתם. לחצו "Next" בכל השלבים. מומלץ לסמן את האפשרות "Add to PATH" אם היא מופיעה.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>פתחו את VS Code</strong> — לאחר ההתקנה, פתחו אותו מתפריט ההתחלה (Windows) או מ-Applications (Mac).</p>
+            </div>
+          </div>
+        </div>
+
+        <h4>שלב ב' — התקנת תוסף Claude Code בתוך VS Code</h4>
+        <p>עכשיו שVS Code מותקן, נתקין בתוכו את התוסף של Claude Code:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>פתחו את חנות התוספים</strong> — לחצו על הצירוף <code>Ctrl+Shift+X</code> (או <code>Cmd+Shift+X</code> ב-Mac). ייפתח פאנל בצד עם שדה חיפוש. "תוספים" (Extensions) הם כמו אפליקציות קטנות שמוסיפות יכולות ל-VS Code.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>חפשו "Claude Code"</strong> — הקלידו בשדה החיפוש. התוצאה הראשונה תהיה התוסף הרשמי של Anthropic.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>לחצו Install</strong> — כפתור כחול ליד שם התוסף. ההתקנה לוקחת כמה שניות.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p><strong>פתחו את Claude Code</strong> — לחצו <code>Ctrl+Shift+P</code> (פותח את "לוח הפקודות" — כמו שורת חיפוש לכל פעולות VS Code). הקלידו "Claude Code" ובחרו <strong>"Open in New Tab"</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <p><strong>התחברו</strong> — חלון יופיע ויבקש מכם להתחבר עם חשבון Claude שלכם. עקבו אחר ההוראות — זה קורה רק פעם אחת.</p>
+            </div>
+          </div>
+        </div>
+
+        <h4>מה מיוחד ב-VS Code?</h4>
+        <ul>
+          <li><strong>תצוגת שינויים ויזואלית (Diffs)</strong> — רואים בדיוק מה Claude שינה בקוד, עם סימוני ירוק/אדום</li>
+          <li><strong>@-mentions</strong> — אפשר לתייג קבצים ספציפיים בשיחה: <code>@src/auth.ts תקן את הבאג כאן</code></li>
+          <li><strong>פאנל צ'אט צדדי</strong> — שיחה עם Claude בצד, תוך כדי עבודה על הקוד</li>
+          <li><strong>אישור/דחייה של שינויים</strong> — ממשק ויזואלי לסקירה ואישור כל שינוי</li>
+        </ul>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>ממשק ויזואלי נוח — לא צריך טרמינל</li>
+            <li>תצוגת שינויים ברורה</li>
+            <li>אינטגרציה מלאה עם VS Code</li>
+            <li>קל למתחילים</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>עובד רק בתוך VS Code</li>
+            <li>פחות גמיש מהטרמינל לאוטומציה</li>
+            <li>עדכונים מגיעים לפעמים מעט מאוחר יותר</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 3: Desktop App -->
+  <div class="collapsible" id="install-desktop">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>
+        <span class="icon" style="background:rgba(167,139,250,0.15)">🖥️</span>
+        אפליקציית דסקטופ — הכי פשוט להתחלה
+      </h3>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>אפליקציה עצמאית שאפשר להוריד ולהתקין — בדיוק כמו כל תוכנה רגילה. מתאימה למי שרוצה להתחיל מהר בלי להתעסק עם טרמינל או עורכי קוד. זו הדרך הכי פשוטה להתחיל!</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>הורידו את האפליקציה מהאתר הרשמי של Anthropic:</strong></p>
+              <ul>
+                <li><a href="https://claude.ai/api/desktop/win32/x64/exe/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary); font-weight:600;">הורדה ל-Windows (x64)</a> — מתאים לרוב מחשבי Windows</li>
+                <li><a href="https://claude.ai/api/desktop/win32/arm64/exe/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary);">הורדה ל-Windows ARM64</a> — למחשבי ARM בלבד (נדיר)</li>
+                <li><a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary); font-weight:600;">הורדה ל-macOS</a> — עובד על Intel ו-Apple Silicon</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>התקינו</strong> — הריצו את קובץ ההתקנה ועקבו אחר ההוראות</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>התחברו</strong> — פתחו את האפליקציה, התחברו עם חשבון Claude שלכם</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p><strong>עברו ללשונית Code</strong> — לחצו על הלשונית "Code" כדי להתחיל לעבוד</p>
+            </div>
+          </div>
+        </div>
+
+        <h4>מה מיוחד באפליקציית הדסקטופ?</h4>
+        <ul>
+          <li>סקירת שינויים ויזואלית נוחה</li>
+          <li>הרצת מספר סשנים במקביל (חלונות מרובים)</li>
+          <li>שליחת משימות ל-Cloud (ללא תלות במחשב המקומי)</li>
+          <li>ממשק נקי ומודרני</li>
+        </ul>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>הכי קל להתקנה — הורד והתקן</li>
+            <li>ממשק ויזואלי עצמאי</li>
+            <li>לא צריך ידע טכני</li>
+            <li>סשנים מרובים במקביל</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>דורש מנוי בתשלום</li>
+            <li>פחות פיצ'רים מ-CLI</li>
+            <li>פחות אינטגרציה עם כלי פיתוח</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 4: JetBrains -->
+  <div class="collapsible" id="install-jetbrains">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>
+        <span class="icon" style="background:rgba(245,158,11,0.15)">🔧</span>
+        JetBrains IDEs — למפתחי Java, Python ועוד
+      </h3>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>פלאגין רשמי ל-IntelliJ IDEA, PyCharm, WebStorm ושאר סביבות JetBrains.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p>התקינו קודם את Claude Code דרך הטרמינל (ראו שיטה 1)</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p>פתחו את ה-IDE של JetBrains</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p>גשו ל-Settings → Plugins → Marketplace</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content"><p>חפשו "Claude Code" ולחצו Install</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content"><p>הפעילו מחדש את ה-IDE — חלון Claude Code יופיע</p></div>
+          </div>
+        </div>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>אינטגרציה טובה עם JetBrains</li>
+            <li>תצוגת שינויים אינטראקטיבית</li>
+            <li>עובד עם כל ה-IDEs של JetBrains</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>דורש התקנת CLI נפרדת</li>
+            <li>ה-IDE כבד — Claude מוסיף עומס</li>
+            <li>עדכונים מגיעים בהשהייה</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 5: Web -->
+  <div class="collapsible" id="install-web">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h3>
+        <span class="icon" style="background:rgba(34,211,238,0.15)">🌐</span>
+        דרך הדפדפן — בלי שום התקנה
+      </h3>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>אפשר להשתמש ב-Claude Code ישירות דרך הדפדפן (Chrome, Edge, Firefox וכו'), בלי להתקין שום דבר על המחשב! זו הדרך הכי מהירה לנסות.</p>
+
+        <div class="info-box">
+          <p>
+            💡 <strong>כן, זה עובד דרך הדפדפן!</strong> Claude Code רץ בענן (על שרתים של Anthropic), כך שאתם לא צריכים להתקין שום דבר. הדפדפן הוא רק הממשק — כל העבודה הכבדה קורית בשרתים. אתם יכולים לפתוח את Claude Code, לתת לו משימה, לסגור את הדפדפן, ולחזור אחר כך לראות את התוצאה!
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p><strong>גשו לכתובת</strong> <a href="https://claude.ai/code" target="_blank" rel="noopener" style="color:var(--accent-primary); font-weight:600;">claude.ai/code</a> בדפדפן שלכם</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p><strong>התחברו</strong> עם חשבון Claude שלכם (Pro, Max, או Team)</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>התחילו לעבוד!</strong> אפשר להתחיל פרויקט חדש מאפס, או לחבר <strong>ריפוזיטורי (Repository)</strong> קיים מ-<strong>GitHub</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <p>
+            💡 <strong>מה זה GitHub?</strong> GitHub הוא אתר שמשמש כ"ענן לקוד". מתכנתים מעלים אליו את הפרויקטים שלהם כדי לגבות אותם, לשתף עם אחרים, ולעקוב אחרי שינויים. חשבו עליו כמו Google Drive, אבל מיועד לפרויקטי תוכנה.
+          </p>
+          <p style="margin-top: 0.5rem;">
+            <strong>מה זה ריפוזיטורי (Repository)?</strong> בקיצור "ריפו" — זו תיקייה של פרויקט ב-GitHub. כל ריפו מכיל את כל קבצי הקוד של הפרויקט, את ההיסטוריה של השינויים, ואפשרות לשתף ולעבוד עם אחרים. כשאתם "מחברים ריפו" ל-Claude Code בדפדפן, אתם נותנים ל-Claude גישה לקרוא ולעבוד על הפרויקט הזה.
+          </p>
+        </div>
+
+        <h4>מה מיוחד בגרסת הדפדפן?</h4>
+        <ul>
+          <li><strong>אפס התקנה</strong> — נכנסים לאתר ומתחילים לעבוד, בלי להוריד שום דבר</li>
+          <li><strong>משימות ברקע</strong> — אפשר לשלוח משימה ארוכה, לסגור את הדפדפן, ולחזור אחר כך לבדוק את התוצאה</li>
+          <li><strong>עבודה על ריפוזיטוריז מרוחקים</strong> — אפשר לעבוד על פרויקטים ב-GitHub בלי להוריד אותם למחשב</li>
+          <li><strong>הרצת משימות מרובות</strong> — אפשר לפתוח כמה לשוניות ולעבוד על כמה דברים במקביל</li>
+          <li><strong>עובד מכל מקום</strong> — גם מהטלפון (אפליקציית Claude ב-iOS) וגם ממחשב אחר</li>
+        </ul>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>אפס התקנה — עובד מיד</li>
+            <li>אפשר לעבוד מכל מכשיר</li>
+            <li>משימות רצות גם כשסוגרים את הדפדפן</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>פחות שליטה מאשר בהתקנה מקומית</li>
+            <li>תלות בחיבור אינטרנט יציב</li>
+            <li>לא כל הפיצ'רים זמינים</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Which to choose -->
+  <div class="content-block" style="margin-top: 2rem;">
+    <h3>
+      <span class="icon" style="background:rgba(167,139,250,0.15)">🤔</span>
+      אז מה מתאים לי?
+    </h3>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>אם אתם...</th>
+          <th>השיטה המומלצת</th>
+          <th>למה?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>מתחילים לגמרי</td>
+          <td><strong>אפליקציית דסקטופ</strong> או <strong>דפדפן</strong></td>
+          <td>הכי פשוט, בלי טרמינל</td>
+        </tr>
+        <tr>
+          <td>עובדים ב-VS Code</td>
+          <td><strong>תוסף VS Code</strong></td>
+          <td>אינטגרציה מושלמת עם העורך</td>
+        </tr>
+        <tr>
+          <td>מתכנתים מנוסים</td>
+          <td><strong>טרמינל (CLI)</strong></td>
+          <td>כל הפיצ'רים, שליטה מלאה</td>
+        </tr>
+        <tr>
+          <td>רוצים לנסות לפני התקנה</td>
+          <td><strong>דפדפן</strong></td>
+          <td>אפס התקנה, מיידי</td>
+        </tr>
+        <tr>
+          <td>עובדים עם JetBrains</td>
+          <td><strong>פלאגין JetBrains</strong></td>
+          <td>נשאר בסביבה המוכרת</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3: INSPIRATION BOARD
+     ═══════════════════════════════════════════ -->
+<section class="section" id="inspiration-section">
+  <div class="section-header">
+    <h2>✨ לוח השראה</h2>
+    <p>פרויקטים אמיתיים שאנשים בנו עם Claude Code — מהמאוד פשוט ועד המתוחכם</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards('all')">הכל</button>
+    <button class="filter-btn" onclick="filterCards('web')">אתרים ואפליקציות</button>
+    <button class="filter-btn" onclick="filterCards('game')">משחקים</button>
+    <button class="filter-btn" onclick="filterCards('automation')">אוטומציה</button>
+    <button class="filter-btn" onclick="filterCards('data')">נתונים וניתוח</button>
+    <button class="filter-btn" onclick="filterCards('tool')">כלים ותוכנות</button>
+    <button class="filter-btn" onclick="filterCards('non-code')">בלי קוד כלל</button>
+    <button class="filter-btn" onclick="filterCards('creative')">יצירתי</button>
+  </div>
+
+  <div class="inspiration-grid">
+
+    <!-- Card 1 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>אתר אישי תוך 10 דקות</h3>
+      <p>מפתחים ללא ניסיון בנו אתרים אישיים מקצועיים רק מתוך קורות חיים — Claude Code יצר עיצוב מודרני, סקשנים, ואפילו אנימציות. פרויקט מתחילים קלאסי שלוקח 10-15 דקות.</p>
+      <a class="inspiration-link" href="https://buildtolaunch.substack.com/p/claude-code-project-ideas" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="inspiration-card" data-category="game">
+      <span class="inspiration-category">משחקים</span>
+      <h3>משחק חלל רטרו ב-20 דקות</h3>
+      <p>אב ובנו בן 7 בנו משחק יריות חלל עם גלים של אויבים, בוסים, פאוור-אפים ומוזיקת רקע — ב-20 דקות בלבד. השתמשו ב-Vibe Coding ובגרפיקה חינמית מ-itch.io.</p>
+      <a class="inspiration-link" href="https://creatoreconomy.so/p/build-a-retro-game-with-claude-code-in-20-min" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>ארגון אוטומטי של תמונות</h3>
+      <p>מאות תמונות שונו שמות וסודרו אוטומטית לתיקיות לפי חודש עם שמות תיאוריים כמו "2025-08-vacation-001.jpg". משימה שלוקחת שעות — הסתיימה ב-30 שניות.</p>
+      <a class="inspiration-link" href="https://buildtolaunch.substack.com/p/claude-code-project-ideas" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="inspiration-card" data-category="automation">
+      <span class="inspiration-category">אוטומציה</span>
+      <h3>דיוור חדשות AI יומי</h3>
+      <p>מפתח בנה מערכת שרצה כל בוקר דרך GitHub Actions, מחפשת חדשות AI ברחבי הרשת, מסכמת אותן ושולחת מייל מסודר — הכל אוטומטי לחלוטין.</p>
+      <a class="inspiration-link" href="https://www.thepromptwarrior.com/p/5-powerful-claude-code-use-cases-you-probably-didn-t-know-about-5826bfb7f5b8fdd8" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="inspiration-card" data-category="data">
+      <span class="inspiration-category">נתונים וניתוח</span>
+      <h3>דשבורד ניתוח הוצאות</h3>
+      <p>הזינו דפי חשבון מהבנק ו-Claude Code יצר דשבורד אינטראקטיבי עם גרפים לפי קטגוריה, סיכום שבועי, ופילטרים לפי תאריך. פרויקט של 15-20 דקות.</p>
+      <a class="inspiration-link" href="https://buildtolaunch.substack.com/p/claude-code-project-ideas" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="inspiration-card" data-category="tool">
+      <span class="inspiration-category">כלים ותוכנות</span>
+      <h3>אפליקציית Electron מאפס</h3>
+      <p>מפתח בנה אפליקציית כתיבה שלמה כ-Electron app — עם ממשק מודרני, שמירה אוטומטית, ותמיכה ב-Markdown. הכל מ-Claude Code בלי ידע קודם ב-Electron.</p>
+      <a class="inspiration-link" href="https://www.stephanmiller.com/electron-project-from-scratch-with-claude-code/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 7 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>עורך דין שזכה בהאקתון</h3>
+      <p>עורך דין לנזקי גוף ללא רקע טכני זכה במקום הראשון בהאקתון של Anthropic — בנה כלי שמאיץ תהליכי אישור בנייה בקליפורניה. "האנשים הכי קרובים לבעיה סוף סוף יוצרים את הפתרון."</p>
+      <a class="inspiration-link" href="https://www.xda-developers.com/claude-code-isnt-just-for-developers/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 8 -->
+    <div class="inspiration-card" data-category="game">
+      <span class="inspiration-category">משחקים</span>
+      <h3>משחק כבאיות לילד בן 3</h3>
+      <p>הורה בנה תוך 15 דקות משחק קפיצה עם נושא כבאיות — מותאם אישית לילד שלו. הפך רעיון פשוט למשחק כיפי ומעורב, בלי שום ניסיון קודם בפיתוח משחקים.</p>
+      <a class="inspiration-link" href="https://medium.com/@ktshannon/how-i-used-claude-ai-to-build-a-customized-game-for-my-3-year-old-in-under-15-minutes-9bd3f447a08d" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 9 -->
+    <div class="inspiration-card" data-category="automation">
+      <span class="inspiration-category">אוטומציה</span>
+      <h3>מרכז פיקוד אישי</h3>
+      <p>קידוד של תהליכי עבודה חוזרים כפקודות מותאמות. פקודה אחת מריצה בדיקות, בונה את האפליקציה, עושה commit ו-push. מתחילים עם פקודה אחת ומרחיבים בהדרגה.</p>
+      <a class="inspiration-link" href="https://buildtolaunch.substack.com/p/claude-code-project-ideas" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 10 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>אפליקציית ניהול משימות כמו Wunderlist</h3>
+      <p>מפתח יצר אפליקציית ניהול משימות שמשחזרת את חווית המשתמש של Wunderlist עם מיקרו-אינטראקציות ואנימציות חלקות — פרויקט שלם ש-Claude Code תכנן וביצע.</p>
+      <a class="inspiration-link" href="https://medium.com/@ondrej.machart/13-claude-code-projects-that-changed-my-product-manager-role-over-the-last-6-months-7057b9045d51" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 11 -->
+    <div class="inspiration-card" data-category="creative">
+      <span class="inspiration-category">יצירתי</span>
+      <h3>15 פרויקטים בזמן הפנוי</h3>
+      <p>מפתח תיעד איך בנה 15 פרויקטים שונים עם AI בזמן הפנוי שלו — מאפליקציות ווב ועד כלים שימושיים. ניסוי ב-Vibe Coding שמראה כמה מגוון השימוש יכול להיות.</p>
+      <a class="inspiration-link" href="https://www.stephanmiller.com/the-great-vibe-coding-experiment/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 12 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>ניהול חיים שלמים מ-Claude Code</h3>
+      <p>מאמנת מוצר מנהלת את כל החיים והעסק שלה דרך טרמינלים של Claude Code — רשימות מטלות, מחקר, כתיבת תוכן, ותזמון. לא רק לקוד — לכל דבר.</p>
+      <a class="inspiration-link" href="https://creatoreconomy.so/p/automate-your-life-with-claude-code-teresa-torres" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 13 -->
+    <div class="inspiration-card" data-category="data">
+      <span class="inspiration-category">נתונים וניתוח</span>
+      <h3>צינור מחקר אוטונומי</h3>
+      <p>מערכת רב-שלבית שאוספת מידע ממחקר ברשת, מצליבה עם ידע אישי, מארגנת ומדרגת ממצאים, ומפיקה דוחות מובנים — מחקר אוטומטי מלא.</p>
+      <a class="inspiration-link" href="https://buildtolaunch.substack.com/p/claude-code-project-ideas" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 14 -->
+    <div class="inspiration-card" data-category="tool">
+      <span class="inspiration-category">כלים ותוכנות</span>
+      <h3>תוסף דפדפן ללימוד שפות</h3>
+      <p>תוסף לדפדפן שמאפשר לסמן טקסט באתרים בשפה זרה, לקבל הגדרות מונחיות מ-AI לפי הקשר, ולשמור מילים לרשימת אוצר מילים אישית.</p>
+      <a class="inspiration-link" href="https://buildtolaunch.substack.com/p/claude-code-project-ideas" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 15 -->
+    <div class="inspiration-card" data-category="automation">
+      <span class="inspiration-category">אוטומציה</span>
+      <h3>סקירת Pull Requests אוטומטית</h3>
+      <p>Claude Code סורק PR-ים אוטומטית, מחפש באגים, בעיות סגנון ובעיות אבטחה. משחרר מפתחים בכירים להתמקד בנושאים ארכיטקטוריים מורכבים יותר.</p>
+      <a class="inspiration-link" href="https://www.eesel.ai/blog/claude-code-automation" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 16 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>אפליקציה מלאה עם תשלומים</h3>
+      <p>פרויקט מתקדם: אפליקציה שלמה עם הרשמה דרך Google/אימייל, אינטגרציית Stripe לתשלומים, יצירת תוכן AI, מסד נתונים, ופאנל ניהול.</p>
+      <a class="inspiration-link" href="https://buildtolaunch.substack.com/p/claude-code-project-ideas" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 17 -->
+    <div class="inspiration-card" data-category="creative">
+      <span class="inspiration-category">יצירתי</span>
+      <h3>Vibe Coding למתחילים מוחלטים</h3>
+      <p>מתחיל ללא שום ניסיון בתכנות תיעד את המסע שלו ב-Vibe Coding עם Claude Code — בניית פרויקטים רק דרך שיחה טבעית, בלי ללמוד שפת תכנות.</p>
+      <a class="inspiration-link" href="https://medium.com/design-bootcamp/vibe-coding-with-claude-code-as-a-complete-novice-63a5b046c307" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 18 -->
+    <div class="inspiration-card" data-category="data">
+      <span class="inspiration-category">נתונים וניתוח</span>
+      <h3>דשבורד מודיעין נתונים</h3>
+      <p>אוסף נתונים ממגוון מקורות (GitHub, Reddit, YouTube, ניוזלטרים) על נושא ספציפי. מציג התפלגויות, מגמות, וממשק חיפוש מסונן — מרכז מידע אישי.</p>
+      <a class="inspiration-link" href="https://buildtolaunch.substack.com/p/claude-code-project-ideas" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 19 -->
+    <div class="inspiration-card" data-category="tool">
+      <span class="inspiration-category">כלים ותוכנות</span>
+      <h3>MDQuery — חיפוש ב-Markdown</h3>
+      <p>כלי שמאפשר חיפוש בסגנון SQL בקבצי Markdown — עובד עם מערכות רישום הערות שונות ומחוללי אתרים סטטיים. פרויקט קוד פתוח שנבנה עם Claude Code.</p>
+      <a class="inspiration-link" href="https://www.platformer.news/claude-code-review-web-design/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 20 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>20 שימושים שאינם קוד</h3>
+      <p>רשימה של 20 שימושים ללא כתיבת קוד: ניהול קבצים, ניתוח CSV, יצירת גרפים, סיכום מסמכים, המרת פורמטים, עריכת תמונות, ועוד — Claude Code הוא הרבה יותר מכלי תכנות.</p>
+      <a class="inspiration-link" href="https://blog.devgenius.io/claude-code-is-turning-non-programmers-into-builders-heres-how-to-start-6a70d06cdcfd" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 21 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>אפליקציית גלישה עם 100+ משתמשים</h3>
+      <p>מפתח בנה אפליקציה בשם Dialed שמציגה תחזיות גלישה מותאמות אישית. האפליקציה פורסמה ב-App Store עם מנוי מובנה, אינטגרציות API, ומעל 100 משתמשים חודשיים — הכל נבנה עם Claude Code.</p>
+      <a class="inspiration-link" href="https://www.platformer.news/claude-code-review-web-design/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 22 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>אפליקציית iOS למציאת גני משחקים</h3>
+      <p>Little Explorer — אפליקציית iOS שעוזרת למשפחות למצוא גני משחקים ומקומות ידידותיים לילדים. כוללת מנוי, אינטגרציות API צד-שלישי, וכ-100 משתמשים חודשיים. נבנתה לחלוטין עם Claude Code.</p>
+      <a class="inspiration-link" href="https://www.platformer.news/claude-code-review-web-design/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 23 -->
+    <div class="inspiration-card" data-category="tool">
+      <span class="inspiration-category">כלים ותוכנות</span>
+      <h3>בוט טלגרם לשליטה מרחוק ב-Claude Code</h3>
+      <p>בוט טלגרם שמאפשר לשלוט ב-Claude Code מהטלפון. שולחים הודעה בטלגרם ו-Claude Code עובד על הפרויקט — עם שמירת סשנים, הרשאות, והתראות על התקדמות. קוד פתוח!</p>
+      <a class="inspiration-link" href="https://github.com/RichardAtCT/claude-code-telegram" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 24 -->
+    <div class="inspiration-card" data-category="automation">
+      <span class="inspiration-category">אוטומציה</span>
+      <h3>פיתוח Arduino אוטומטי לחלוטין</h3>
+      <p>Claude Code מחובר ישירות לחומרת Arduino — כותב קוד, מקמפל, מעלה ללוח, בודק את הפלט ומתקן בעיות. פיתוח חומרה אוטומטי בלי לגעת ב-IDE. הודגם על ידי Adafruit.</p>
+      <a class="inspiration-link" href="https://blog.adafruit.com/2025/03/09/fully-automating-arduino-development-giving-claude-code-access-to-hardware/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 25 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>מוצר SaaS שלם — רק עם Claude Code</h3>
+      <p>מפתח תיעד את בניית מוצר SaaS (תוכנה כשירות) מלא רק עם Claude Code — מהרעיון הראשוני, דרך הפיתוח, ועד פריסה באינטרנט. כולל מה עבד ומה לא.</p>
+      <a class="inspiration-link" href="https://world.hey.com/cpinto/building-a-complete-saas-product-with-only-claude-code-cca13895" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 26 -->
+    <div class="inspiration-card" data-category="creative">
+      <span class="inspiration-category">יצירתי</span>
+      <h3>עיצוב פורטפוליו מקצועי</h3>
+      <p>מעצב שיפר את אתר הפורטפוליו שלו עם Claude Code ותוסף frontend-design — שיפור פריסה, היררכיה ויזואלית ואיכות ממשק. התוצאה: אתר שנראה כאילו עוצב ביד, לא על ידי AI.</p>
+      <a class="inspiration-link" href="https://dev.to/saidmounaim/redesigning-my-portfolio-with-claude-code-frontend-design-skill-1njc" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 27 -->
+    <div class="inspiration-card" data-category="data">
+      <span class="inspiration-category">נתונים וניתוח</span>
+      <h3>ניתוח 2,486 מאמרי Medium</h3>
+      <p>צינור ניתוח נתונים שלם: איסוף 2,486 מאמרים, ניתוח טקסט, חילוץ תובנות, ויצירת ויזואליזציות אינטראקטיביות — הכל באמצעות Claude Code כסוכן ניתוח נתונים.</p>
+      <a class="inspiration-link" href="https://medium.com/aiguys/data-analysis-pipeline-with-claude-code-2-486-medium-articles-to-interactive-insights-45d39417334b" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 28 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>תרגום ספר רוסי בן 274 עמודים</h3>
+      <p>מערכת תרגום PDF חצי-אוטומטית שתרגמה ספר שלם בן 274 עמודים מרוסית לאנגלית — כולל טיפול בטקסט בכתב קירילי. פרויקט קוד פתוח שנבנה עם Claude Code.</p>
+      <a class="inspiration-link" href="https://github.com/gvmfhy/pdf-translator" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 29 -->
+    <div class="inspiration-card" data-category="automation">
+      <span class="inspiration-category">אוטומציה</span>
+      <h3>שליטה ב-Arduino Cloud בשפה טבעית</h3>
+      <p>גשר MCP בין Claude Code למכשירי IoT של Arduino Cloud — שולטים בחומרה פיזית (חיישנים, נורות, מנועים) רק דרך שיחה בשפה טבעית. "תדליק את הנורה בסלון" — ו-Claude עושה את זה.</p>
+      <a class="inspiration-link" href="https://forum.arduino.cc/t/talk-to-your-arduino-cloud-with-claude/1385826" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 30 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>אוטומציה של חיים שלמים ב-50 דקות</h3>
+      <p>מדריך מפורט איך לאוטמט את החיים עם Claude Code: מניהול מיילים, דרך תזמון פגישות, ועד ניהול משימות יומיות — הכל ב-50 דקות של הגדרה ראשונית. אחרי זה הכל רץ לבד.</p>
+      <a class="inspiration-link" href="https://creatoreconomy.so/p/automate-your-life-with-claude-code-teresa-torres" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 31 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>אתר אתיקה של AI להוראה</h3>
+      <p>אתר חינוכי מלא בנושא אתיקה של בינה מלאכותית — כולל מאמרים, שאלות לדיון, ומקרי בוחן. נבנה עם Claude Code ו-Astro 5, פורסם ב-Cloudflare Pages.</p>
+      <a class="inspiration-link" href="https://leonfurze.com/2026/02/14/building-websites-with-claude-code/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 32 -->
+    <div class="inspiration-card" data-category="automation">
+      <span class="inspiration-category">אוטומציה</span>
+      <h3>ניהול לקוחות אוטומטי לעסקים קטנים</h3>
+      <p>בעלי עסקים ללא רקע טכני השתמשו ב-Claude Code לאוטומציה של מיילים ללקוחות, דוחות מלאי, ותכנון תוכן לרשתות חברתיות. מה שלקח שעות — לוקח דקות.</p>
+      <a class="inspiration-link" href="https://www.claudecodeforbusiness.com/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 33 -->
+    <div class="inspiration-card" data-category="creative">
+      <span class="inspiration-category">יצירתי</span>
+      <h3>אמנות גנרטיבית עם p5.js</h3>
+      <p>יצירת אמנות אלגוריתמית עם Claude Code — שדות זרימה (Flow Fields), מערכות חלקיקים, ודפוסים מתמטיים מרהיבים. הסקיל algorithmic-art מאפשר ליצור יצירות אמנות דיגיטליות דרך שיחה.</p>
+      <a class="inspiration-link" href="https://github.com/travisvn/awesome-claude-skills" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 34 -->
+    <div class="inspiration-card" data-category="tool">
+      <span class="inspiration-category">כלים ותוכנות</span>
+      <h3>ClaudeCAD — מודלים תלת-ממדיים להדפסה</h3>
+      <p>כלי שמשתמש ב-Claude ליצירת ועריכת מודלים תלת-ממדיים להדפסת 3D. מתארים מה רוצים בשפה טבעית, ו-Claude יוצר קובץ מוכן להדפסה. עיצוב תלת-ממדי בלי ללמוד תוכנת CAD.</p>
+      <a class="inspiration-link" href="https://github.com/niklasmh/ClaudeCAD" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 35 -->
+    <div class="inspiration-card" data-category="data">
+      <span class="inspiration-category">נתונים וניתוח</span>
+      <h3>דשבורד אנליטיקה עסקית</h3>
+      <p>בניית דשבורד אנליטיקה עסקית אינטראקטיבי עם Claude — גרפים, טבלאות, ופילטרים מתקדמים. מתארים את הנתונים שרוצים לנתח ו-Claude בונה את הדשבורד בדקות.</p>
+      <a class="inspiration-link" href="https://medium.com/@prakash.sukhwal/building-business-analytics-dashboards-with-claude-ai-part-1-306a819d1b2e" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 36 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>3 סטארטאפים של Y Combinator</h3>
+      <p>שלושה סטארטאפים מתוכנית Y Combinator היוקרתית סיפרו איך בנו את החברות שלהם עם Claude Code — מהרעיון הראשוני ועד מוצר פעיל עם לקוחות משלמים. סיפורי הצלחה אמיתיים.</p>
+      <a class="inspiration-link" href="https://claude.com/blog/building-companies-with-claude-code" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 37 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>משימות יומיומיות — בלי תכנות כלל</h3>
+      <p>מדריך לשימוש ב-Claude Code למשימות יום-יומיות ללא תכנות: ארגון קבצים, המרת פורמטים, ניתוח דפי חשבון, סיכום מסמכים, עריכת תמונות, ויצירת גרפים מנתוני אקסל.</p>
+      <a class="inspiration-link" href="https://every.to/source-code/how-to-use-claude-code-for-everyday-tasks-no-programming-required" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 38 -->
+    <div class="inspiration-card" data-category="creative">
+      <span class="inspiration-category">יצירתי</span>
+      <h3>מדריך Claude Code למעצבים</h3>
+      <p>מעצבים גרפיים משתמשים ב-Claude Code ליצירת ממשקי משתמש, אנימציות CSS, ואפילו חיבור ישיר ל-Figma — עיצובים הופכים לקוד React מוכן לייצור בלחיצת כפתור.</p>
+      <a class="inspiration-link" href="https://adplist.substack.com/p/claude-code-guide-for-designers" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 39 -->
+    <div class="inspiration-card" data-category="tool">
+      <span class="inspiration-category">כלים ותוכנות</span>
+      <h3>סוכן AI לשליטה בסמארטפון</h3>
+      <p>מפתח יצר סוכן AI ב-Claude Code ששולט בסמארטפון — ניווט בין אפליקציות, שליחת הודעות, וביצוע פעולות אוטומטיות. כמו עוזר אישי שמפעיל את הטלפון בשבילכם.</p>
+      <a class="inspiration-link" href="https://dev.to/tiagodanin/creating-an-ai-agent-in-claude-code-to-control-my-smartphone-1e3e" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 40 -->
+    <div class="inspiration-card" data-category="game">
+      <span class="inspiration-category">משחקים</span>
+      <h3>משחק יריות תלת-ממדי</h3>
+      <p>משחק Top-Down Shooter דו-ממדי עם תנועה בחיצים, כיוון עם העכבר, אויבים שמגיחים מכל הכיוונים, שלבים עם מסכי תפריט — הכל נבנה עם Claude Code מאפס.</p>
+      <a class="inspiration-link" href="https://creatoreconomy.so/p/build-a-retro-game-with-claude-code-in-20-min" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 41 -->
+    <div class="inspiration-card" data-category="automation">
+      <span class="inspiration-category">אוטומציה</span>
+      <h3>בוט רב-פלטפורמי: WhatsApp, Slack, Discord</h3>
+      <p>Clawdbot — בוט קוד פתוח שמחבר את Claude Code ל-WhatsApp, Slack, Discord, Signal, iMessage ו-Teams. שליחת משימות קידוד מכל אפליקציית צ'אט — ו-Claude עובד ברקע.</p>
+      <a class="inspiration-link" href="https://github.com/clawdbot/clawdbot" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 42 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>הפיכת PDF לכלי סינון אינטראקטיבי</h3>
+      <p>מסמך PDF ארוך הפך לכלי ווב אינטראקטיבי עם סינון ומיון — בפחות משעה. Claude Code קרא את ה-PDF, חילץ את המידע, ובנה ממשק חיפוש מתקדם.</p>
+      <a class="inspiration-link" href="https://www.orbisdesign.com/blog/claude-ai-pdf-convert-filter-tool" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 43 -->
+    <div class="inspiration-card" data-category="data">
+      <span class="inspiration-category">נתונים וניתוח</span>
+      <h3>דשבורד לניתוח שימוש ב-Claude Code</h3>
+      <p>מפתח בנה דשבורד ויזואלי שמנתח 83 ימים של שימוש אישי ב-Claude Code — כמה טוקנים נצרכו, באילו שעות עבד, ומה הדפוסים. תובנות מפתיעות על עבודה עם AI.</p>
+      <a class="inspiration-link" href="https://kevinjmagnan.com/2026/01/21/83-days-with-claude-code.html" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 44 -->
+    <div class="inspiration-card" data-category="web">
+      <span class="inspiration-category">אתרים ואפליקציות</span>
+      <h3>מרעיון לאפליקציה פרוסה באינטרנט</h3>
+      <p>תיעוד מלא של התהליך: מרעיון ראשוני, דרך פיתוח עם Claude Code, ועד העלאה לאוויר (Deploy). כולל מה עבד, מה נכשל, ומה למדו — מדריך כנה ופרקטי.</p>
+      <a class="inspiration-link" href="https://medium.com/@rfatideh/from-idea-to-deployed-app-with-claude-code-what-worked-and-what-didnt-68ac4269e96b" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 45 -->
+    <div class="inspiration-card" data-category="tool">
+      <span class="inspiration-category">כלים ותוכנות</span>
+      <h3>תרגום מאמרים מדעיים מ-PDF</h3>
+      <p>כלי לתרגום איכותי של מאמרים מדעיים סרוקים — מאנגלית לצרפתית עם שמירה על פורמט, נוסחאות, וטבלאות. מבוסס Claude Code Max, מטפל ב-PDF סרוקים שכלים אחרים לא מצליחים איתם.</p>
+      <a class="inspiration-link" href="https://github.com/Hugues-DTANKOUO/scientific-pdf-translator" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 46 -->
+    <div class="inspiration-card" data-category="non-code">
+      <span class="inspiration-category">בלי קוד כלל</span>
+      <h3>בניית תהליכי עבודה AI — בלי רקע טכני</h3>
+      <p>מדריך צעד-אחר-צעד למי שלא טכני: איך לבנות תהליכי עבודה אוטומטיים עם Claude Code. מהגדרת פקודות מותאמות ועד יצירת מערכות שמשתפרות לבד עם הזמן.</p>
+      <a class="inspiration-link" href="https://www.producttalk.org/how-to-build-ai-workflows-with-claude-code/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 47 -->
+    <div class="inspiration-card" data-category="creative">
+      <span class="inspiration-category">יצירתי</span>
+      <h3>Washington Post: בניית אתר בדקות</h3>
+      <p>ה-Washington Post בדק את Claude Code בשידור חי — צפו ב-AI בונה אתר מלא בזמן אמת. הכתבה כוללת וידאו אינטראקטיבי שמראה את התהליך מההתחלה ועד הסוף.</p>
+      <a class="inspiration-link" href="https://www.washingtonpost.com/technology/interactive/2026/claude-code-cowork-build-apps/" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+    <!-- Card 48 -->
+    <div class="inspiration-card" data-category="tool">
+      <span class="inspiration-category">כלים ותוכנות</span>
+      <h3>75+ פרויקטי קוד פתוח</h3>
+      <p>אוסף של 75+ ריפוזיטוריז (פרויקטי קוד פתוח) שנבנו עם Claude Code — מניהול תוכן, דרך עיצוב מערכות, IoT, תהליכי עבודה אגנטיים, וניהול שרתים. מאגר השראה עצום.</p>
+      <a class="inspiration-link" href="https://github.com/hesreallyhim/awesome-claude-code" target="_blank" rel="noopener">
+        קראו עוד ←
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 4: SKILLS & PLUGINS
+     ═══════════════════════════════════════════ -->
+<section class="section" id="skills-section">
+  <div class="section-header">
+    <h2>🧩 סקילים ופלאגינים</h2>
+    <p>איך להרחיב את היכולות של Claude Code — עם כלים מוכנים או כאלה שתיצרו בעצמכם</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- Intro: What are Skills & Plugins -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(99,140,255,0.15); color: var(--accent-primary);">💡</span>
+      מה זה סקילים ופלאגינים? — הסבר פשוט
+    </h3>
+    <p>
+      חשבו על <strong style="color: var(--text-bright);">Claude Code</strong> כמו טלפון חכם חדש. כשקונים אותו, הוא מגיע עם יכולות מובנות — אפשר להתקשר, לצלם, לגלוש באינטרנט. אבל הכוח האמיתי של הטלפון הוא ב<strong style="color: var(--accent-primary);">אפליקציות</strong> שמתקינים עליו: וויז לניווט, אינסטגרם לתמונות, ווטסאפ להודעות.
+    </p>
+    <p>
+      באותו אופן בדיוק, Claude Code מגיע עם יכולות מרשימות — הוא יודע לכתוב קוד, לתקן באגים, לבנות אתרים. אבל אפשר להוסיף לו <strong style="color: var(--accent-primary);">"אפליקציות"</strong> שנקראות <strong style="color: var(--text-bright);">סקילים ופלאגינים</strong>, שנותנות לו כוחות נוספים ומלמדות אותו לעבוד בדיוק כמו שאתם רוצים.
+    </p>
+
+    <h4>סקיל (Skill) — כמו כרטיס מתכון למטבח</h4>
+    <p>
+      דמיינו שיש לכם שף פרטי (זה Claude). הוא שף מעולה שיודע לבשל הכל. אבל אתם אוהבים שהפסטה תהיה תמיד אל-דנטה, שתמיד יהיה בזיל טרי, ושהרוטב יהיה מעגבניות טריות בלבד.
+    </p>
+    <p>
+      במקום לחזור ולהסביר את זה כל ערב — אתם כותבים <strong style="color: var(--text-bright);">כרטיס מתכון</strong> עם כל ההנחיות האלה, ותולים אותו במטבח. עכשיו, כל פעם שהשף מכין פסטה, הוא מסתכל על הכרטיס ועובד בדיוק לפי הטעם שלכם.
+    </p>
+    <p>
+      זה בדיוק מה שסקיל עושה. זה <strong style="color: var(--text-bright);">קובץ טקסט פשוט עם הוראות</strong> שמלמד את Claude איך לעשות משימה מסוימת. למשל: "כשמבקשים ממך לבנות אתר — תמיד תשתמש בעיצוב כהה, תוסיף אנימציות חלקות, ותבחר גופנים (פונטים) ישראליים".
+    </p>
+    <p>
+      מבחינה טכנית: סקילים נכתבים בקובץ טקסט בשם <code style="color: var(--accent-cyan);">SKILL.md</code> ונשמרים בתיקייה מיוחדת בשם <code style="color: var(--accent-cyan);">.claude/skills/</code> בתוך תיקיית הפרויקט שלכם. אבל אל תדאגו — נסביר בהמשך בדיוק איך עושים את זה, צעד אחר צעד.
+    </p>
+    <p style="margin-top: 0.75rem;">
+      <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener" style="color: var(--accent-primary); text-decoration: underline;">
+        📖 קראו את התיעוד הרשמי המלא על סקילים באתר Anthropic ←
+      </a>
+    </p>
+
+    <h4>פלאגין (Plugin) — כמו ארגז כלים שלם</h4>
+    <p>
+      אם סקיל הוא כרטיס מתכון בודד, <strong style="color: var(--text-bright);">פלאגין הוא ספר בישול שלם</strong> — חבילה שמכילה בתוכה כמה מתכונים (סקילים) ואולי גם כלי מטבח מיוחדים.
+    </p>
+    <p>
+      למשל, הפלאגין <strong style="color: var(--accent-primary);">superpowers</strong> מכיל בתוכו יותר מ-10 סקילים שונים: אחד שמלמד את Claude לתכנן לפני שהוא מתחיל לעבוד, אחד שמלמד אותו לחפש באגים בצורה שיטתית, ואחד שמלמד אותו לסקור קוד כמו מפתח מנוסה.
+    </p>
+    <p>
+      פלאגינים מופצים דרך <strong style="color: var(--text-bright);">שוק פלאגינים (Marketplace)</strong> — זה כמו חנות האפליקציות בטלפון. נכנסים, מחפשים מה שצריכים, ומתקינים בלחיצה אחת.
+    </p>
+    <p style="margin-top: 0.75rem;">
+      <a href="https://code.claude.com/docs/en/plugins" target="_blank" rel="noopener" style="color: var(--accent-primary); text-decoration: underline;">
+        📖 קראו את התיעוד הרשמי המלא על פלאגינים באתר Anthropic ←
+      </a>
+    </p>
+  </div>
+
+  <!-- Why do you need them -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(52,211,153,0.15); color: var(--accent-tertiary);">🚀</span>
+      למה בכלל צריך סקילים ופלאגינים?
+    </h3>
+    <p>
+      שאלה טובה! Claude Code כבר עובד מעולה בלי שום תוספות. אז למה להתעסק עם סקילים ופלאגינים? הנה חמש סיבות מעשיות:
+    </p>
+    <ul>
+      <li>
+        <strong style="color: var(--text-bright);">🎯 שהתוצאה תהיה תמיד כמו שאתם רוצים</strong> — בלי סקיל, כל פעם שתבקשו מ-Claude לבנות אתר, הוא יבחר עיצוב אחר, צבעים אחרים, גופנים אחרים. עם סקיל, אתם אומרים לו פעם אחת "ככה אני אוהב" — והוא יעבוד ככה בכל פעם. זה כמו ההבדל בין להזמין "קפה" בבית קפה חדש (מקבלים מה שבא להם) לעומת בית הקפה השכונתי שלכם שכבר יודע שאתם רוצים אמריקנו עם חלב שקדים.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">🔌 לחבר את Claude לשירותים שאתם משתמשים בהם</strong> — רוצים ש-Claude ישלח הודעה ב-Slack? יעלה קוד ל-GitHub? יעבוד עם העיצובים שלכם ב-Figma? בלי פלאגין הוא לא יודע לעשות את זה. עם הפלאגין המתאים — הוא מחובר ישירות ויכול לעבוד עם השירותים האלה.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">⏰ לחסוך זמן על הסברים חוזרים</strong> — במקום לכתוב כל פעם מחדש "תשתמש בעברית, תעצב מימין לשמאל, תשים את הלוגו שלי בפינה" — כותבים את זה פעם אחת בסקיל, והוא זוכר לבד בכל פעם.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">🧠 להפוך את Claude לחכם יותר בתחום שלכם</strong> — פלאגינים יכולים לתת ל-Claude הבנה עמוקה יותר של שפות תכנות מסוימות, או לחבר אותו לכלים שעוזרים לו למצוא בעיות בקוד. זה כמו לשלוח את השף שלכם לסדנת שוקולד — הוא כבר היה שף טוב, אבל עכשיו הוא מומחה גם בשוקולד.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">🤝 ליהנות ממה שאחרים כבר בנו</strong> — בשוק הפלאגינים יש עשרות כלים שמפתחים אחרים כבר יצרו ושיתפו בחינם. למה להמציא את הגלגל מחדש כשמישהו כבר עשה את העבודה?
+      </li>
+    </ul>
+  </div>
+
+  <!-- How to use plugins (marketplace) -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(167,139,250,0.15); color: var(--accent-secondary);">🛒</span>
+      איך מתקינים פלאגינים? — מדריך לשוק הפלאגינים
+    </h3>
+    <p>
+      התקנת פלאגין היא קלה כמו התקנת אפליקציה בטלפון. יש <strong style="color: var(--text-bright);">שוק פלאגינים רשמי (Plugin Marketplace)</strong> — חנות מרכזית שבה אפשר לדפדף, לחפש ולהתקין פלאגינים מוכנים לשימוש. החנות מנוהלת על ידי Anthropic (החברה שיצרה את Claude), ומפתחים מכל העולם מעלים אליה פלאגינים.
+    </p>
+
+    <h4>🔍 דרך 1: גלישה בחנות (הדרך הקלה)</h4>
+    <p>
+      פתחו את Claude Code (בטרמינל או ב-VS Code) והקלידו את הפקודה הבאה. <strong style="color: var(--text-bright);">שימו לב לסלש (/) בהתחלה</strong> — זה אומר ל-Claude שזו פקודה מיוחדת ולא שאלה רגילה:
+    </p>
+    <div class="code-block">
+      <span class="code-label">הקלידו בתוך Claude Code</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+      /plugin
+    </div>
+    <p>
+      זה יפתח תפריט עם שלוש לשוניות (כמו טאבים בדפדפן):
+    </p>
+    <ul>
+      <li><strong style="color: var(--accent-primary);">Installed (מותקנים)</strong> — רשימת כל הפלאגינים שכבר התקנתם. כאן תוכלו גם להסיר פלאגינים שאתם לא צריכים יותר.</li>
+      <li><strong style="color: var(--accent-primary);">Discover (גלו חדשים)</strong> — זו ה"חנות" עצמה. כאן תראו עשרות פלאגינים מסודרים לפי קטגוריות. תוכלו לגלול, לקרוא תיאורים, ולהתקין מה שמעניין אתכם.</li>
+      <li><strong style="color: var(--accent-primary);">Add (הוספה ידנית)</strong> — אם מישהו נתן לכם כתובת של פלאגין מסוים (למשל מ-GitHub), תוכלו להדביק אותה כאן.</li>
+    </ul>
+
+    <h4>⚡ דרך 2: התקנה ישירה (למי שיודע מה הוא רוצה)</h4>
+    <p>
+      אם כבר יודעים את שם הפלאגין (למשל, קראתם עליו כאן), אפשר להתקין ישירות בלי לגלוש בחנות. מקלידים את הפקודה הבאה ב-Claude Code:
+    </p>
+    <div class="code-block">
+      <span class="code-label">הקלידו בתוך Claude Code</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+      claude plugin install frontend-design@claude-plugins-official
+    </div>
+    <p>
+      בואו נפרק את הפקודה הזו כדי שתבינו מה קורה:
+    </p>
+    <ul>
+      <li><code style="color: var(--accent-cyan);">claude plugin install</code> — אומר ל-Claude: "תתקין פלאגין"</li>
+      <li><code style="color: var(--accent-cyan);">frontend-design</code> — שם הפלאגין שרוצים להתקין</li>
+      <li><code style="color: var(--accent-cyan);">@claude-plugins-official</code> — שם החנות. החנות הרשמית של Anthropic נקראת "claude-plugins-official"</li>
+    </ul>
+    <p>
+      אחרי ההתקנה, הפלאגין מוכן לשימוש מיד — אין צורך לעשות שום דבר נוסף!
+    </p>
+
+    <h4>📦 איפה הפלאגין יהיה זמין? — שלושה מצבים</h4>
+    <p>
+      כשמתקינים פלאגין, אפשר לבחור באיזה "טווח" הוא יהיה זמין. רוב המשתמשים לא צריכים לדאוג מזה — ברירת המחדל (User) מתאימה כמעט תמיד. אבל הנה שלושת המצבים למקרה שתרצו לדעת:
+    </p>
+    <table class="comparison-table">
+      <tr>
+        <th>מצב</th>
+        <th>מה זה אומר בשפה פשוטה</th>
+        <th>מתי להשתמש</th>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--text-bright);">User</strong><br><span style="color: var(--accent-tertiary); font-size: 0.8rem;">(ברירת מחדל)</span></td>
+        <td>הפלאגין עובד בכל מקום, בכל פרויקט — כמו אפליקציה שמותקנת על הטלפון</td>
+        <td>כמעט תמיד. זה מה שתרצו</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--text-bright);">Project</strong></td>
+        <td>הפלאגין שמור בתוך הפרויקט — אם תשתפו את הפרויקט עם מישהו, גם הוא יקבל את הפלאגין</td>
+        <td>כשעובדים בצוות על פרויקט משותף</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--text-bright);">Local</strong></td>
+        <td>הפלאגין עובד רק אצלכם, רק בפרויקט הספציפי הזה</td>
+        <td>כשרוצים לנסות פלאגין בלי שזה ישפיע על שום דבר אחר</td>
+      </tr>
+    </table>
+
+    <h4>🔄 עדכון רשימת הפלאגינים</h4>
+    <p>
+      כמו חנות אפליקציות, גם שוק הפלאגינים מתעדכן כל הזמן — מוסיפים פלאגינים חדשים ומעדכנים קיימים. כדי לוודא שאתם רואים את הרשימה העדכנית ביותר:
+    </p>
+    <div class="code-block">
+      <span class="code-label">הקלידו בתוך Claude Code</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+      claude plugin marketplace update claude-plugins-official
+    </div>
+    <p>
+      מומלץ להריץ את הפקודה הזו פעם בשבוע-שבועיים, כדי לוודא שאתם לא מפספסים פלאגינים חדשים ומעניינים.
+    </p>
+    <p style="margin-top: 0.75rem;">
+      <a href="https://code.claude.com/docs/en/discover-plugins" target="_blank" rel="noopener" style="color: var(--accent-primary); text-decoration: underline;">
+        📖 למדו עוד על גילוי והתקנת פלאגינים בתיעוד הרשמי ←
+      </a>
+    </p>
+  </div>
+
+  <!-- Popular plugins -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(245,158,11,0.15); color: var(--accent-warm);">⭐</span>
+      פלאגינים מומלצים — מאיפה כדאי להתחיל?
+    </h3>
+    <p>
+      בשוק הפלאגינים יש עשרות אפשרויות, וזה יכול להרגיש מבלבל. הנה רשימה של הפלאגינים הכי שימושיים, מחולקים לפי מה שהם עושים. <strong style="color: var(--text-bright);">לא צריך להתקין את כולם</strong> — בחרו רק את מה שרלוונטי עבורכם.
+    </p>
+
+    <h4>🎨 בניית אתרים ועיצוב</h4>
+    <ul>
+      <li>
+        <strong style="color: var(--accent-primary);">frontend-design</strong> — מלמד את Claude לבנות אתרים עם עיצוב מרשים, ייחודי ויצירתי — במקום עיצוב גנרי ומשעמם. בלי הפלאגין הזה, אתרים שClaude בונה נוטים להיראות דומים ובסיסיים. עם הפלאגין — הם נראים כאילו מעצב מקצועי עבד עליהם.
+        <br><span style="color: var(--accent-tertiary); font-size: 0.85rem;">💡 האתר שאתם קוראים עכשיו נבנה עם הפלאגין הזה!</span>
+      </li>
+      <li>
+        <strong style="color: var(--accent-primary);">playground</strong> — יוצר "מגרש משחקים" שבו אפשר לבדוק קוד בזמן אמת ישירות בדפדפן, בלי צורך לשמור קבצים ולפתוח אותם
+      </li>
+    </ul>
+
+    <h4>🔧 ניהול קוד ופרויקטים (Git ו-GitHub)</h4>
+    <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+      תזכורת: GitHub הוא אתר שבו מפתחים שומרים ומשתפים קוד. Git הוא הכלי שמנהל את ההיסטוריה של השינויים בקוד (כמו "שמור גרסה" אבל הרבה יותר חזק).
+    </p>
+    <ul>
+      <li>
+        <strong style="color: var(--accent-primary);">github</strong> — מאפשר ל-Claude לעבוד ישירות עם GitHub: ליצור פרויקטים חדשים, להעלות קוד, לנהל משימות, ולעבוד עם Pull Requests (בקשות לשלב קוד חדש)
+      </li>
+      <li>
+        <strong style="color: var(--accent-primary);">commit-commands</strong> — עוזר ל-Claude לשמור שינויים בקוד בצורה מסודרת עם הודעות ברורות שמסבירות מה השתנה ולמה
+      </li>
+    </ul>
+
+    <h4>🛡️ אבטחה ואיכות קוד</h4>
+    <ul>
+      <li>
+        <strong style="color: var(--accent-primary);">security-guidance</strong> — כמו מאבטח שבודק את הדלתות והחלונות בבית — הפלאגין הזה בודק את הקוד שלכם ומחפש "פרצות" שהאקרים יכולים לנצל, ומציע איך לתקן אותן
+      </li>
+      <li>
+        <strong style="color: var(--accent-primary);">code-review</strong> — כמו עורך שקורא את הטקסט שלכם לפני פרסום — בודק את הקוד ומציע שיפורים בסדר, בקריאות ובמהירות
+      </li>
+    </ul>
+
+    <h4>🔌 חיבורים לשירותים ואפליקציות</h4>
+    <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+      הפלאגינים האלה מחברים את Claude לשירותים חיצוניים, כך שהוא יכול לעבוד איתם ישירות בלי שתצטרכו לעבור בין חלונות.
+    </p>
+    <ul>
+      <li><strong style="color: var(--accent-primary);">slack</strong> — Claude יכול לקרוא ולשלוח הודעות ב-Slack (אפליקציית צ'אט פופולרית לצוותים)</li>
+      <li><strong style="color: var(--accent-primary);">supabase</strong> — חיבור למסד נתונים Supabase (מקום לאחסן מידע כמו משתמשים, הזמנות, מוצרים)</li>
+      <li><strong style="color: var(--accent-primary);">firebase</strong> — חיבור לשירותי Firebase של Google (פלטפורמה לבניית אפליקציות)</li>
+      <li><strong style="color: var(--accent-primary);">vercel</strong> — העלאת אתרים לאינטרנט (במקום שהאתר ישב רק על המחשב שלכם, Vercel שם אותו באינטרנט שכולם יכולים לראות)</li>
+      <li><strong style="color: var(--accent-primary);">figma</strong> — חיבור ל-Figma (כלי עיצוב פופולרי). Claude יכול לקחת עיצוב מ-Figma ולהפוך אותו לאתר אמיתי עובד</li>
+    </ul>
+
+    <h4>📊 מעקב אחרי שגיאות וניהול משימות</h4>
+    <ul>
+      <li><strong style="color: var(--accent-primary);">sentry</strong> — מעקב אחרי שגיאות — אם משהו נשבר באפליקציה שלכם, Sentry יודיע לכם ויראה בדיוק מה קרה</li>
+      <li><strong style="color: var(--accent-primary);">linear</strong> — ניהול משימות ופרויקטים (כמו רשימת מטלות חכמה לצוות פיתוח)</li>
+      <li><strong style="color: var(--accent-primary);">notion</strong> — חיבור ל-Notion (אפליקציה לניהול מסמכים, פתקים ומידע)</li>
+    </ul>
+
+    <h4>🧠 שדרוג הדרך שבה Claude עובד</h4>
+    <ul>
+      <li>
+        <strong style="color: var(--accent-primary);">superpowers</strong> —
+        <span style="background: rgba(52,211,153,0.15); color: var(--accent-tertiary); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">מומלץ במיוחד!</span>
+        חבילת סקילים שמשנה את הדרך שבה Claude עובד. במקום לקפוץ ישר לכתיבת קוד, הוא קודם מתכנן, בודק, ורק אז מבצע. זה כמו ההבדל בין שיפוצניק שמתחיל לפרק קירות בלי תכנית, לעומת אדריכל שקודם מצייר תכניות ורק אז מתחיל לבנות.
+      </li>
+      <li>
+        <strong style="color: var(--accent-primary);">explanatory-output-style</strong> — גורם ל-Claude להסביר כל דבר שהוא עושה: מה הוא שינה, למה, ומה זה אומר. <strong style="color: var(--text-bright);">מושלם למי שלומד</strong> ורוצה להבין מה קורה, לא רק לקבל תוצאה.
+      </li>
+    </ul>
+  </div>
+
+  <!-- What's inside a plugin -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(34,211,238,0.15); color: var(--accent-cyan);">🔍</span>
+      מה יש בתוך פלאגין? — חמשת הרכיבים
+    </h3>
+    <p>
+      פלאגין הוא כמו ארגז כלים, ובתוכו יכולים להיות כמה סוגים של "כלים". רוב הפלאגינים מכילים רק סקילים (הרכיב הראשון ברשימה), אבל חלקם מכילים גם רכיבים נוספים. הנה הסבר על כל סוג:
+    </p>
+
+    <table class="comparison-table">
+      <tr>
+        <th>רכיב</th>
+        <th>מה זה בשפה פשוטה</th>
+        <th>דוגמה מהחיים</th>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--accent-primary);">סקילים<br>(Skills)</strong></td>
+        <td>"כרטיסי מתכון" — קבצי טקסט עם הוראות שמלמדים את Claude איך לעשות דברים. זה הרכיב הכי נפוץ והכי פשוט.</td>
+        <td>"כשבונים אתר — תמיד תשתמש בגופנים מיוחדים, תוסיף אנימציות, ותעצב בסגנון כהה"</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--accent-secondary);">סוכנים<br>(Agents)</strong></td>
+        <td>"עוזרים מתמחים" — גרסאות מותאמות של Claude שמקבלות כלים ספציפיים לתחום מסוים. כמו לשכור עובד שמתמחה בתחום אחד.</td>
+        <td>סוכן שמתמחה ב-Slack: הוא יודע לקרוא הודעות, לשלוח תגובות, ולחפש בשיחות ישנות</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--accent-tertiary);">שרתי MCP</strong></td>
+        <td>"מתרגמים" — תוכנות קטנות שמאפשרות ל-Claude לדבר עם שירותים חיצוניים. MCP זה ראשי תיבות של Model Context Protocol — בעצם שפה משותפת שבה Claude ושירותים חיצוניים יכולים לתקשר.</td>
+        <td>שרת MCP שמחבר את Claude למסד נתונים, כך שהוא יכול לשלוף ולעדכן מידע ישירות</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--accent-warm);">הוקים<br>(Hooks)</strong></td>
+        <td>"תגובות אוטומטיות" — פעולות שקורות מאליהן כשמשהו מסוים מתרחש. כמו לקבוע שכל פעם שנדלקת המכונית, הרדיו יפתח אוטומטית.</td>
+        <td>"כל פעם ש-Claude שומר קובץ קוד — תריץ בדיקה אוטומטית שמחפשת שגיאות"</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--accent-rose);">שרתי LSP</strong></td>
+        <td>"יועצים טכניים" — תוכנות שנותנות ל-Claude הבנה עמוקה יותר של שפת תכנות מסוימת. LSP = Language Server Protocol (פרוטוקול שרת שפה). כמו לתת לשף מדריך מפורט על מטבח ספציפי.</td>
+        <td>שרת LSP ל-Python שמאפשר ל-Claude להבין את כל הפונקציות והמשתנים בפרויקט, ולדעת בדיוק מה מחובר למה</td>
+      </tr>
+    </table>
+    <p>
+      <strong style="color: var(--text-bright);">חשוב לדעת:</strong> אתם לא צריכים להבין את כל סוגי הרכיבים כדי להשתמש בפלאגינים! רוב הפלאגינים פשוט עובדים ברקע אחרי ההתקנה. ההסבר כאן הוא למי שסקרן ורוצה להבין מה קורה מאחורי הקלעים.
+    </p>
+  </div>
+
+  <!-- How to create skills -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(244,114,182,0.15); color: var(--accent-rose);">✏️</span>
+      איך יוצרים סקיל משלכם? — מדריך צעד אחר צעד
+    </h3>
+    <p>
+      יצירת סקיל היא הרבה יותר פשוטה ממה שזה נשמע. בעצם, אתם כותבים <strong style="color: var(--text-bright);">קובץ טקסט רגיל עם הוראות</strong> — Claude יקרא את ההוראות ויפעל לפיהן. אין צורך בידע בתכנות, אין צורך בכלים מיוחדים — רק לכתוב מה אתם רוצים שClaude יעשה.
+    </p>
+
+    <h4>שלב 1: יצירת התיקייה והקובץ</h4>
+    <p>
+      קודם כל צריך ליצור "בית" לסקיל שלכם. בתוך תיקיית הפרויקט שלכם (התיקייה הראשית שבה כל הקבצים של הפרויקט), צריך ליצור תיקייה מיוחדת. הנה איך זה אמור להיראות:
+    </p>
+    <div class="code-block">
+      <span class="code-label">מבנה תיקיות — כמו מגירות בארון</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+my-project/              ← התיקייה הראשית של הפרויקט
+├── .claude/              ← תיקייה מיוחדת ל-Claude (הנקודה בהתחלה חשובה!)
+│   └── skills/           ← כאן גרים כל הסקילים
+│       └── my-skill/     ← תיקייה בשם הסקיל שלכם
+│           └── SKILL.md  ← הקובץ עם ההוראות
+├── src/                  ← שאר קבצי הפרויקט
+└── ...</div>
+    <p>
+      <strong style="color: var(--accent-warm);">טיפ:</strong> אם אתם עובדים עם Claude Code, אפשר פשוט לבקש ממנו: "תיצור לי סקיל חדש בשם hebrew-website" — והוא יבנה את כל מבנה התיקיות בשבילכם!
+    </p>
+
+    <h4>שלב 2: כתיבת ההוראות</h4>
+    <p>
+      קובץ הסקיל (SKILL.md) מורכב משני חלקים פשוטים:
+    </p>
+    <ol>
+      <li><strong style="color: var(--text-bright);">חלק עליון — "תעודת זהות" של הסקיל</strong> — שם ותיאור קצר, עטופים בין שלוש מקפים (---). זה עוזר ל-Claude לדעת מתי להשתמש בסקיל.</li>
+      <li><strong style="color: var(--text-bright);">חלק תחתון — ההוראות עצמן</strong> — פשוט כתבו בשפה רגילה (באנגלית) מה אתם רוצים ש-Claude יעשה. ככל שתהיו יותר ספציפיים, התוצאה תהיה יותר טובה.</li>
+    </ol>
+    <p>הנה דוגמה מלאה:</p>
+    <div class="code-block">
+      <span class="code-label">SKILL.md — דוגמה לסקיל שבונה אתרים בעברית</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+---
+name: hebrew-website
+description: Build Hebrew RTL websites with modern design
+---
+
+# Hebrew Website Builder
+
+When building a website in Hebrew:
+
+1. Always set the page direction to right-to-left
+2. Use the Heebo font for headings
+3. Use Noto Sans Hebrew for body text
+4. Choose a dark theme with blue accents
+5. Add smooth animations on scroll
+6. Include a footer with credit to the creator</div>
+    <p>
+      בדוגמה הזו:
+    </p>
+    <ul>
+      <li><code style="color: var(--accent-cyan);">name: hebrew-website</code> — שם הסקיל. זה גם מה שתקלידו כדי להפעיל אותו ידנית.</li>
+      <li><code style="color: var(--accent-cyan);">description: Build Hebrew RTL...</code> — תיאור קצר. Claude קורא את התיאור הזה ומחליט אם הסקיל מתאים למשימה הנוכחית. ככל שהתיאור מדויק יותר — הסקיל יופעל בדיוק כשצריך.</li>
+      <li>שאר הטקסט — ההוראות עצמן. שימו לב שזו פשוט רשימה של כללים בשפה טבעית.</li>
+    </ul>
+
+    <h4>מה עוד אפשר להוסיף ל"תעודת הזהות"? (אופציונלי — למתקדמים)</h4>
+    <p>מעבר לשם ולתיאור, יש עוד שדות אופציונליים. <strong style="color: var(--text-bright);">לא חייבים להשתמש בהם</strong> — הם רק למי שרוצה שליטה מדויקת יותר:</p>
+    <table class="comparison-table">
+      <tr>
+        <th>שדה</th>
+        <th>חובה?</th>
+        <th>מה זה עושה — בשפה פשוטה</th>
+      </tr>
+      <tr>
+        <td><code style="color: var(--accent-cyan);">name</code></td>
+        <td><span style="color: var(--accent-tertiary);">כן</span></td>
+        <td>שם הסקיל — ככה תקראו לו כשתרצו להפעיל אותו</td>
+      </tr>
+      <tr>
+        <td><code style="color: var(--accent-cyan);">description</code></td>
+        <td><span style="color: var(--accent-tertiary);">כן</span></td>
+        <td>תיאור קצר שמסביר מתי להשתמש בסקיל — Claude קורא את זה כדי להחליט אם הסקיל רלוונטי</td>
+      </tr>
+      <tr>
+        <td><code style="color: var(--accent-cyan);">context: fork</code></td>
+        <td><span style="color: var(--text-muted);">לא</span></td>
+        <td>אומר ל-Claude להריץ את הסקיל ב"חדר נפרד" כדי שלא ייגמר לו הזיכרון. שימושי לסקילים גדולים ומורכבים.</td>
+      </tr>
+    </table>
+
+    <h4>שלב 3: שימוש בסקיל</h4>
+    <p>
+      ברגע שיצרתם את הקובץ במקום הנכון, יש <strong style="color: var(--text-bright);">שתי דרכים</strong> להשתמש בסקיל:
+    </p>
+    <p>
+      <strong style="color: var(--accent-tertiary);">אוטומטית:</strong> Claude יזהה לבד שהסקיל מתאים למה שביקשתם. למשל, אם ביקשתם "תבנה לי אתר בעברית" ויש לכם סקיל עם תיאור שמדבר על אתרים בעברית — Claude יפעיל אותו מעצמו. אתם לא צריכים לעשות כלום!
+    </p>
+    <p>
+      <strong style="color: var(--accent-primary);">ידנית:</strong> אם רוצים להפעיל סקיל ספציפי, מקלידים סלש (/) ואז את שם הסקיל, ואחריו את הבקשה:
+    </p>
+    <div class="code-block">
+      <span class="code-label">הקלידו בתוך Claude Code</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+/hebrew-website Build me a landing page for my cafe</div>
+    <p>
+      בדוגמה הזו: <code style="color: var(--accent-cyan);">/hebrew-website</code> מפעיל את הסקיל, ו-<code style="color: var(--accent-cyan);">Build me a landing page for my cafe</code> אומר לו מה לבנות.
+    </p>
+    <p style="margin-top: 0.75rem;">
+      <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener" style="color: var(--accent-primary); text-decoration: underline;">
+        📖 למדו עוד על יצירת סקילים בתיעוד הרשמי — כולל דוגמאות מתקדמות ←
+      </a>
+    </p>
+  </div>
+
+  <!-- How to create plugins -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(99,140,255,0.15); color: var(--accent-primary);">📦</span>
+      איך יוצרים פלאגין משלכם? (למתקדמים)
+    </h3>
+    <p>
+      <strong style="color: var(--accent-warm);">שימו לב:</strong> יצירת פלאגין היא שלב מתקדם יותר. אם אתם רק מתחילים, מומלץ קודם ללמוד ליצור סקילים (בחלק הקודם) ולהתנסות עם פלאגינים מוכנים מהחנות. כשתרגישו בנוח — חזרו לכאן.
+    </p>
+    <p>
+      פלאגין הוא הצעד הבא אחרי סקילים. הוא מאפשר לכם <strong style="color: var(--text-bright);">לארוז כמה סקילים יחד</strong> בחבילה אחת מסודרת, ואולי גם להוסיף רכיבים נוספים (כמו סוכנים או הוקים). ואם תרצו — תוכלו גם לשתף את הפלאגין שלכם עם אנשים אחרים.
+    </p>
+
+    <h4>מבנה התיקיות של פלאגין</h4>
+    <p>
+      פלאגין הוא בעצם תיקייה מסודרת עם מבנה מסוים. חשבו על זה כמו ארון עם מגירות, וכל מגירה מכילה סוג אחר של תוכן:
+    </p>
+    <div class="code-block">
+      <span class="code-label">מבנה תיקיות — כמו ארון מסודר</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+my-plugin/                    ← התיקייה הראשית של הפלאגין
+├── .claude-plugin/           ← תיקייה עם ההגדרות
+│   └── manifest.json         ← "תעודת הזהות" של הפלאגין
+├── skills/                   ← מגירת הסקילים
+│   ├── skill-one/
+│   │   └── SKILL.md          ← סקיל ראשון
+│   └── skill-two/
+│       └── SKILL.md          ← סקיל שני
+├── agents/                   ← מגירת הסוכנים (אופציונלי)
+│   └── my-agent/
+│       └── AGENT.md
+└── hooks/                    ← מגירת ההוקים (אופציונלי)
+    └── post-save-hook.sh</div>
+
+    <h4>קובץ ההגדרות — "תעודת הזהות" של הפלאגין</h4>
+    <p>
+      כל פלאגין חייב קובץ בשם <code style="color: var(--accent-cyan);">manifest.json</code> שמסביר ל-Claude Code מה יש בפלאגין. זה כמו תווית על קופסה שמפרטת מה בפנים. הנה דוגמה פשוטה:
+    </p>
+    <div class="code-block">
+      <span class="code-label">manifest.json — תעודת הזהות של הפלאגין</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+{
+  "name": "my-awesome-plugin",
+  "description": "A plugin that helps build Hebrew websites",
+  "version": "1.0.0",
+  "author": {
+    "name": "Your Name"
+  },
+  "components": {
+    "skills": [
+      {
+        "name": "hebrew-website",
+        "path": "skills/hebrew-website/SKILL.md",
+        "description": "Build RTL Hebrew websites"
+      }
+    ]
+  }
+}</div>
+    <p>
+      מה כל שורה אומרת:
+    </p>
+    <ul>
+      <li><code style="color: var(--accent-cyan);">name</code> — שם הפלאגין (באנגלית, בלי רווחים)</li>
+      <li><code style="color: var(--accent-cyan);">description</code> — תיאור קצר של מה הפלאגין עושה</li>
+      <li><code style="color: var(--accent-cyan);">version</code> — מספר גרסה (מתחילים מ-1.0.0)</li>
+      <li><code style="color: var(--accent-cyan);">author</code> — מי יצר את הפלאגין</li>
+      <li><code style="color: var(--accent-cyan);">components</code> — רשימה של כל מה שיש בתוך הפלאגין (סקילים, סוכנים וכו')</li>
+    </ul>
+
+    <h4>איך משתפים את הפלאגין עם אחרים?</h4>
+    <p>
+      אחרי שיצרתם פלאגין, אתם יכולים לשתף אותו כדי שאנשים אחרים יוכלו להשתמש בו:
+    </p>
+    <ul>
+      <li>
+        <strong style="color: var(--text-bright);">דרך GitHub</strong> — להעלות את תיקיית הפלאגין ל-GitHub (אתר לשיתוף קוד). אחרים יוכלו להתקין עם הפקודה: <code style="color: var(--accent-cyan);">claude plugin install github:username/repo</code>
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">דרך השוק הרשמי</strong> — להגיש את הפלאגין לשוק של Anthropic. אם הוא יאושר, הוא יופיע בחנות ומיליוני משתמשים יוכלו למצוא ולהתקין אותו.
+      </li>
+    </ul>
+    <p style="margin-top: 0.75rem;">
+      <a href="https://code.claude.com/docs/en/plugins" target="_blank" rel="noopener" style="color: var(--accent-primary); text-decoration: underline;">
+        📖 המדריך המלא ליצירת פלאגינים — כולל כל השדות והאפשרויות ←
+      </a>
+    </p>
+  </div>
+
+  <!-- Tips and best practices -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(52,211,153,0.15); color: var(--accent-tertiary);">💎</span>
+      טיפים חשובים — לפני שמתחילים
+    </h3>
+
+    <h4>🎯 טיפים ליצירת סקילים טובים</h4>
+    <ul>
+      <li>
+        <strong style="color: var(--text-bright);">כתבו תיאור מדויק ככל האפשר</strong> — התיאור (description) הוא הדבר הכי חשוב בסקיל. Claude קורא את התיאור ומחליט — "האם הסקיל הזה מתאים למה שביקשו ממני עכשיו?" אם התיאור מעורפל, Claude עלול להפעיל את הסקיל בזמנים לא נכונים, או לא להפעיל אותו כשכן צריך.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">השתמשו ב-$ARGUMENTS למשתנים</strong> — אפשר לכתוב <code style="color: var(--accent-cyan);">$ARGUMENTS</code> בתוך ההוראות, וזה יוחלף אוטומטית בטקסט שהמשתמש הקליד. למשל, אם בסקיל כתוב "Build a website about $ARGUMENTS" ומקלידים <code style="color: var(--accent-cyan);">/my-skill cats</code>, Claude יקבל "Build a website about cats".
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">אפשר להוסיף קבצי דוגמה</strong> — בתיקיית הסקיל אפשר לשים קבצים נוספים, כמו תבניות עיצוב, דוגמאות קוד, או תמונות. בהוראות הסקיל אפשר לכתוב "תסתכל על הקובץ template.html בתיקייה הזו" ו-Claude ידע למצוא אותו.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">תנסו כמה פעמים</strong> — אחרי שכתבתם סקיל, בדקו אותו עם כמה בקשות שונות. אם משהו לא עובד כמו שציפיתם — שנו את ההוראות ונסו שוב. בניית סקיל טוב לוקחת כמה ניסיונות.
+      </li>
+    </ul>
+
+    <h4>🔒 טיפים להתקנת פלאגינים בבטחה</h4>
+    <ul>
+      <li>
+        <strong style="color: var(--text-bright);">בדקו מי יצר את הפלאגין</strong> — בדיוק כמו אפליקציות בטלפון, יש פלאגינים רשמיים ויש כאלה של מפתחים עצמאיים. פלאגינים שנוצרו על ידי <strong style="color: var(--accent-tertiary);">Anthropic</strong> (החברה שעומדת מאחורי Claude) הם הכי אמינים. פלאגינים של חברות גדולות ומוכרות (כמו GitHub, Slack, Figma) גם בדרך כלל בטוחים. פלאגינים של מפתחים קטנים יכולים להיות מעולים, אבל כדאי לקרוא את התיאור לפני ההתקנה.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">התחילו עם מעט</strong> — אין צורך להתקין 20 פלאגינים ביום הראשון. התקינו אחד או שניים שנראים לכם שימושיים, התנסו בהם, ורק אז הוסיפו עוד.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">עדכנו מדי פעם</strong> — כמו אפליקציות בטלפון, גם פלאגינים מקבלים עדכונים עם שיפורים ותיקוני באגים. הריצו את פקודת העדכון פעם בשבוע-שבועיים.
+      </li>
+    </ul>
+
+    <h4>🔗 מה ההבדל בין CLAUDE.md לסקיל?</h4>
+    <p>
+      אם כבר שמעתם על קובץ <code style="color: var(--accent-cyan);">CLAUDE.md</code> — זה קובץ הגדרות כללי שנטען <strong style="color: var(--text-bright);">תמיד</strong> כש-Claude Code מתחיל לעבוד. הוא כמו הכללים הקבועים של הבית.
+    </p>
+    <p>
+      סקילים, לעומת זאת, נטענים <strong style="color: var(--text-bright);">רק כשהם רלוונטיים</strong>. זה כמו ההבדל בין כלל קבוע ("תמיד תנעל את הדלת") לבין הוראה שמופעלת רק כשצריך ("אם מבשלים סטייק — ככה עושים את זה"). הסקיל לא מעמיס על Claude כשהוא לא צריך אותו, מה שמאפשר לכם ליצור עשרות סקילים בלי שClaude יהיה "כבד" או איטי.
+    </p>
+    <p>
+      <strong style="color: var(--accent-warm);">כלל אצבע:</strong> הוראות שתמיד רלוונטיות (כמו "תכתוב בעברית", "תשתמש בלוגו שלי") שייכות ב-CLAUDE.md. הוראות ספציפיות למשימה מסוימת (כמו "ככה בונים אתר" או "ככה מדפיסים ב-3D") שייכות בסקיל.
+    </p>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 5: CLAUDE.md
+     ═══════════════════════════════════════════ -->
+<section class="section" id="claudemd-section">
+  <div class="section-header">
+    <h2>📋 CLAUDE.md — קובץ ההגדרות האישי</h2>
+    <p>איך ללמד את Claude לזכור את ההעדפות שלכם — פעם אחת ולתמיד</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- What is CLAUDE.md -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(99,140,255,0.15); color: var(--accent-primary);">📝</span>
+      מה זה CLAUDE.md?
+    </h3>
+    <p>
+      דמיינו שאתם מגיעים לבית קפה חדש כל בוקר ואומרים: "אמריקנו עם חלב שקדים, לא חם מדי, עם שני סוכרים". כל בוקר אותו הדבר. מעצבן, נכון? עכשיו דמיינו שיש פתק שתלוי על הקיר עם כל ההעדפות שלכם — הבריסטה רק מסתכל על הפתק ומכין בדיוק מה שאתם אוהבים.
+    </p>
+    <p>
+      <strong style="color: var(--text-bright);">CLAUDE.md הוא בדיוק הפתק הזה.</strong> זה קובץ טקסט פשוט שבו אתם כותבים הוראות, העדפות וכללים — ו-Claude קורא אותו <strong style="color: var(--accent-primary);">אוטומטית בתחילת כל שיחה</strong>. ככה הוא תמיד יודע מה הסגנון שלכם, מה הכללים של הפרויקט, ומה חשוב לכם.
+    </p>
+    <p>
+      השם <code style="color: var(--accent-cyan);">CLAUDE.md</code> מורכב מ"CLAUDE" (שם הבינה המלאכותית) ו-".md" (סוג קובץ שנקרא Markdown — פורמט טקסט פשוט שקל לכתוב ולקרוא).
+    </p>
+  </div>
+
+  <!-- Why do you need it -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(52,211,153,0.15); color: var(--accent-tertiary);">💡</span>
+      למה צריך CLAUDE.md?
+    </h3>
+    <p>בלי CLAUDE.md, כל שיחה עם Claude מתחילה מאפס — הוא לא יודע כלום עליכם או על הפרויקט. עם CLAUDE.md:</p>
+    <ul>
+      <li>
+        <strong style="color: var(--text-bright);">Claude יזכור את ההעדפות שלכם</strong> — "תמיד תכתוב בעברית", "תשתמש בלוגו שלי", "תסביר כל דבר בשפה פשוטה". אתם כותבים את זה פעם אחת, ו-Claude יעשה את זה בכל שיחה.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">Claude יכיר את הפרויקט</strong> — "הפרויקט הזה הוא אתר אישי", "אנחנו משתמשים ב-React", "מסד הנתונים הוא PostgreSQL". במקום להסביר מחדש כל פעם.
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">Claude יימנע מטעויות</strong> — "אל תמחק קבצים בלי לשאול", "אל תשנה את הקובץ הראשי", "תמיד תגבה לפני שינויים". כמו לשים שלט "זהירות רצפה רטובה".
+      </li>
+      <li>
+        <strong style="color: var(--text-bright);">תחסכו זמן בכל שיחה</strong> — במקום 5 דקות של הסברים בתחילת כל שיחה, Claude כבר יודע הכל. אתם נכנסים ומתחילים לעבוד.
+      </li>
+    </ul>
+  </div>
+
+  <!-- Three levels of CLAUDE.md -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(167,139,250,0.15); color: var(--accent-secondary);">📂</span>
+      שלושה סוגים של CLAUDE.md — איפה לשים אותו?
+    </h3>
+    <p>
+      אפשר ליצור CLAUDE.md בשלושה מקומות שונים, כל אחד עם תפקיד אחר. חשבו על זה כמו שכבות של הוראות:
+    </p>
+
+    <table class="comparison-table">
+      <tr>
+        <th>סוג</th>
+        <th>מיקום</th>
+        <th>מה זה עושה — בשפה פשוטה</th>
+        <th>דוגמה למה לכתוב שם</th>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--accent-primary);">גלובלי (אישי)</strong></td>
+        <td style="direction: ltr; text-align: left; font-family: var(--font-mono); font-size: 0.8rem;">~/.claude/CLAUDE.md</td>
+        <td>הוראות שחלות על <strong style="color: var(--text-bright);">כל הפרויקטים</strong> שלכם. זה כמו ההעדפות הכלליות שלכם.</td>
+        <td>"תמיד תכתוב בעברית", "תסביר בשפה פשוטה", "השם שלי הוא תום"</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--accent-tertiary);">פרויקט</strong></td>
+        <td style="direction: ltr; text-align: left; font-family: var(--font-mono); font-size: 0.8rem;">project/CLAUDE.md</td>
+        <td>הוראות ספציפיות <strong style="color: var(--text-bright);">לפרויקט מסוים</strong>. כל מי שעובד על הפרויקט יקבל אותן.</td>
+        <td>"האתר הזה בנוי ב-React", "תמיד תריץ בדיקות לפני שמירה"</td>
+      </tr>
+      <tr>
+        <td><strong style="color: var(--accent-warm);">מקומי (פרטי)</strong></td>
+        <td style="direction: ltr; text-align: left; font-family: var(--font-mono); font-size: 0.8rem;">.claude/settings/CLAUDE.md</td>
+        <td>הוראות <strong style="color: var(--text-bright);">רק בשבילכם</strong> בפרויקט ספציפי. אף אחד אחר לא יראה אותן.</td>
+        <td>"הפורט שלי הוא 3001", "אני עובד על מערכת Windows"</td>
+      </tr>
+    </table>
+    <p>
+      <strong style="color: var(--accent-warm);">טיפ:</strong> רוב המשתמשים צריכים רק את הסוג הראשון (גלובלי). התחילו עם זה, ואם תעבדו על פרויקטים ספציפיים — הוסיפו CLAUDE.md ברמת הפרויקט.
+    </p>
+  </div>
+
+  <!-- How to create -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(245,158,11,0.15); color: var(--accent-warm);">⚡</span>
+      איך יוצרים CLAUDE.md? — שלוש דרכים
+    </h3>
+
+    <h4>דרך 1: לבקש מ-Claude (הכי קל!)</h4>
+    <p>פשוט פתחו את Claude Code והקלידו:</p>
+    <div class="code-block">
+      <span class="code-label">הקלידו בתוך Claude Code</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+      /init</div>
+    <p>
+      הפקודה הזו אומרת ל-Claude: "תסתכל על הפרויקט שלי ותיצור לי קובץ CLAUDE.md מותאם". Claude יסרוק את הקבצים, יבין מה הפרויקט, ויכתוב CLAUDE.md עם הגדרות מתאימות. אחרי זה תוכלו לערוך ולהוסיף העדפות אישיות.
+    </p>
+
+    <h4>דרך 2: דרך תפריט ההגדרות</h4>
+    <p>הקלידו:</p>
+    <div class="code-block">
+      <span class="code-label">הקלידו בתוך Claude Code</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+      /memory</div>
+    <p>
+      זה יפתח את קובץ ה-CLAUDE.md לעריכה. אפשר לכתוב, לשנות, ולשמור — והשינויים ייכנסו לתוקף מיד בשיחה הבאה.
+    </p>
+
+    <h4>דרך 3: ליצור ידנית (למי שאוהב שליטה)</h4>
+    <p>פשוט צרו קובץ טקסט חדש בשם <code style="color: var(--accent-cyan);">CLAUDE.md</code> בתיקייה הנכונה וכתבו בו את ההוראות שלכם.</p>
+  </div>
+
+  <!-- Example -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(244,114,182,0.15); color: var(--accent-rose);">📄</span>
+      דוגמה ל-CLAUDE.md — מה כותבים בפנים?
+    </h3>
+    <p>הנה דוגמה לקובץ CLAUDE.md אמיתי, עם הסברים:</p>
+    <div class="code-block">
+      <span class="code-label">CLAUDE.md — דוגמה מלאה</span>
+      <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+# About Me
+- My name is Tom
+- I'm a non-technical user who is learning
+- Always explain everything in simple terms
+
+# Communication
+- Write in English (Hebrew doesn't display well in terminal)
+- Use analogies and real-world examples
+- Every session is both a work session AND a learning session
+
+# My Projects
+- Logo file: shared-assets/tom-hagiladi-logo.png
+- Use my logo on all websites we build
+- Add credit: "Built by Tom Hagiladi using Claude Code"
+
+# Rules
+- Never delete files without asking first
+- Always explain what you're doing and why
+- When making changes, describe what changed
+
+# Tech Stack
+- I usually build HTML/CSS/JS websites
+- I prefer dark themes with blue accents
+- Use Hebrew fonts: Heebo for headings, Noto Sans Hebrew for body</div>
+    <p>
+      <strong style="color: var(--text-bright);">שימו לב:</strong> הקובץ כתוב באנגלית כי Claude מבין אנגלית הכי טוב. אבל אפשר לכתוב גם בעברית — Claude מבין את שתי השפות.
+    </p>
+    <p>
+      כל שורה שמתחילה ב-<code style="color: var(--accent-cyan);">#</code> היא כותרת (כמו כותרת של פרק). שורות שמתחילות ב-<code style="color: var(--accent-cyan);">-</code> הן פריטים ברשימה. זהו! לא צריך שום פורמט מיוחד.
+    </p>
+  </div>
+
+  <!-- What to include -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(34,211,238,0.15); color: var(--accent-cyan);">📌</span>
+      מה כדאי לכלול ב-CLAUDE.md?
+    </h3>
+    <p>הנה צ'קליסט של דברים שכדאי לחשוב עליהם:</p>
+    <ul>
+      <li><strong style="color: var(--accent-primary);">מי אתם</strong> — שם, רמת ניסיון, האם אתם מתכנתים או לא</li>
+      <li><strong style="color: var(--accent-primary);">שפת תקשורת</strong> — באיזו שפה אתם רוצים שClaude ידבר, האם להסביר מונחים טכניים</li>
+      <li><strong style="color: var(--accent-primary);">כללי עבודה</strong> — מה Claude מותר/אסור לעשות (למחוק קבצים? לדחוף קוד ל-GitHub?)</li>
+      <li><strong style="color: var(--accent-primary);">העדפות עיצוב</strong> — ערכת צבעים, גופנים, סגנון עיצוב מועדף</li>
+      <li><strong style="color: var(--accent-primary);">מידע על הפרויקט</strong> — איזה טכנולוגיות בשימוש, מבנה התיקיות, כללים מיוחדים</li>
+      <li><strong style="color: var(--accent-primary);">קבצים חשובים</strong> — נתיבים ללוגו, תמונות, קבצי הגדרות שClaude צריך לדעת עליהם</li>
+      <li><strong style="color: var(--accent-primary);">חיבורים חיצוניים</strong> — API keys, שמות משתמש, כתובות שרתים</li>
+    </ul>
+    <p>
+      <strong style="color: var(--accent-warm);">אל תדאגו לכתוב הכל מההתחלה.</strong> הקובץ הזה גדל עם הזמן — כל פעם שתגלו שאתם חוזרים על אותו הסבר, הוסיפו אותו ל-CLAUDE.md ולא תצטרכו לחזור עליו שוב.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 6: TIPS & COMMANDS
+     ═══════════════════════════════════════════ -->
+<section class="section" id="tips-section">
+  <div class="section-header">
+    <h2>⌨️ טיפים ופקודות שימושיות</h2>
+    <p>כל מה שצריך לדעת כדי לעבוד מהר ובנוחות עם Claude Code</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- Slash Commands -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(99,140,255,0.15); color: var(--accent-primary);">⚡</span>
+      פקודות סלש — הקיצורים הכי שימושיים
+    </h3>
+    <p>
+      פקודות סלש (Slash Commands) הן קיצורים שמתחילים בסימן <code style="color: var(--accent-cyan);">/</code>. במקום לכתוב משפט שלם, פשוט מקלידים את הפקודה ו-Claude יודע מה לעשות. חשבו על זה כמו קיצורי מקלדת — אבל בטקסט.
+    </p>
+
+    <table class="comparison-table">
+      <tr>
+        <th>פקודה</th>
+        <th>מה היא עושה</th>
+        <th>מתי להשתמש</th>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/help</code></td>
+        <td>מציגה את כל הפקודות הזמינות ואיך להשתמש בהן</td>
+        <td>כשלא זוכרים פקודה מסוימת, או רוצים לגלות פקודות חדשות</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/init</code></td>
+        <td>יוצרת קובץ CLAUDE.md מותאם לפרויקט שלכם</td>
+        <td>כשמתחילים לעבוד על פרויקט חדש ורוצים ש-Claude יכיר אותו</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/compact</code></td>
+        <td>דוחסת את השיחה — Claude "מסכם" את מה שקרה עד עכשיו כדי לפנות זיכרון</td>
+        <td>כששיחה ארוכה ו-Claude מתחיל "לשכוח" דברים מההתחלה, או כשאתם מקבלים אזהרה שהזיכרון מתמלא</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/clear</code></td>
+        <td>מנקה את כל השיחה ומתחילה מחדש לגמרי</td>
+        <td>כשרוצים להתחיל נושא חדש לגמרי, בלי שום "זיכרון" מהשיחה הקודמת</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/cost</code></td>
+        <td>מראה כמה עלתה השיחה הנוכחית (בטוקנים או בדולרים)</td>
+        <td>כשרוצים לעקוב אחרי הצריכה ולוודא שלא חורגים מהתקציב</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/model</code></td>
+        <td>מאפשרת לבחור איזה דגם (מודל) של Claude להשתמש</td>
+        <td>כשרוצים לעבור למודל מהיר יותר (Haiku) למשימות פשוטות, או למודל חזק יותר (Opus) למשימות מורכבות</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/memory</code></td>
+        <td>פותחת את קובץ ה-CLAUDE.md לעריכה</td>
+        <td>כשרוצים להוסיף או לשנות הוראות קבועות ל-Claude</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/plugin</code></td>
+        <td>פותחת את מנהל הפלאגינים — התקנה, גילוי והסרה</td>
+        <td>כשרוצים להתקין פלאגין חדש או לנהל את הפלאגינים הקיימים</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/config</code></td>
+        <td>פותחת את הגדרות Claude Code</td>
+        <td>כשרוצים לשנות הגדרות כמו מודל ברירת מחדל, הרשאות, ועוד</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Keyboard Shortcuts -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(52,211,153,0.15); color: var(--accent-tertiary);">🎹</span>
+      קיצורי מקלדת חשובים
+    </h3>
+    <p>קיצורים שחוסכים זמן כשעובדים עם Claude Code בטרמינל:</p>
+
+    <table class="comparison-table">
+      <tr>
+        <th>קיצור</th>
+        <th>מה זה עושה</th>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">Ctrl + C</code></td>
+        <td>עוצר את Claude באמצע — אם הוא כותב קוד ארוך ואתם רוצים שיפסיק</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">Esc</code></td>
+        <td>ביטול הפעולה הנוכחית — כמו "תתעלם ממה שהקלדתי"</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">↑ / ↓</code></td>
+        <td>גלילה בהיסטוריית ההודעות — מחזיר הודעות שהקלדתם קודם</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">Shift + Enter</code></td>
+        <td>מעבר שורה בלי לשלוח — כשרוצים לכתוב הודעה ארוכה בכמה שורות</td>
+      </tr>
+      <tr>
+        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">Shift + Tab</code></td>
+        <td>מעבר בין מצב "קבל אוטומטית" למצב "שאל לפני כל פעולה"</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Working Tips -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(167,139,250,0.15); color: var(--accent-secondary);">🧠</span>
+      טיפים לעבודה חכמה עם Claude Code
+    </h3>
+
+    <h4>🎯 תנו הקשר (Context) — ככל שתפרטו יותר, התוצאה תהיה טובה יותר</h4>
+    <p>
+      ההבדל בין תוצאה בינונית למצוינת הוא כמות ההקשר שאתם נותנים. במקום "תבנה לי אתר", נסו: "תבנה לי אתר תדמית לבית קפה בתל אביב, בעברית, עם תפריט, מפה, ושעות פתיחה. העיצוב צריך להיות חם ומזמין עם צבעי חום וקרם."
+    </p>
+
+    <h4>🔄 עבדו בצעדים קטנים</h4>
+    <p>
+      במקום לבקש "תבנה לי אפליקציה שלמה לניהול משימות עם התחברות משתמשים, דאשבורד, והתראות" — חלקו את העבודה לשלבים: "תבנה לי דף התחברות" → "עכשיו תוסיף דף רשימת משימות" → "עכשיו תוסיף אפשרות למחוק משימה". ככה אתם בודקים כל שלב לפני שממשיכים.
+    </p>
+
+    <h4>👀 תמיד בדקו את התוצאה</h4>
+    <p>
+      אחרי שClaude מסיים לעבוד, בדקו את התוצאה! אם זה אתר — פתחו אותו בדפדפן. אם זה קוד — הריצו אותו. Claude טוב מאוד אבל הוא לא מושלם — לפעמים יש באגים קטנים שצריך לתקן.
+    </p>
+
+    <h4>📸 השתמשו בתמונות</h4>
+    <p>
+      Claude יכול "לראות" תמונות! אם יש לכם עיצוב שאתם רוצים לחקות, צילום מסך של באג, או דוגמה של מה שאתם רוצים — גררו את התמונה לתוך Claude Code (או הדביקו מהלוח) והוא יבין מה אתם רוצים.
+    </p>
+
+    <h4>🔙 אל תפחדו ללחוץ "בטל" (Undo)</h4>
+    <p>
+      אם Claude עשה שינוי שלא אהבתם, אפשר תמיד לחזור אחורה. פשוט אמרו "תבטל את השינוי האחרון" או השתמשו ב-Git (אם הפרויקט שלכם מחובר ל-Git). Claude שומר גיבויים ויודע לחזור אחורה.
+    </p>
+
+    <h4>💬 דברו עם Claude כמו עם אדם</h4>
+    <p>
+      אין צורך בשפה טכנית. "הכפתור הכחול לא ממורכז" עובד מצוין. "הטקסט קטן מדי בטלפון" — Claude מבין. "תעשה את זה יותר יפה" — אפילו את זה הוא מבין. ככל שתהיו יותר טבעיים, ככה שיחת העבודה תהיה יותר יעילה.
+    </p>
+  </div>
+
+  <!-- Common Patterns -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(245,158,11,0.15); color: var(--accent-warm);">📋</span>
+      משפטים שימושיים שכדאי לדעת
+    </h3>
+    <p>הנה כמה משפטים שעובדים מעולה עם Claude Code:</p>
+    <table class="comparison-table">
+      <tr>
+        <th>מה אתם רוצים</th>
+        <th>מה להגיד ל-Claude</th>
+      </tr>
+      <tr>
+        <td>לתקן באג</td>
+        <td>"יש שגיאה — כשלוחצים על הכפתור כלום לא קורה. תבדוק ותתקן"</td>
+      </tr>
+      <tr>
+        <td>לשנות עיצוב</td>
+        <td>"תשנה את הרקע לצבע כהה יותר ותגדיל את הכותרת"</td>
+      </tr>
+      <tr>
+        <td>להבין קוד</td>
+        <td>"תסביר לי מה הקובץ הזה עושה, בשפה פשוטה"</td>
+      </tr>
+      <tr>
+        <td>לחזור אחורה</td>
+        <td>"השינוי האחרון לא טוב, תחזיר למצב הקודם"</td>
+      </tr>
+      <tr>
+        <td>לבדוק לפני שינוי</td>
+        <td>"לפני שתשנה משהו, תראה לי מה אתה מתכנן לעשות"</td>
+      </tr>
+      <tr>
+        <td>לקבל אפשרויות</td>
+        <td>"תציע לי 3 אפשרויות שונות לעיצוב הדף הזה"</td>
+      </tr>
+      <tr>
+        <td>לעבוד זהיר</td>
+        <td>"אל תשנה שום דבר בלי לשאול אותי קודם"</td>
+      </tr>
+      <tr>
+        <td>לבנות משהו חדש</td>
+        <td>"תבנה לי [מה שרוצים] — תתחיל מהבסיס ותראה לי בכל שלב"</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 8: FAQ
+     ═══════════════════════════════════════════ -->
+<section class="section" id="faq-section">
+  <div class="section-header">
+    <h2>❓ שאלות נפוצות</h2>
+    <p>תשובות לשאלות שכולם שואלים — לפני שמתחילים ואחרי שמתחילים</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- Security & Privacy -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(52,211,153,0.15); color: var(--accent-tertiary);">🔒</span>
+      אבטחה ופרטיות
+    </h3>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>האם הקוד שלי נשלח לענן? האם Anthropic רואה את הקבצים שלי?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong style="color: var(--text-bright);">כן, הקוד נשלח לשרתים של Anthropic כדי לעבד אותו</strong> — Claude Code לא רץ על המחשב שלכם בלבד. כשאתם מבקשים מ-Claude לקרוא או לשנות קובץ, תוכן הקובץ נשלח לשרתי Anthropic כדי ש-Claude יוכל להבין אותו ולעבוד עליו.
+          </p>
+          <p>
+            עם זאת, Anthropic מצהירה שהיא <strong style="color: var(--accent-tertiary);">לא משתמשת בקוד שלכם לאימון מודלים</strong> (כלומר, הקוד שלכם לא מלמד את Claude דברים חדשים ולא נשמר לצמיתות). המידע מעובד ונמחק.
+          </p>
+          <p>
+            <strong style="color: var(--accent-warm);">טיפ:</strong> אם יש לכם קבצים רגישים (כמו סיסמאות, מפתחות API, או מידע אישי), שמרו אותם בקובץ <code style="color: var(--accent-cyan);">.env</code> נפרד ואל תבקשו מ-Claude לקרוא אותם.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>האם Claude יכול למחוק לי קבצים בטעות?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            Claude יכול לשנות, ליצור ולמחוק קבצים — זו אחת היכולות שלו. <strong style="color: var(--text-bright);">אבל כברירת מחדל, הוא ישאל אתכם לפני כל פעולה מסוכנת.</strong>
+          </p>
+          <p>
+            יש שלוש רמות הרשאה:
+          </p>
+          <ul>
+            <li><strong style="color: var(--accent-tertiary);">Suggest (המלץ)</strong> — Claude מציע שינויים אבל לא מבצע. אתם מאשרים כל דבר.</li>
+            <li><strong style="color: var(--accent-primary);">Auto-edit (עריכה אוטומטית)</strong> — Claude יכול לערוך קבצים בלי לשאול, אבל ישאל לפני מחיקה או הרצת פקודות.</li>
+            <li><strong style="color: var(--accent-rose);">YOLO (הכל אוטומטי)</strong> — Claude עושה הכל בלי לשאול. <strong>לא מומלץ למתחילים.</strong></li>
+          </ul>
+          <p>
+            <strong style="color: var(--accent-warm);">המלצה:</strong> התחילו עם "Auto-edit" — זה נותן ל-Claude מספיק חופש לעבוד ביעילות, אבל עדיין שומר אתכם בשליטה על פעולות מסוכנות.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>האם בטוח להשתמש ב-Claude Code לפרויקטים של לקוחות?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            זה תלוי ברמת הרגישות. לרוב הפרויקטים — כן, זה בטוח. אבל כדאי לשים לב:
+          </p>
+          <ul>
+            <li>אל תשתפו מידע רפואי, פיננסי או מזהה אישי של לקוחות דרך Claude</li>
+            <li>אל תדביקו סיסמאות, מפתחות API או credentials בשיחה</li>
+            <li>בדקו את <a href="https://anthropic.com/policies/privacy" target="_blank" rel="noopener" style="color: var(--accent-primary);">מדיניות הפרטיות של Anthropic</a> אם אתם עובדים עם מידע רגיש</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Costs & Limits -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(245,158,11,0.15); color: var(--accent-warm);">💰</span>
+      עלויות ומגבלות
+    </h3>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>כמה עולה Claude Code?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>Claude Code כלול בכל מנויי Claude:</p>
+          <ul>
+            <li><strong style="color: var(--accent-primary);">Pro — $20 לחודש</strong> — כולל Claude Code עם מגבלת שימוש. מספיק לשימוש קל עד בינוני.</li>
+            <li><strong style="color: var(--accent-secondary);">Max 5x — $100 לחודש</strong> — פי 5 יותר שימוש. מתאים לעבודה יומיומית.</li>
+            <li><strong style="color: var(--accent-tertiary);">Max 20x — $200 לחודש</strong> — פי 20 יותר שימוש. לשימוש אינטנסיבי.</li>
+            <li><strong style="color: var(--accent-warm);">API — תשלום לפי צריכה</strong> — משלמים רק על מה שמשתמשים. מתאים למפתחים מנוסים.</li>
+          </ul>
+          <p>
+            <strong style="color: var(--accent-warm);">טיפ:</strong> אם אתם רק רוצים לנסות — התחילו עם Pro ב-$20. אם נגמר לכם המכסה באמצע החודש, תוכלו לשדרג.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>מה קורה כשנגמרת לי המכסה?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            כשמגיעים למגבלת השימוש, Claude Code ממשיך לעבוד אבל <strong style="color: var(--text-bright);">יעבור למודל קטן יותר (Haiku)</strong> שהוא מהיר יותר אבל פחות חכם. עדיין אפשר לעבוד, אבל המשימות המורכבות עלולות להיות פחות טובות.
+          </p>
+          <p>
+            המכסה מתאפסת בתחילת כל חודש. אפשר גם לשדרג לתכנית גבוהה יותר באמצע החודש.
+          </p>
+          <p>
+            <strong style="color: var(--accent-warm);">טיפ:</strong> השתמשו בפקודה <code style="color: var(--accent-cyan);">/cost</code> כדי לעקוב אחרי הצריכה שלכם.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>מה זה "טוקנים"?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            טוקנים הם <strong style="color: var(--text-bright);">יחידות המדידה של Claude</strong>. חשבו על זה ככה: כמו שמונה מים ליטרים וחשמל בקילוואט — Claude מודד שימוש בטוקנים.
+          </p>
+          <p>
+            בערך: <strong style="color: var(--accent-primary);">1 טוקן ≈ ¾ מילה באנגלית</strong>. אז 1,000 טוקנים זה בערך 750 מילים — כמו עמוד וחצי של טקסט.
+          </p>
+          <p>
+            כל הודעה שאתם שולחים צורכת טוקנים (הקלט), וגם התשובה של Claude צורכת טוקנים (הפלט). ככל שהשיחה ארוכה יותר והקבצים גדולים יותר — נצרכים יותר טוקנים.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technical Questions -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(99,140,255,0.15); color: var(--accent-primary);">🔧</span>
+      שאלות טכניות
+    </h3>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>האם Claude Code עובד בלי אינטרנט?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong style="color: var(--accent-rose);">לא.</strong> Claude Code חייב חיבור לאינטרנט כדי לעבוד. "המוח" של Claude נמצא בשרתים של Anthropic, וכל שיחה דורשת תקשורת עם השרתים האלה. בלי אינטרנט, Claude Code לא יכול לקבל בקשות או לענות.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>על אילו מערכות הפעלה Claude Code עובד?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>Claude Code עובד על:</p>
+          <ul>
+            <li><strong style="color: var(--text-bright);">macOS</strong> — תמיכה מלאה</li>
+            <li><strong style="color: var(--text-bright);">Linux</strong> — תמיכה מלאה</li>
+            <li><strong style="color: var(--text-bright);">Windows</strong> — תמיכה מלאה. עובד ישירות ב-PowerShell וב-CMD ללא צורך ב-WSL. מומלץ להתקין Git for Windows מראש.</li>
+          </ul>
+          <p>
+            בנוסף, אפשר להשתמש ב-Claude Code דרך <strong style="color: var(--accent-primary);">VS Code</strong> (כתוסף), דרך <strong style="color: var(--accent-primary);">אפליקציית שולחן העבודה</strong>, או דרך <strong style="color: var(--accent-primary);">הדפדפן</strong> בכתובת claude.ai/code — כל האפשרויות עובדות על כל מערכת הפעלה.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>האם Claude Code יכול לגשת לכל הקבצים במחשב שלי?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            Claude Code רואה את <strong style="color: var(--text-bright);">התיקייה שבה הפעלתם אותו</strong> ואת כל התיקיות שבתוכה. הוא לא יכול לגשת אוטומטית לכל הדיסק — רק לאזור שבו אתם עובדים.
+          </p>
+          <p>
+            אם אתם רוצים שClaude יעבוד על קבצים ממקום אחר, תצטרכו לתת לו את הנתיב המלא לקובץ, או לפתוח את Claude Code מהתיקייה הנכונה.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>מה ההבדל בין Claude Code ל-ChatGPT? ול-Cursor?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong style="color: var(--accent-primary);">ChatGPT</strong> — צ'אטבוט כללי שיכול לעזור עם הרבה דברים (כתיבה, שאלות, תכנות). הוא <strong>לא יכול לגשת ישירות לקבצים שלכם</strong> או להריץ פקודות על המחשב. אתם צריכים להעתיק ולהדביק קוד.
+          </p>
+          <p>
+            <strong style="color: var(--accent-secondary);">Claude Code</strong> — עובד <strong>ישירות על המחשב שלכם</strong>. הוא קורא, כותב ומריץ קבצים. הוא רואה את כל הפרויקט ויכול לעשות שינויים בכמה קבצים במקביל. זה ההבדל העיקרי — הוא לא רק "מייעץ", הוא גם "עושה".
+          </p>
+          <p>
+            <strong style="color: var(--accent-warm);">Cursor</strong> — עורך קוד (כמו VS Code) עם בינה מלאכותית מובנית. הוא דומה ל-Claude Code בזה שהוא עובד ישירות על הקבצים, אבל הוא משתמש במודלים שונים ויש לו ממשק של עורך קוד ולא של טרמינל.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Claude "שכח" מה דיברנו עליו — למה?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            ל-Claude יש <strong style="color: var(--text-bright);">"חלון זיכרון" מוגבל</strong> (נקרא Context Window). חשבו על זה כמו שולחן עבודה — אפשר לשים עליו כמות מסוימת של דפים. כשהשולחן מתמלא, הדפים הישנים נופלים מהקצה.
+          </p>
+          <p>
+            כשהשיחה ארוכה מאוד, Claude "שוכח" את ההודעות הראשונות. הנה מה לעשות:
+          </p>
+          <ul>
+            <li><strong style="color: var(--accent-primary);">השתמשו ב-<code style="color: var(--accent-cyan);">/compact</code></strong> — זה גורם ל-Claude לסכם את השיחה ולפנות מקום</li>
+            <li><strong style="color: var(--accent-primary);">שמרו הוראות חשובות ב-CLAUDE.md</strong> — מה שנמצא שם תמיד זמין, לא משנה כמה ארוכה השיחה</li>
+            <li><strong style="color: var(--accent-primary);">התחילו שיחה חדשה</strong> — לפעמים עדיף להתחיל מחדש עם הקשר ברור מאשר לגרור שיחה ארוכה</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>Claude עשה שגיאה / כתב קוד שלא עובד — מה עושים?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            זה קורה! Claude הוא מרשים אבל לא מושלם. הנה מה לעשות:
+          </p>
+          <ul>
+            <li><strong style="color: var(--text-bright);">פשוט אמרו לו:</strong> "זה לא עובד, אני מקבל שגיאה כזו: [הדביקו את השגיאה]". Claude ילמד מהשגיאה ויתקן.</li>
+            <li><strong style="color: var(--text-bright);">תנו לו את הפלט:</strong> אם משהו לא עובד, העתיקו את הודעת השגיאה ושלחו ל-Claude. הוא בדרך כלל מבין מה הבעיה.</li>
+            <li><strong style="color: var(--text-bright);">בקשו גישה אחרת:</strong> "הפתרון הזה לא עובד, תנסה דרך אחרת".</li>
+            <li><strong style="color: var(--text-bright);">חזרו אחורה:</strong> "תבטל את כל השינויים האחרונים ותתחיל מחדש".</li>
+          </ul>
+          <p>
+            <strong style="color: var(--accent-warm);">זכרו:</strong> Claude לומד מהמשוב שלכם. ככל שתהיו יותר ספציפיים בתיאור הבעיה, ככה הפתרון יהיה יותר מדויק.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- General Questions -->
+  <div class="content-block">
+    <h3>
+      <span class="icon" style="background: rgba(167,139,250,0.15); color: var(--accent-secondary);">🤔</span>
+      שאלות כלליות
+    </h3>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>האם צריך לדעת תכנות כדי להשתמש ב-Claude Code?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong style="color: var(--accent-tertiary);">לא!</strong> זה בדיוק הקסם של Claude Code. אתם מדברים בשפה רגילה — "תבנה לי אתר", "תתקן את הבאג הזה", "תסביר לי מה הקוד הזה עושה" — ו-Claude עושה את העבודה הטכנית.
+          </p>
+          <p>
+            כמובן, ככל שתלמדו יותר — תוכלו לתת הוראות מדויקות יותר ולקבל תוצאות טובות יותר. אבל אפשר להתחיל מאפס מוחלט.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>מה Claude Code יכול לעשות שאי אפשר לעשות ב-ChatGPT רגיל?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>הנה הדברים העיקריים:</p>
+          <ul>
+            <li><strong style="color: var(--text-bright);">לקרוא ולכתוב קבצים</strong> — ישירות על המחשב שלכם, בלי העתק-הדבק</li>
+            <li><strong style="color: var(--text-bright);">להריץ פקודות</strong> — להתקין תוכנות, להריץ בדיקות, להפעיל סקריפטים</li>
+            <li><strong style="color: var(--text-bright);">לראות פרויקט שלם</strong> — לא רק קובץ אחד, אלא את כל מבנה הפרויקט</li>
+            <li><strong style="color: var(--text-bright);">לעבוד עם Git</strong> — לשמור גרסאות, לדחוף ל-GitHub, לנהל שינויים</li>
+            <li><strong style="color: var(--text-bright);">לתקן שגיאות בזמן אמת</strong> — אם קוד נכשל, Claude רואה את השגיאה ומתקן מיד</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+        <h3>האם Claude Code מתאים לילדים / מתחילים?</h3>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong style="color: var(--accent-tertiary);">בהחלט!</strong> בעצם, מתחילים הם הקהל שנהנה מ-Claude Code הכי הרבה. למה?
+          </p>
+          <ul>
+            <li>אפשר לבנות דברים אמיתיים (אתרים, משחקים, כלים) בלי ידע קודם</li>
+            <li>Claude מסביר מה הוא עושה ולמה — אתם לומדים תוך כדי</li>
+            <li>אם משהו לא עובד, פשוט אומרים "זה לא עובד" ו-Claude מתקן</li>
+            <li>אפשר להתקין את הפלאגין <strong style="color: var(--accent-primary);">explanatory-output-style</strong> שגורם ל-Claude להסביר כל צעד בפירוט</li>
+          </ul>
+          <p>
+            <strong style="color: var(--accent-warm);">טיפ להורים:</strong> Claude Code הוא כלי מעולה ללמד ילדים (ומבוגרים!) חשיבה לוגית ובניית דברים דיגיטליים. זה כמו לגו דיגיטלי — אומרים מה רוצים לבנות ורואים את זה מתגשם.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Back to top -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+<!-- Footer -->
+<footer class="footer">
+  <div style="margin-bottom: 1.5rem;">
+    <a href="https://www.tomhagiladi.com/" target="_blank" rel="noopener"><img src="tom-hagiladi-logo.png" alt="Tom Hagiladi - Empowering through AI" style="height: 60px; opacity: 0.9; filter: brightness(1.1);"></a>
+  </div>
+  <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+    אתר זה נבנה על ידי <a href="https://www.tomhagiladi.com/" target="_blank" rel="noopener" style="color: var(--text-bright); text-decoration: underline; text-underline-offset: 3px;">Tom Hagiladi</a> באמצעות <strong style="color: var(--accent-primary);">Claude Code</strong>
+  </p>
+  <p>
+    מידע מבוסס על
+    <a href="https://code.claude.com/docs" target="_blank" rel="noopener">התיעוד הרשמי של Anthropic</a>
+    · מעודכן למרץ 2026
+  </p>
+  <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+    Claude Code הוא מוצר של
+    <a href="https://anthropic.com" target="_blank" rel="noopener">Anthropic</a>.
+    אתר זה אינו קשור רשמית לחברה.
+  </p>
+  <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-dim); max-width: 700px; margin-left: auto; margin-right: auto;">
+    <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.8; text-align: center;">
+      <strong style="color: var(--text-secondary);">הבהרה משפטית:</strong>
+      המידע באתר זה מוצג למטרות לימוד והעשרה בלבד, ואינו מהווה ייעוץ מקצועי, טכני או משפטי.
+      השימוש במידע הוא באחריותכם המלאה.
+      יוצר האתר אינו נושא באחריות לכל נזק, הפסד, או תוצאה שעלולים לנבוע משימוש במידע המוצג כאן, כולל אך לא מוגבל לשגיאות בקוד, אובדן נתונים, הוצאות כספיות, או בעיות אבטחה.
+      מחירים, תכונות ומפרטים טכניים עשויים להשתנות — בדקו תמיד את המקורות הרשמיים למידע עדכני.
+      כל הסימנים המסחריים המוזכרים באתר שייכים לבעליהם בהתאמה.
+    </p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════ -->
+<script>
+// Navigation
+function showSection(section) {
+  const hero = document.getElementById('home-section');
+  const sections = document.querySelectorAll('.section');
+  const links = document.querySelectorAll('.nav-links a');
+
+  // Close mobile menu
+  document.getElementById('navLinks').classList.remove('open');
+
+  // Update active link
+  links.forEach(l => l.classList.remove('active'));
+  const activeLink = document.querySelector(`[data-section="${section}"]`);
+  if (activeLink) activeLink.classList.add('active');
+
+  if (section === 'home') {
+    hero.style.display = 'flex';
+    sections.forEach(s => s.classList.remove('active'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    hero.style.display = 'none';
+    sections.forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(section + '-section');
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+}
+
+// Collapsible sections
+function toggleCollapsible(header) {
+  const parent = header.parentElement;
+  parent.classList.toggle('open');
+}
+
+// Filter inspiration cards
+function filterCards(category) {
+  const cards = document.querySelectorAll('.inspiration-card');
+  const btns = document.querySelectorAll('.filter-btn');
+
+  btns.forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'flex';
+      card.style.animation = 'fadeIn 0.4s ease';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Copy code
+function copyCode(btn) {
+  const codeBlock = btn.parentElement;
+  const text = codeBlock.textContent
+    .replace('העתק', '')
+    .replace(codeBlock.querySelector('.code-label')?.textContent || '', '')
+    .trim();
+
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'הועתק!';
+    btn.style.background = 'var(--accent-tertiary)';
+    btn.style.color = 'white';
+    setTimeout(() => {
+      btn.textContent = 'העתק';
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 2000);
+  });
+}
+
+// Mobile menu
+function toggleMobileMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// Scroll to top
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Navbar scroll effect + back to top
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  const backBtn = document.getElementById('backToTop');
+
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+
+  if (window.scrollY > 500) {
+    backBtn.classList.add('visible');
+  } else {
+    backBtn.classList.remove('visible');
+  }
+});
+
+// Animate elements on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'fadeInUp 0.6s ease both';
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.content-block, .collapsible, .inspiration-card').forEach(el => {
+    observer.observe(el);
+  });
+});
+</script>
+</body>
+</html>
