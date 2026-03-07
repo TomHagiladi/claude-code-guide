@@ -29,7 +29,7 @@
   --accent-cyan: #22d3ee;
   --text-primary: #e8ecf4;
   --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-muted: #7a8ba0;
   --text-bright: #ffffff;
   --glow-soft: 0 0 30px rgba(99, 140, 255, 0.08);
   --glow-medium: 0 0 40px rgba(99, 140, 255, 0.12);
@@ -963,6 +963,133 @@ body {
 /* ═══════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════ */
+/* ─── Screen reader only (accessibility) ─── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── Skip link (accessibility) ─── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  right: 0;
+  background: var(--accent-primary);
+  color: var(--bg-void);
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  z-index: 200;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--accent-warm);
+  outline-offset: 2px;
+}
+
+/* ─── Focus indicators (WCAG 2.4.7) ─── */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+.collapsible-header:focus-visible,
+.hero-card:focus-visible,
+.filter-btn:focus-visible,
+.nav-links a:focus-visible {
+  outline: 3px solid var(--accent-warm);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Reduced motion (WCAG 2.3.1) ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Table scroll wrapper (mobile) ─── */
+.table-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.5rem 0;
+  border-radius: var(--radius-md);
+  position: relative;
+}
+.table-scroll-wrapper .comparison-table {
+  margin: 0;
+}
+.table-scroll-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 30px;
+  background: linear-gradient(to right, rgba(6,8,13,0.6), transparent);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.table-scroll-wrapper.is-scrollable::after {
+  opacity: 1;
+}
+
+/* ─── Accessibility statement ─── */
+.accessibility-statement {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 2rem;
+  margin-top: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.accessibility-statement h3 {
+  color: var(--text-bright);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+.accessibility-statement ul {
+  list-style: disc;
+  padding-right: 1.5rem;
+  margin: 0.5rem 0;
+}
+.accessibility-statement li {
+  margin-bottom: 0.3rem;
+}
+
+/* ─── Responsive: Tablet (1024px) ─── */
+@media (max-width: 1024px) {
+  .hero-cards {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .inspiration-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  .pricing-cards {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+/* ─── Responsive: Mobile (768px) ─── */
 @media (max-width: 768px) {
   .hero-cards {
     grid-template-columns: 1fr;
@@ -996,10 +1123,77 @@ body {
 
   .comparison-table {
     font-size: 0.8rem;
+    min-width: 500px;
   }
 
   .comparison-table th, .comparison-table td {
     padding: 0.6rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  .comparison-table td {
+    white-space: normal;
+    min-width: 120px;
+  }
+
+  .filter-bar {
+    gap: 0.4rem;
+  }
+
+  .filter-btn {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+  }
+
+  .footer {
+    padding: 2rem 1rem;
+  }
+
+  .back-to-top {
+    bottom: 1rem;
+    left: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .pricing-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .accessibility-statement {
+    padding: 1.25rem;
+  }
+}
+
+/* ─── Responsive: Small phones (480px) ─── */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .section { padding: 50px 0.75rem; }
+
+  .content-block { padding: 1rem; }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .collapsible-header {
+    padding: 1rem;
+  }
+
+  .collapsible-header h3 {
+    font-size: 1rem;
   }
 }
 
@@ -1107,22 +1301,25 @@ body {
 </head>
 <body>
 
+<!-- Skip to content (accessibility) -->
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
 <!-- Ambient Background -->
-<div class="ambient-bg">
+<div class="ambient-bg" aria-hidden="true">
   <div class="ambient-orb"></div>
   <div class="ambient-orb"></div>
   <div class="ambient-orb"></div>
 </div>
-<div class="grid-overlay"></div>
+<div class="grid-overlay" aria-hidden="true"></div>
 
 <!-- Navigation -->
-<nav class="navbar" id="navbar">
+<nav class="navbar" id="navbar" aria-label="ניווט ראשי">
   <a href="#" class="nav-logo" onclick="showSection('home');return false;">
     <div class="nav-logo-icon">&gt;_</div>
     <span class="nav-logo-text">Claude Code</span>
   </a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#home" onclick="showSection('home')" class="active" data-section="home">דף הבית</a></li>
+    <li><a href="#home" onclick="showSection('home')" class="active" data-section="home" aria-current="page">דף הבית</a></li>
     <li><a href="#what" onclick="showSection('what')" data-section="what">מה זה Claude Code?</a></li>
     <li><a href="#install" onclick="showSection('install')" data-section="install">התקנה</a></li>
     <li><a href="#inspiration" onclick="showSection('inspiration')" data-section="inspiration">לוח השראה</a></li>
@@ -1134,10 +1331,11 @@ body {
   </ul>
   <div style="display: flex; align-items: center; gap: 8px;">
     <a href="https://www.tomhagiladi.com/" target="_blank" rel="noopener"><img src="tom-hagiladi-logo.png" alt="Tom Hagiladi" style="height: 28px; opacity: 0.8;" class="nav-author-logo"></a>
-    <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="תפריט">☰</button>
+    <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="תפריט" aria-expanded="false" aria-controls="navLinks">☰</button>
   </div>
 </nav>
 
+<main id="main-content">
 <!-- ═══════════════════════════════════════════
      HOME / HERO
      ═══════════════════════════════════════════ -->
@@ -1155,38 +1353,38 @@ body {
       Claude Code הוא כלי בינה מלאכותית שמבין את כל הפרויקט שלך, כותב קוד, מתקן באגים, מריץ פקודות ובונה תוכנה — הכל דרך שיחה בשפה טבעית. בין אם אתה מתכנת מנוסה או מתחיל לגמרי, המדריך הזה בשבילך.
     </p>
     <div class="hero-cards">
-      <a class="hero-card" onclick="showSection('what')">
-        <div class="hero-card-icon">🧠</div>
+      <a class="hero-card" href="#what" onclick="showSection('what');return false;" role="link">
+        <div class="hero-card-icon" aria-hidden="true">🧠</div>
         <h3>מה זה Claude Code?</h3>
         <p>הסבר מקיף על הכלי, ההשוואה למתחרים, יתרונות, חסרונות וסיכונים</p>
       </a>
-      <a class="hero-card" onclick="showSection('install')">
-        <div class="hero-card-icon">⚡</div>
+      <a class="hero-card" href="#install" onclick="showSection('install');return false;" role="link">
+        <div class="hero-card-icon" aria-hidden="true">⚡</div>
         <h3>מדריך התקנה</h3>
         <p>כל דרכי ההתקנה בצעדים פשוטים — טרמינל, VS Code, אפליקציה ועוד</p>
       </a>
-      <a class="hero-card" onclick="showSection('inspiration')">
-        <div class="hero-card-icon">✨</div>
+      <a class="hero-card" href="#inspiration" onclick="showSection('inspiration');return false;" role="link">
+        <div class="hero-card-icon" aria-hidden="true">✨</div>
         <h3>לוח השראה</h3>
         <p>פרויקטים אמיתיים שאנשים בנו עם Claude Code — מאתרים ועד משחקים</p>
       </a>
-      <a class="hero-card" onclick="showSection('skills')">
-        <div class="hero-card-icon">🧩</div>
+      <a class="hero-card" href="#skills" onclick="showSection('skills');return false;" role="link">
+        <div class="hero-card-icon" aria-hidden="true">🧩</div>
         <h3>סקילים ופלאגינים</h3>
         <p>הרחיבו את היכולות של Claude Code עם כלים מוכנים מהמדף או כאלה שתבנו בעצמכם</p>
       </a>
-      <a class="hero-card" onclick="showSection('claudemd')">
-        <div class="hero-card-icon">📋</div>
+      <a class="hero-card" href="#claudemd" onclick="showSection('claudemd');return false;" role="link">
+        <div class="hero-card-icon" aria-hidden="true">📋</div>
         <h3>CLAUDE.md</h3>
         <p>קובץ ההגדרות האישי שלכם — ככה Claude יזכור את ההעדפות שלכם לתמיד</p>
       </a>
-      <a class="hero-card" onclick="showSection('tips')">
-        <div class="hero-card-icon">⌨️</div>
+      <a class="hero-card" href="#tips" onclick="showSection('tips');return false;" role="link">
+        <div class="hero-card-icon" aria-hidden="true">⌨️</div>
         <h3>טיפים ופקודות</h3>
         <p>כל הפקודות השימושיות, קיצורי הדרך והטריקים שיעשו לכם את החיים קלים</p>
       </a>
-      <a class="hero-card" onclick="showSection('faq')">
-        <div class="hero-card-icon">❓</div>
+      <a class="hero-card" href="#faq" onclick="showSection('faq');return false;" role="link">
+        <div class="hero-card-icon" aria-hidden="true">❓</div>
         <h3>שאלות נפוצות</h3>
         <p>תשובות לשאלות שכולם שואלים — אבטחה, עלויות, מגבלות ועוד</p>
       </a>
@@ -1276,9 +1474,9 @@ body {
     <table class="comparison-table">
       <thead>
         <tr>
-          <th>סביבה</th>
-          <th>תיאור</th>
-          <th>למי מתאים?</th>
+          <th scope="col">סביבה</th>
+          <th scope="col">תיאור</th>
+          <th scope="col">למי מתאים?</th>
         </tr>
       </thead>
       <tbody>
@@ -1326,10 +1524,10 @@ body {
     <table class="comparison-table">
       <thead>
         <tr>
-          <th>כלי</th>
-          <th>סוג</th>
-          <th>מחיר</th>
-          <th>נקודת חוזק</th>
+          <th scope="col">כלי</th>
+          <th scope="col">סוג</th>
+          <th scope="col">מחיר</th>
+          <th scope="col">נקודת חוזק</th>
         </tr>
       </thead>
       <tbody>
@@ -1530,8 +1728,8 @@ body {
     <table class="comparison-table">
       <thead>
         <tr>
-          <th>דרישה</th>
-          <th>פרטים</th>
+          <th scope="col">דרישה</th>
+          <th scope="col">פרטים</th>
         </tr>
       </thead>
       <tbody>
@@ -1545,7 +1743,7 @@ body {
 
   <!-- Method 1: Terminal -->
   <div class="collapsible open" id="install-terminal">
-    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
       <h3>
         <span class="icon" style="background:rgba(52,211,153,0.15)">💻</span>
         התקנה דרך הטרמינל (CLI) — מומלץ
@@ -1564,8 +1762,8 @@ body {
 
         <h4>שלב 0 — איך פותחים טרמינל?</h4>
         <ul>
-          <li><strong>Windows:</strong> לחצו על מקש Windows במקלדת, הקלידו <code>PowerShell</code> ולחצו Enter. ייפתח חלון כחול-כהה — זה הטרמינל שלכם!</li>
-          <li><strong>macOS:</strong> לחצו <code>Cmd+רווח</code>, הקלידו <code>Terminal</code> ולחצו Enter.</li>
+          <li><strong>Windows:</strong> לחצו על מקש Windows במקלדת, הקלידו <code lang="en" dir="ltr">PowerShell</code> ולחצו Enter. ייפתח חלון כחול-כהה — זה הטרמינל שלכם!</li>
+          <li><strong>macOS:</strong> לחצו <code>Cmd+רווח</code>, הקלידו <code lang="en" dir="ltr">Terminal</code> ולחצו Enter.</li>
           <li><strong>Linux:</strong> לחצו <code>Ctrl+Alt+T</code> — טרמינל ייפתח מיד.</li>
         </ul>
 
@@ -1615,7 +1813,7 @@ body {
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
-            <div class="step-content"><p><strong>נווטו לתיקיית הפרויקט</strong> — כתבו בטרמינל את הפקודה הבאה (שנו את הנתיב לתיקייה שלכם). הפקודה <code>cd</code> (קיצור של Change Directory) אומרת למחשב "עבור לתיקייה הזו":</p>
+            <div class="step-content"><p><strong>נווטו לתיקיית הפרויקט</strong> — כתבו בטרמינל את הפקודה הבאה (שנו את הנתיב לתיקייה שלכם). הפקודה <code lang="en" dir="ltr">cd</code> (קיצור של Change Directory) אומרת למחשב "עבור לתיקייה הזו":</p>
               <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">העתק</button>
                 cd your-project
@@ -1663,7 +1861,7 @@ body {
 
   <!-- Method 2: VS Code -->
   <div class="collapsible" id="install-vscode">
-    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
       <h3>
         <span class="icon" style="background:rgba(99,140,255,0.15)">📝</span>
         התקנה דרך VS Code — הכי ויזואלי
@@ -1764,7 +1962,7 @@ body {
 
   <!-- Method 3: Desktop App -->
   <div class="collapsible" id="install-desktop">
-    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
       <h3>
         <span class="icon" style="background:rgba(167,139,250,0.15)">🖥️</span>
         אפליקציית דסקטופ — הכי פשוט להתחלה
@@ -1836,7 +2034,7 @@ body {
 
   <!-- Method 4: JetBrains -->
   <div class="collapsible" id="install-jetbrains">
-    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
       <h3>
         <span class="icon" style="background:rgba(245,158,11,0.15)">🔧</span>
         JetBrains IDEs — למפתחי Java, Python ועוד
@@ -1890,7 +2088,7 @@ body {
 
   <!-- Method 5: Web -->
   <div class="collapsible" id="install-web">
-    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
       <h3>
         <span class="icon" style="background:rgba(34,211,238,0.15)">🌐</span>
         דרך הדפדפן — בלי שום התקנה
@@ -1969,9 +2167,9 @@ body {
     <table class="comparison-table">
       <thead>
         <tr>
-          <th>אם אתם...</th>
-          <th>השיטה המומלצת</th>
-          <th>למה?</th>
+          <th scope="col">אם אתם...</th>
+          <th scope="col">השיטה המומלצת</th>
+          <th scope="col">למה?</th>
         </tr>
       </thead>
       <tbody>
@@ -2545,7 +2743,7 @@ body {
       זה בדיוק מה שסקיל עושה. זה <strong style="color: var(--text-bright);">קובץ טקסט פשוט עם הוראות</strong> שמלמד את Claude איך לעשות משימה מסוימת. למשל: "כשמבקשים ממך לבנות אתר — תמיד תשתמש בעיצוב כהה, תוסיף אנימציות חלקות, ותבחר גופנים (פונטים) ישראליים".
     </p>
     <p>
-      מבחינה טכנית: סקילים נכתבים בקובץ טקסט בשם <code style="color: var(--accent-cyan);">SKILL.md</code> ונשמרים בתיקייה מיוחדת בשם <code style="color: var(--accent-cyan);">.claude/skills/</code> בתוך תיקיית הפרויקט שלכם. אבל אל תדאגו — נסביר בהמשך בדיוק איך עושים את זה, צעד אחר צעד.
+      מבחינה טכנית: סקילים נכתבים בקובץ טקסט בשם <code lang="en" dir="ltr" style="color: var(--accent-cyan);">SKILL.md</code> ונשמרים בתיקייה מיוחדת בשם <code lang="en" dir="ltr" style="color: var(--accent-cyan);">.claude/skills/</code> בתוך תיקיית הפרויקט שלכם. אבל אל תדאגו — נסביר בהמשך בדיוק איך עושים את זה, צעד אחר צעד.
     </p>
     <p style="margin-top: 0.75rem;">
       <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener" style="color: var(--accent-primary); text-decoration: underline;">
@@ -2639,9 +2837,9 @@ body {
       בואו נפרק את הפקודה הזו כדי שתבינו מה קורה:
     </p>
     <ul>
-      <li><code style="color: var(--accent-cyan);">claude plugin install</code> — אומר ל-Claude: "תתקין פלאגין"</li>
-      <li><code style="color: var(--accent-cyan);">frontend-design</code> — שם הפלאגין שרוצים להתקין</li>
-      <li><code style="color: var(--accent-cyan);">@claude-plugins-official</code> — שם החנות. החנות הרשמית של Anthropic נקראת "claude-plugins-official"</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">claude plugin install</code> — אומר ל-Claude: "תתקין פלאגין"</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">frontend-design</code> — שם הפלאגין שרוצים להתקין</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">@claude-plugins-official</code> — שם החנות. החנות הרשמית של Anthropic נקראת "claude-plugins-official"</li>
     </ul>
     <p>
       אחרי ההתקנה, הפלאגין מוכן לשימוש מיד — אין צורך לעשות שום דבר נוסף!
@@ -2653,9 +2851,9 @@ body {
     </p>
     <table class="comparison-table">
       <tr>
-        <th>מצב</th>
-        <th>מה זה אומר בשפה פשוטה</th>
-        <th>מתי להשתמש</th>
+        <th scope="col">מצב</th>
+        <th scope="col">מה זה אומר בשפה פשוטה</th>
+        <th scope="col">מתי להשתמש</th>
       </tr>
       <tr>
         <td><strong style="color: var(--text-bright);">User</strong><br><span style="color: var(--accent-tertiary); font-size: 0.8rem;">(ברירת מחדל)</span></td>
@@ -2781,9 +2979,9 @@ body {
 
     <table class="comparison-table">
       <tr>
-        <th>רכיב</th>
-        <th>מה זה בשפה פשוטה</th>
-        <th>דוגמה מהחיים</th>
+        <th scope="col">רכיב</th>
+        <th scope="col">מה זה בשפה פשוטה</th>
+        <th scope="col">דוגמה מהחיים</th>
       </tr>
       <tr>
         <td><strong style="color: var(--accent-primary);">סקילים<br>(Skills)</strong></td>
@@ -2875,8 +3073,8 @@ When building a website in Hebrew:
       בדוגמה הזו:
     </p>
     <ul>
-      <li><code style="color: var(--accent-cyan);">name: hebrew-website</code> — שם הסקיל. זה גם מה שתקלידו כדי להפעיל אותו ידנית.</li>
-      <li><code style="color: var(--accent-cyan);">description: Build Hebrew RTL...</code> — תיאור קצר. Claude קורא את התיאור הזה ומחליט אם הסקיל מתאים למשימה הנוכחית. ככל שהתיאור מדויק יותר — הסקיל יופעל בדיוק כשצריך.</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">name: hebrew-website</code> — שם הסקיל. זה גם מה שתקלידו כדי להפעיל אותו ידנית.</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">description: Build Hebrew RTL...</code> — תיאור קצר. Claude קורא את התיאור הזה ומחליט אם הסקיל מתאים למשימה הנוכחית. ככל שהתיאור מדויק יותר — הסקיל יופעל בדיוק כשצריך.</li>
       <li>שאר הטקסט — ההוראות עצמן. שימו לב שזו פשוט רשימה של כללים בשפה טבעית.</li>
     </ul>
 
@@ -2884,22 +3082,22 @@ When building a website in Hebrew:
     <p>מעבר לשם ולתיאור, יש עוד שדות אופציונליים. <strong style="color: var(--text-bright);">לא חייבים להשתמש בהם</strong> — הם רק למי שרוצה שליטה מדויקת יותר:</p>
     <table class="comparison-table">
       <tr>
-        <th>שדה</th>
-        <th>חובה?</th>
-        <th>מה זה עושה — בשפה פשוטה</th>
+        <th scope="col">שדה</th>
+        <th scope="col">חובה?</th>
+        <th scope="col">מה זה עושה — בשפה פשוטה</th>
       </tr>
       <tr>
-        <td><code style="color: var(--accent-cyan);">name</code></td>
+        <td><code lang="en" dir="ltr" style="color: var(--accent-cyan);">name</code></td>
         <td><span style="color: var(--accent-tertiary);">כן</span></td>
         <td>שם הסקיל — ככה תקראו לו כשתרצו להפעיל אותו</td>
       </tr>
       <tr>
-        <td><code style="color: var(--accent-cyan);">description</code></td>
+        <td><code lang="en" dir="ltr" style="color: var(--accent-cyan);">description</code></td>
         <td><span style="color: var(--accent-tertiary);">כן</span></td>
         <td>תיאור קצר שמסביר מתי להשתמש בסקיל — Claude קורא את זה כדי להחליט אם הסקיל רלוונטי</td>
       </tr>
       <tr>
-        <td><code style="color: var(--accent-cyan);">context: fork</code></td>
+        <td><code lang="en" dir="ltr" style="color: var(--accent-cyan);">context: fork</code></td>
         <td><span style="color: var(--text-muted);">לא</span></td>
         <td>אומר ל-Claude להריץ את הסקיל ב"חדר נפרד" כדי שלא ייגמר לו הזיכרון. שימושי לסקילים גדולים ומורכבים.</td>
       </tr>
@@ -2920,7 +3118,7 @@ When building a website in Hebrew:
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
 /hebrew-website Build me a landing page for my cafe</div>
     <p>
-      בדוגמה הזו: <code style="color: var(--accent-cyan);">/hebrew-website</code> מפעיל את הסקיל, ו-<code style="color: var(--accent-cyan);">Build me a landing page for my cafe</code> אומר לו מה לבנות.
+      בדוגמה הזו: <code lang="en" dir="ltr" style="color: var(--accent-cyan);">/hebrew-website</code> מפעיל את הסקיל, ו-<code lang="en" dir="ltr" style="color: var(--accent-cyan);">Build me a landing page for my cafe</code> אומר לו מה לבנות.
     </p>
     <p style="margin-top: 0.75rem;">
       <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener" style="color: var(--accent-primary); text-decoration: underline;">
@@ -2965,7 +3163,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
 
     <h4>קובץ ההגדרות — "תעודת הזהות" של הפלאגין</h4>
     <p>
-      כל פלאגין חייב קובץ בשם <code style="color: var(--accent-cyan);">manifest.json</code> שמסביר ל-Claude Code מה יש בפלאגין. זה כמו תווית על קופסה שמפרטת מה בפנים. הנה דוגמה פשוטה:
+      כל פלאגין חייב קובץ בשם <code lang="en" dir="ltr" style="color: var(--accent-cyan);">manifest.json</code> שמסביר ל-Claude Code מה יש בפלאגין. זה כמו תווית על קופסה שמפרטת מה בפנים. הנה דוגמה פשוטה:
     </p>
     <div class="code-block">
       <span class="code-label">manifest.json — תעודת הזהות של הפלאגין</span>
@@ -2991,11 +3189,11 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
       מה כל שורה אומרת:
     </p>
     <ul>
-      <li><code style="color: var(--accent-cyan);">name</code> — שם הפלאגין (באנגלית, בלי רווחים)</li>
-      <li><code style="color: var(--accent-cyan);">description</code> — תיאור קצר של מה הפלאגין עושה</li>
-      <li><code style="color: var(--accent-cyan);">version</code> — מספר גרסה (מתחילים מ-1.0.0)</li>
-      <li><code style="color: var(--accent-cyan);">author</code> — מי יצר את הפלאגין</li>
-      <li><code style="color: var(--accent-cyan);">components</code> — רשימה של כל מה שיש בתוך הפלאגין (סקילים, סוכנים וכו')</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">name</code> — שם הפלאגין (באנגלית, בלי רווחים)</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">description</code> — תיאור קצר של מה הפלאגין עושה</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">version</code> — מספר גרסה (מתחילים מ-1.0.0)</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">author</code> — מי יצר את הפלאגין</li>
+      <li><code lang="en" dir="ltr" style="color: var(--accent-cyan);">components</code> — רשימה של כל מה שיש בתוך הפלאגין (סקילים, סוכנים וכו')</li>
     </ul>
 
     <h4>איך משתפים את הפלאגין עם אחרים?</h4>
@@ -3004,7 +3202,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </p>
     <ul>
       <li>
-        <strong style="color: var(--text-bright);">דרך GitHub</strong> — להעלות את תיקיית הפלאגין ל-GitHub (אתר לשיתוף קוד). אחרים יוכלו להתקין עם הפקודה: <code style="color: var(--accent-cyan);">claude plugin install github:username/repo</code>
+        <strong style="color: var(--text-bright);">דרך GitHub</strong> — להעלות את תיקיית הפלאגין ל-GitHub (אתר לשיתוף קוד). אחרים יוכלו להתקין עם הפקודה: <code lang="en" dir="ltr" style="color: var(--accent-cyan);">claude plugin install github:username/repo</code>
       </li>
       <li>
         <strong style="color: var(--text-bright);">דרך השוק הרשמי</strong> — להגיש את הפלאגין לשוק של Anthropic. אם הוא יאושר, הוא יופיע בחנות ומיליוני משתמשים יוכלו למצוא ולהתקין אותו.
@@ -3030,7 +3228,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
         <strong style="color: var(--text-bright);">כתבו תיאור מדויק ככל האפשר</strong> — התיאור (description) הוא הדבר הכי חשוב בסקיל. Claude קורא את התיאור ומחליט — "האם הסקיל הזה מתאים למה שביקשו ממני עכשיו?" אם התיאור מעורפל, Claude עלול להפעיל את הסקיל בזמנים לא נכונים, או לא להפעיל אותו כשכן צריך.
       </li>
       <li>
-        <strong style="color: var(--text-bright);">השתמשו ב-$ARGUMENTS למשתנים</strong> — אפשר לכתוב <code style="color: var(--accent-cyan);">$ARGUMENTS</code> בתוך ההוראות, וזה יוחלף אוטומטית בטקסט שהמשתמש הקליד. למשל, אם בסקיל כתוב "Build a website about $ARGUMENTS" ומקלידים <code style="color: var(--accent-cyan);">/my-skill cats</code>, Claude יקבל "Build a website about cats".
+        <strong style="color: var(--text-bright);">השתמשו ב-$ARGUMENTS למשתנים</strong> — אפשר לכתוב <code lang="en" dir="ltr" style="color: var(--accent-cyan);">$ARGUMENTS</code> בתוך ההוראות, וזה יוחלף אוטומטית בטקסט שהמשתמש הקליד. למשל, אם בסקיל כתוב "Build a website about $ARGUMENTS" ומקלידים <code lang="en" dir="ltr" style="color: var(--accent-cyan);">/my-skill cats</code>, Claude יקבל "Build a website about cats".
       </li>
       <li>
         <strong style="color: var(--text-bright);">אפשר להוסיף קבצי דוגמה</strong> — בתיקיית הסקיל אפשר לשים קבצים נוספים, כמו תבניות עיצוב, דוגמאות קוד, או תמונות. בהוראות הסקיל אפשר לכתוב "תסתכל על הקובץ template.html בתיקייה הזו" ו-Claude ידע למצוא אותו.
@@ -3055,7 +3253,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
 
     <h4>🔗 מה ההבדל בין CLAUDE.md לסקיל?</h4>
     <p>
-      אם כבר שמעתם על קובץ <code style="color: var(--accent-cyan);">CLAUDE.md</code> — זה קובץ הגדרות כללי שנטען <strong style="color: var(--text-bright);">תמיד</strong> כש-Claude Code מתחיל לעבוד. הוא כמו הכללים הקבועים של הבית.
+      אם כבר שמעתם על קובץ <code lang="en" dir="ltr" style="color: var(--accent-cyan);">CLAUDE.md</code> — זה קובץ הגדרות כללי שנטען <strong style="color: var(--text-bright);">תמיד</strong> כש-Claude Code מתחיל לעבוד. הוא כמו הכללים הקבועים של הבית.
     </p>
     <p>
       סקילים, לעומת זאת, נטענים <strong style="color: var(--text-bright);">רק כשהם רלוונטיים</strong>. זה כמו ההבדל בין כלל קבוע ("תמיד תנעל את הדלת") לבין הוראה שמופעלת רק כשצריך ("אם מבשלים סטייק — ככה עושים את זה"). הסקיל לא מעמיס על Claude כשהוא לא צריך אותו, מה שמאפשר לכם ליצור עשרות סקילים בלי שClaude יהיה "כבד" או איטי.
@@ -3090,7 +3288,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
       <strong style="color: var(--text-bright);">CLAUDE.md הוא בדיוק הפתק הזה.</strong> זה קובץ טקסט פשוט שבו אתם כותבים הוראות, העדפות וכללים — ו-Claude קורא אותו <strong style="color: var(--accent-primary);">אוטומטית בתחילת כל שיחה</strong>. ככה הוא תמיד יודע מה הסגנון שלכם, מה הכללים של הפרויקט, ומה חשוב לכם.
     </p>
     <p>
-      השם <code style="color: var(--accent-cyan);">CLAUDE.md</code> מורכב מ"CLAUDE" (שם הבינה המלאכותית) ו-".md" (סוג קובץ שנקרא Markdown — פורמט טקסט פשוט שקל לכתוב ולקרוא).
+      השם <code lang="en" dir="ltr" style="color: var(--accent-cyan);">CLAUDE.md</code> מורכב מ"CLAUDE" (שם הבינה המלאכותית) ו-".md" (סוג קובץ שנקרא Markdown — פורמט טקסט פשוט שקל לכתוב ולקרוא).
     </p>
   </div>
 
@@ -3129,10 +3327,10 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
 
     <table class="comparison-table">
       <tr>
-        <th>סוג</th>
-        <th>מיקום</th>
-        <th>מה זה עושה — בשפה פשוטה</th>
-        <th>דוגמה למה לכתוב שם</th>
+        <th scope="col">סוג</th>
+        <th scope="col">מיקום</th>
+        <th scope="col">מה זה עושה — בשפה פשוטה</th>
+        <th scope="col">דוגמה למה לכתוב שם</th>
       </tr>
       <tr>
         <td><strong style="color: var(--accent-primary);">גלובלי (אישי)</strong></td>
@@ -3186,7 +3384,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </p>
 
     <h4>דרך 3: ליצור ידנית (למי שאוהב שליטה)</h4>
-    <p>פשוט צרו קובץ טקסט חדש בשם <code style="color: var(--accent-cyan);">CLAUDE.md</code> בתיקייה הנכונה וכתבו בו את ההוראות שלכם.</p>
+    <p>פשוט צרו קובץ טקסט חדש בשם <code lang="en" dir="ltr" style="color: var(--accent-cyan);">CLAUDE.md</code> בתיקייה הנכונה וכתבו בו את ההוראות שלכם.</p>
   </div>
 
   <!-- Example -->
@@ -3227,7 +3425,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
       <strong style="color: var(--text-bright);">שימו לב:</strong> הקובץ כתוב באנגלית כי Claude מבין אנגלית הכי טוב. אבל אפשר לכתוב גם בעברית — Claude מבין את שתי השפות.
     </p>
     <p>
-      כל שורה שמתחילה ב-<code style="color: var(--accent-cyan);">#</code> היא כותרת (כמו כותרת של פרק). שורות שמתחילות ב-<code style="color: var(--accent-cyan);">-</code> הן פריטים ברשימה. זהו! לא צריך שום פורמט מיוחד.
+      כל שורה שמתחילה ב-<code lang="en" dir="ltr" style="color: var(--accent-cyan);">#</code> היא כותרת (כמו כותרת של פרק). שורות שמתחילות ב-<code lang="en" dir="ltr" style="color: var(--accent-cyan);">-</code> הן פריטים ברשימה. זהו! לא צריך שום פורמט מיוחד.
     </p>
   </div>
 
@@ -3270,57 +3468,57 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
       פקודות סלש — הקיצורים הכי שימושיים
     </h3>
     <p>
-      פקודות סלש (Slash Commands) הן קיצורים שמתחילים בסימן <code style="color: var(--accent-cyan);">/</code>. במקום לכתוב משפט שלם, פשוט מקלידים את הפקודה ו-Claude יודע מה לעשות. חשבו על זה כמו קיצורי מקלדת — אבל בטקסט.
+      פקודות סלש (Slash Commands) הן קיצורים שמתחילים בסימן <code lang="en" dir="ltr" style="color: var(--accent-cyan);">/</code>. במקום לכתוב משפט שלם, פשוט מקלידים את הפקודה ו-Claude יודע מה לעשות. חשבו על זה כמו קיצורי מקלדת — אבל בטקסט.
     </p>
 
     <table class="comparison-table">
       <tr>
-        <th>פקודה</th>
-        <th>מה היא עושה</th>
-        <th>מתי להשתמש</th>
+        <th scope="col">פקודה</th>
+        <th scope="col">מה היא עושה</th>
+        <th scope="col">מתי להשתמש</th>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/help</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/help</code></td>
         <td>מציגה את כל הפקודות הזמינות ואיך להשתמש בהן</td>
         <td>כשלא זוכרים פקודה מסוימת, או רוצים לגלות פקודות חדשות</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/init</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/init</code></td>
         <td>יוצרת קובץ CLAUDE.md מותאם לפרויקט שלכם</td>
         <td>כשמתחילים לעבוד על פרויקט חדש ורוצים ש-Claude יכיר אותו</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/compact</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/compact</code></td>
         <td>דוחסת את השיחה — Claude "מסכם" את מה שקרה עד עכשיו כדי לפנות זיכרון</td>
         <td>כששיחה ארוכה ו-Claude מתחיל "לשכוח" דברים מההתחלה, או כשאתם מקבלים אזהרה שהזיכרון מתמלא</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/clear</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/clear</code></td>
         <td>מנקה את כל השיחה ומתחילה מחדש לגמרי</td>
         <td>כשרוצים להתחיל נושא חדש לגמרי, בלי שום "זיכרון" מהשיחה הקודמת</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/cost</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/cost</code></td>
         <td>מראה כמה עלתה השיחה הנוכחית (בטוקנים או בדולרים)</td>
         <td>כשרוצים לעקוב אחרי הצריכה ולוודא שלא חורגים מהתקציב</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/model</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/model</code></td>
         <td>מאפשרת לבחור איזה דגם (מודל) של Claude להשתמש</td>
         <td>כשרוצים לעבור למודל מהיר יותר (Haiku) למשימות פשוטות, או למודל חזק יותר (Opus) למשימות מורכבות</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/memory</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/memory</code></td>
         <td>פותחת את קובץ ה-CLAUDE.md לעריכה</td>
         <td>כשרוצים להוסיף או לשנות הוראות קבועות ל-Claude</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/plugin</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/plugin</code></td>
         <td>פותחת את מנהל הפלאגינים — התקנה, גילוי והסרה</td>
         <td>כשרוצים להתקין פלאגין חדש או לנהל את הפלאגינים הקיימים</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">/config</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/config</code></td>
         <td>פותחת את הגדרות Claude Code</td>
         <td>כשרוצים לשנות הגדרות כמו מודל ברירת מחדל, הרשאות, ועוד</td>
       </tr>
@@ -3337,27 +3535,27 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
 
     <table class="comparison-table">
       <tr>
-        <th>קיצור</th>
-        <th>מה זה עושה</th>
+        <th scope="col">קיצור</th>
+        <th scope="col">מה זה עושה</th>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">Ctrl + C</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">Ctrl + C</code></td>
         <td>עוצר את Claude באמצע — אם הוא כותב קוד ארוך ואתם רוצים שיפסיק</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">Esc</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">Esc</code></td>
         <td>ביטול הפעולה הנוכחית — כמו "תתעלם ממה שהקלדתי"</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">↑ / ↓</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">↑ / ↓</code></td>
         <td>גלילה בהיסטוריית ההודעות — מחזיר הודעות שהקלדתם קודם</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">Shift + Enter</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">Shift + Enter</code></td>
         <td>מעבר שורה בלי לשלוח — כשרוצים לכתוב הודעה ארוכה בכמה שורות</td>
       </tr>
       <tr>
-        <td style="direction: ltr; text-align: left;"><code style="color: var(--accent-cyan);">Shift + Tab</code></td>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">Shift + Tab</code></td>
         <td>מעבר בין מצב "קבל אוטומטית" למצב "שאל לפני כל פעולה"</td>
       </tr>
     </table>
@@ -3410,8 +3608,8 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     <p>הנה כמה משפטים שעובדים מעולה עם Claude Code:</p>
     <table class="comparison-table">
       <tr>
-        <th>מה אתם רוצים</th>
-        <th>מה להגיד ל-Claude</th>
+        <th scope="col">מה אתם רוצים</th>
+        <th scope="col">מה להגיד ל-Claude</th>
       </tr>
       <tr>
         <td>לתקן באג</td>
@@ -3467,7 +3665,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </h3>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>האם הקוד שלי נשלח לענן? האם Anthropic רואה את הקבצים שלי?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3480,14 +3678,14 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
             עם זאת, Anthropic מצהירה שהיא <strong style="color: var(--accent-tertiary);">לא משתמשת בקוד שלכם לאימון מודלים</strong> (כלומר, הקוד שלכם לא מלמד את Claude דברים חדשים ולא נשמר לצמיתות). המידע מעובד ונמחק.
           </p>
           <p>
-            <strong style="color: var(--accent-warm);">טיפ:</strong> אם יש לכם קבצים רגישים (כמו סיסמאות, מפתחות API, או מידע אישי), שמרו אותם בקובץ <code style="color: var(--accent-cyan);">.env</code> נפרד ואל תבקשו מ-Claude לקרוא אותם.
+            <strong style="color: var(--accent-warm);">טיפ:</strong> אם יש לכם קבצים רגישים (כמו סיסמאות, מפתחות API, או מידע אישי), שמרו אותם בקובץ <code lang="en" dir="ltr" style="color: var(--accent-cyan);">.env</code> נפרד ואל תבקשו מ-Claude לקרוא אותם.
           </p>
         </div>
       </div>
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>האם Claude יכול למחוק לי קבצים בטעות?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3512,7 +3710,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>האם בטוח להשתמש ב-Claude Code לפרויקטים של לקוחות?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3539,7 +3737,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </h3>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>כמה עולה Claude Code?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3560,7 +3758,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>מה קורה כשנגמרת לי המכסה?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3573,14 +3771,14 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
             המכסה מתאפסת בתחילת כל חודש. אפשר גם לשדרג לתכנית גבוהה יותר באמצע החודש.
           </p>
           <p>
-            <strong style="color: var(--accent-warm);">טיפ:</strong> השתמשו בפקודה <code style="color: var(--accent-cyan);">/cost</code> כדי לעקוב אחרי הצריכה שלכם.
+            <strong style="color: var(--accent-warm);">טיפ:</strong> השתמשו בפקודה <code lang="en" dir="ltr" style="color: var(--accent-cyan);">/cost</code> כדי לעקוב אחרי הצריכה שלכם.
           </p>
         </div>
       </div>
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>מה זה "טוקנים"?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3608,7 +3806,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </h3>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>האם Claude Code עובד בלי אינטרנט?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3622,7 +3820,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>על אילו מערכות הפעלה Claude Code עובד?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3642,7 +3840,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>האם Claude Code יכול לגשת לכל הקבצים במחשב שלי?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3659,7 +3857,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>מה ההבדל בין Claude Code ל-ChatGPT? ול-Cursor?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3679,7 +3877,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>Claude "שכח" מה דיברנו עליו — למה?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3692,7 +3890,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
             כשהשיחה ארוכה מאוד, Claude "שוכח" את ההודעות הראשונות. הנה מה לעשות:
           </p>
           <ul>
-            <li><strong style="color: var(--accent-primary);">השתמשו ב-<code style="color: var(--accent-cyan);">/compact</code></strong> — זה גורם ל-Claude לסכם את השיחה ולפנות מקום</li>
+            <li><strong style="color: var(--accent-primary);">השתמשו ב-<code lang="en" dir="ltr" style="color: var(--accent-cyan);">/compact</code></strong> — זה גורם ל-Claude לסכם את השיחה ולפנות מקום</li>
             <li><strong style="color: var(--accent-primary);">שמרו הוראות חשובות ב-CLAUDE.md</strong> — מה שנמצא שם תמיד זמין, לא משנה כמה ארוכה השיחה</li>
             <li><strong style="color: var(--accent-primary);">התחילו שיחה חדשה</strong> — לפעמים עדיף להתחיל מחדש עם הקשר ברור מאשר לגרור שיחה ארוכה</li>
           </ul>
@@ -3701,7 +3899,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>Claude עשה שגיאה / כתב קוד שלא עובד — מה עושים?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3732,7 +3930,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </h3>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>האם צריך לדעת תכנות כדי להשתמש ב-Claude Code?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3749,7 +3947,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>מה Claude Code יכול לעשות שאי אפשר לעשות ב-ChatGPT רגיל?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3768,7 +3966,7 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
     </div>
 
     <div class="collapsible">
-      <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
         <h3>האם Claude Code מתאים לילדים / מתחילים?</h3>
         <span class="collapsible-arrow">▼</span>
       </div>
@@ -3792,8 +3990,10 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
   </div>
 </section>
 
+</main>
+
 <!-- Back to top -->
-<button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="חזרה למעלה">↑</button>
 
 <!-- Footer -->
 <footer class="footer">
@@ -3823,6 +4023,39 @@ my-plugin/                    ← התיקייה הראשית של הפלאגי�
       כל הסימנים המסחריים המוזכרים באתר שייכים לבעליהם בהתאמה.
     </p>
   </div>
+
+  <!-- Accessibility Statement (הצהרת נגישות) — required by Israeli Standard SI 5568 -->
+  <div class="accessibility-statement" id="accessibility-statement">
+    <h3>הצהרת נגישות</h3>
+    <p>
+      אתר זה פותח תוך מחויבות לנגישות דיגיטלית בהתאם לתקן הישראלי ת"י 5568 המאמץ את הנחיות WCAG 2.0 ברמת AA, כנדרש בתקנה 35 לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג-2013.
+    </p>
+    <p><strong style="color: var(--text-bright);">פעולות נגישות שבוצעו באתר:</strong></p>
+    <ul>
+      <li>תמיכה בניווט מלא באמצעות מקלדת</li>
+      <li>קישור "דלג לתוכן הראשי" לדילוג על תפריט הניווט</li>
+      <li>תגיות ARIA למרכיבים אינטראקטיביים (אקורדיונים, כפתורי סינון, ניווט)</li>
+      <li>ניגודיות צבעים העומדת ביחס מינימלי של 4.5:1 לטקסט רגיל</li>
+      <li>מבנה כותרות היררכי ותקין (h1-h4)</li>
+      <li>סימון שפה (עברית כשפת הדף, סימון אנגלית בקטעי קוד)</li>
+      <li>תמיכה בכיוון RTL מלא</li>
+      <li>תמיכה בהגדלת טקסט עד 200%</li>
+      <li>טבלאות נגישות עם כותרות עמודה מסומנות</li>
+      <li>תמיכה בהפחתת תנועה (prefers-reduced-motion)</li>
+    </ul>
+    <p><strong style="color: var(--text-bright);">מגבלות ידועות:</strong></p>
+    <ul>
+      <li>חלק מהתכנים באתר כוללים טקסט באנגלית (שמות כלים ופקודות טכניות) בתוך הקשר עברי</li>
+    </ul>
+    <p style="margin-top: 0.75rem;">
+      <strong style="color: var(--text-bright);">פנייה בנושא נגישות:</strong>
+      אם נתקלתם בבעיית נגישות באתר, אנא פנו אלינו באמצעות דוא"ל:
+      <a href="mailto:tomhagiladi@gmail.com" style="color: var(--accent-primary);">tomhagiladi@gmail.com</a>
+    </p>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+      הצהרה זו עודכנה לאחרונה: מרץ 2026
+    </p>
+  </div>
 </footer>
 
 <!-- ═══════════════════════════════════════════
@@ -3839,9 +4072,9 @@ function showSection(section) {
   document.getElementById('navLinks').classList.remove('open');
 
   // Update active link
-  links.forEach(l => l.classList.remove('active'));
+  links.forEach(l => { l.classList.remove('active'); l.removeAttribute('aria-current'); });
   const activeLink = document.querySelector(`[data-section="${section}"]`);
-  if (activeLink) activeLink.classList.add('active');
+  if (activeLink) { activeLink.classList.add('active'); activeLink.setAttribute('aria-current', 'page'); }
 
   if (section === 'home') {
     hero.style.display = 'flex';
@@ -3861,7 +4094,8 @@ function showSection(section) {
 // Collapsible sections
 function toggleCollapsible(header) {
   const parent = header.parentElement;
-  parent.classList.toggle('open');
+  const isOpen = parent.classList.toggle('open');
+  header.setAttribute('aria-expanded', isOpen);
 }
 
 // Filter inspiration cards
@@ -3904,8 +4138,21 @@ function copyCode(btn) {
 
 // Mobile menu
 function toggleMobileMenu() {
-  document.getElementById('navLinks').classList.toggle('open');
+  const nav = document.getElementById('navLinks');
+  const isOpen = nav.classList.toggle('open');
+  document.querySelector('.mobile-toggle').setAttribute('aria-expanded', isOpen);
 }
+// Close mobile menu on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const nav = document.getElementById('navLinks');
+    if (nav.classList.contains('open')) {
+      nav.classList.remove('open');
+      document.querySelector('.mobile-toggle').setAttribute('aria-expanded', 'false');
+      document.querySelector('.mobile-toggle').focus();
+    }
+  }
+});
 
 // Scroll to top
 function scrollToTop() {
@@ -3943,6 +4190,29 @@ const observer = new IntersectionObserver((entries) => {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.content-block, .collapsible, .inspiration-card').forEach(el => {
     observer.observe(el);
+  });
+
+  // Wrap all comparison tables in scroll wrappers for mobile
+  document.querySelectorAll('.comparison-table').forEach((table, i) => {
+    // Get caption from the closest heading context
+    const headings = table.closest('.content-block, .collapsible-inner');
+    const h = headings ? headings.querySelector('h3, h4') : null;
+    const label = h ? h.textContent.trim().replace(/^[^\u0590-\u05FF]+/, '').trim() : 'טבלה ' + (i + 1);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'table-scroll-wrapper';
+    wrapper.setAttribute('tabindex', '0');
+    wrapper.setAttribute('role', 'region');
+    wrapper.setAttribute('aria-label', label);
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+
+    // Check if scrollable and add indicator class
+    function checkScroll() {
+      wrapper.classList.toggle('is-scrollable', wrapper.scrollWidth > wrapper.clientWidth);
+    }
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
   });
 });
 </script>
