@@ -1032,21 +1032,6 @@ button:focus-visible,
 .table-scroll-wrapper .comparison-table {
   margin: 0;
 }
-.table-scroll-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 30px;
-  background: linear-gradient(to right, rgba(6,8,13,0.6), transparent);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.table-scroll-wrapper.is-scrollable::after {
-  opacity: 1;
-}
 
 /* ─── Accessibility statement ─── */
 .accessibility-statement {
@@ -4229,12 +4214,6 @@ document.addEventListener('DOMContentLoaded', () => {
     table.parentNode.insertBefore(wrapper, table);
     wrapper.appendChild(table);
 
-    // Check if scrollable and add indicator class
-    function checkScroll() {
-      wrapper.classList.toggle('is-scrollable', wrapper.scrollWidth > wrapper.clientWidth);
-    }
-    checkScroll();
-    window.addEventListener('resize', checkScroll);
   });
 });
 </script>
