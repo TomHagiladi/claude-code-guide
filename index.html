@@ -1350,7 +1350,7 @@ button:focus-visible,
       הסוכן שכותב קוד בשבילך
     </h1>
     <p class="hero-subtitle">
-      Claude Code הוא כלי בינה מלאכותית שמבין את כל הפרויקט שלך, כותב קוד, מתקן באגים, מריץ פקודות ובונה תוכנה — הכל דרך שיחה בשפה טבעית. בין אם אתה מתכנת מנוסה או מתחיל לגמרי, המדריך הזה בשבילך.
+      Claude Code הוא כלי בינה מלאכותית שמבין את כל הפרויקט שלך, כותב קוד, מתקן באגים, מריץ פקודות ובונה תוכנה — הכל דרך שיחה בשפה טבעית. זמין דרך אפליקציית דסקטופ עם ממשק גרפי נוח, או דרך הטרמינל למפתחים. בין אם אתה מתכנת מנוסה או מתחיל לגמרי, המדריך הזה בשבילך.
     </p>
     <div class="hero-cards">
       <a class="hero-card" href="#what" onclick="showSection('what');return false;" role="link">
@@ -1497,8 +1497,8 @@ button:focus-visible,
         </tr>
         <tr>
           <td><strong>אפליקציית דסקטופ</strong></td>
-          <td>אפליקציה עצמאית עם ממשק ויזואלי</td>
-          <td>כל אחד, במיוחד מתחילים</td>
+          <td>אפליקציה עם ממשק גרפי — כוללת Code, Chat ו-Cowork</td>
+          <td>כל אחד — הדרך המומלצת למתחילים ולמי שלא מתכנתים</td>
         </tr>
         <tr>
           <td><strong>דפדפן (Web)</strong></td>
@@ -1536,6 +1536,12 @@ button:focus-visible,
           <td>סוכן בטרמינל / IDE</td>
           <td>$20-$200/חודש</td>
           <td>הכי טוב במשימות מורכבות ורב-קבציות</td>
+        </tr>
+        <tr>
+          <td><strong lang="en" dir="ltr">Codex (OpenAI)</strong></td>
+          <td>סוכן בטרמינל (קוד פתוח)</td>
+          <td>חינם (+ מנוי ChatGPT או API)</td>
+          <td>מהירות גבוהה, קוד פתוח, פעולה אוטונומית</td>
         </tr>
         <tr>
           <td><strong>GitHub Copilot</strong></td>
@@ -1741,12 +1747,100 @@ button:focus-visible,
     </table>
   </div>
 
-  <!-- Method 1: Terminal -->
-  <div class="collapsible open" id="install-terminal">
+  <!-- Method 1: Desktop App (recommended) -->
+  <div class="collapsible" id="install-desktop">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
+      <h3>
+        <span class="icon" style="background:rgba(167,139,250,0.15)">🖥️</span>
+        אפליקציית דסקטופ — מומלץ לרוב המשתמשים
+      </h3>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>אפליקציית Claude Desktop היא הדרך הקלה והנוחה ביותר להתחיל לעבוד עם Claude Code. היא כוללת ממשק גרפי ידידותי, ומתאימה במיוחד למי שלא רגילים לעבוד עם טרמינל.</p>
+
+        <div class="info-box">
+          <p>
+            💡 <strong>מה מיוחד באפליקציית הדסקטופ?</strong> האפליקציה מכילה שלוש לשוניות: <strong style="color: var(--accent-primary);">Chat</strong> (שיחה רגילה), <strong style="color: var(--accent-primary);">Code</strong> (כתיבת קוד — זה בדיוק Claude Code, רק עם ממשק ויזואלי), ו-<strong style="color: var(--accent-primary);">Cowork</strong> (סוכן שיודע לעבוד על משימות שאינן קוד — מסמכים, גיליונות, מצגות ועוד). כל מה שאפשר לעשות בטרמינל, אפשר לעשות גם כאן — בלחיצות כפתור.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>הורידו את האפליקציה מהאתר הרשמי של Anthropic:</strong></p>
+              <ul>
+                <li><a href="https://claude.ai/api/desktop/win32/x64/exe/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary); font-weight:600;">הורדה ל-Windows (x64)</a> — מתאים לרוב מחשבי Windows</li>
+                <li><a href="https://claude.ai/api/desktop/win32/arm64/exe/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary);">הורדה ל-Windows ARM64</a> — למחשבי ARM בלבד (נדיר)</li>
+                <li><a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary); font-weight:600;">הורדה ל-macOS</a> — עובד על Intel ו-Apple Silicon</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>התקינו</strong> — הריצו את קובץ ההתקנה ועקבו אחר ההוראות</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>התחברו</strong> — פתחו את האפליקציה, התחברו עם חשבון Claude שלכם (מנוי Pro $20/חודש ומעלה)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p><strong>עברו ללשונית Code</strong> — לחצו על הלשונית "Code" בחלק העליון כדי להתחיל לעבוד עם Claude Code</p>
+            </div>
+          </div>
+        </div>
+
+        <h4>מה אפשר לעשות דרך הממשק הגרפי?</h4>
+        <ul>
+          <li><strong>סקירת שינויים ויזואלית</strong> — רואים בדיוק מה Claude שינה בקבצים, עם סימון צבעוני</li>
+          <li><strong>התקנת פלאגינים בקליק</strong> — חנות פלאגינים מובנית, בלי צורך בפקודות</li>
+          <li><strong>חיבור שירותים (Connectors)</strong> — Gmail, Slack, GitHub, Google Calendar ועוד — הכל בממשק גרפי</li>
+          <li><strong>גלישת סקילים</strong> — לחיצה על <code lang="en" dir="ltr">/</code> או על <code lang="en" dir="ltr">+</code> מציגה את כל הסקילים הזמינים</li>
+          <li><strong>בחירת תיקייה</strong> — בוחרים תיקיית פרויקט בדרך הרגילה, בלי פקודת cd</li>
+          <li><strong>סשנים מרובים</strong> — אפשר לעבוד על כמה פרויקטים במקביל בלשוניות שונות</li>
+          <li><strong>משימות מתוזמנות</strong> — אפשר לקבוע משימות חוזרות דרך ממשק גרפי</li>
+          <li><strong>גרירת קבצים</strong> — גוררים תמונות, PDF או קבצים אחרים ישירות לשיחה</li>
+        </ul>
+
+        <h4>מה זה Cowork?</h4>
+        <p>
+          לשונית <strong style="color: var(--accent-secondary);">Cowork</strong> היא בעצם "Claude Code למשימות שאינן קוד". היא יודעת ליצור מסמכי Word, גיליונות Excel עם נוסחאות, מצגות PowerPoint, לנתח PDF-ים, ולארגן קבצים — הכל בתוך סביבה מבודדת ומאובטחת. Cowork מתאימה במיוחד למי שרוצה להשתמש ביכולות של AI אבל לא צריכים דווקא לכתוב קוד.
+        </p>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>הכי קל להתקנה — הורד והתקן</li>
+            <li>ממשק ויזואלי — לא צריך ידע טכני</li>
+            <li>פלאגינים, סקילים וחיבורים דרך הממשק</li>
+            <li>כולל Cowork למשימות שאינן קוד</li>
+            <li>סקירת שינויים ויזואלית נוחה</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>דורש מנוי בתשלום ($20/חודש ומעלה)</li>
+            <li>לא זמין על Linux</li>
+            <li>חלק מהפיצ'רים המתקדמים זמינים רק ב-CLI (סקריפטים, אוטומציה)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 2: Terminal -->
+  <div class="collapsible" id="install-terminal">
     <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
       <h3>
         <span class="icon" style="background:rgba(52,211,153,0.15)">💻</span>
-        התקנה דרך הטרמינל (CLI) — מומלץ
+        התקנה דרך הטרמינל (CLI) — מומלץ למפתחים
       </h3>
       <span class="collapsible-arrow">▼</span>
     </div>
@@ -1960,78 +2054,6 @@ button:focus-visible,
     </div>
   </div>
 
-  <!-- Method 3: Desktop App -->
-  <div class="collapsible" id="install-desktop">
-    <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
-      <h3>
-        <span class="icon" style="background:rgba(167,139,250,0.15)">🖥️</span>
-        אפליקציית דסקטופ — הכי פשוט להתחלה
-      </h3>
-      <span class="collapsible-arrow">▼</span>
-    </div>
-    <div class="collapsible-body">
-      <div class="collapsible-inner">
-        <p>אפליקציה עצמאית שאפשר להוריד ולהתקין — בדיוק כמו כל תוכנה רגילה. מתאימה למי שרוצה להתחיל מהר בלי להתעסק עם טרמינל או עורכי קוד. זו הדרך הכי פשוטה להתחיל!</p>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <p><strong>הורידו את האפליקציה מהאתר הרשמי של Anthropic:</strong></p>
-              <ul>
-                <li><a href="https://claude.ai/api/desktop/win32/x64/exe/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary); font-weight:600;">הורדה ל-Windows (x64)</a> — מתאים לרוב מחשבי Windows</li>
-                <li><a href="https://claude.ai/api/desktop/win32/arm64/exe/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary);">הורדה ל-Windows ARM64</a> — למחשבי ARM בלבד (נדיר)</li>
-                <li><a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener" style="color:var(--accent-primary); font-weight:600;">הורדה ל-macOS</a> — עובד על Intel ו-Apple Silicon</li>
-              </ul>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <p><strong>התקינו</strong> — הריצו את קובץ ההתקנה ועקבו אחר ההוראות</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <p><strong>התחברו</strong> — פתחו את האפליקציה, התחברו עם חשבון Claude שלכם</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-content">
-              <p><strong>עברו ללשונית Code</strong> — לחצו על הלשונית "Code" כדי להתחיל לעבוד</p>
-            </div>
-          </div>
-        </div>
-
-        <h4>מה מיוחד באפליקציית הדסקטופ?</h4>
-        <ul>
-          <li>סקירת שינויים ויזואלית נוחה</li>
-          <li>הרצת מספר סשנים במקביל (חלונות מרובים)</li>
-          <li>שליחת משימות ל-Cloud (ללא תלות במחשב המקומי)</li>
-          <li>ממשק נקי ומודרני</li>
-        </ul>
-
-        <div class="pros-cons">
-          <ul class="pros-list">
-            <div class="list-title">✓ יתרונות</div>
-            <li>הכי קל להתקנה — הורד והתקן</li>
-            <li>ממשק ויזואלי עצמאי</li>
-            <li>לא צריך ידע טכני</li>
-            <li>סשנים מרובים במקביל</li>
-          </ul>
-          <ul class="cons-list">
-            <div class="list-title">✗ חסרונות</div>
-            <li>דורש מנוי בתשלום</li>
-            <li>פחות פיצ'רים מ-CLI</li>
-            <li>פחות אינטגרציה עם כלי פיתוח</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Method 4: JetBrains -->
   <div class="collapsible" id="install-jetbrains">
     <div class="collapsible-header" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this)}" tabindex="0" role="button" aria-expanded="false">
@@ -2174,9 +2196,9 @@ button:focus-visible,
       </thead>
       <tbody>
         <tr>
-          <td>מתחילים לגמרי</td>
-          <td><strong>אפליקציית דסקטופ</strong> או <strong>דפדפן</strong></td>
-          <td>הכי פשוט, בלי טרמינל</td>
+          <td>מתחילים לגמרי / לא מתכנתים</td>
+          <td><strong>אפליקציית דסקטופ</strong></td>
+          <td>ממשק גרפי ידידותי, כולל Cowork למשימות שאינן קוד</td>
         </tr>
         <tr>
           <td>עובדים ב-VS Code</td>
