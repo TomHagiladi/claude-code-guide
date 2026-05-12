@@ -137,26 +137,29 @@ body {
 /* ═══════════════════════════════════════════
    NAVIGATION
    ═══════════════════════════════════════════ */
+/* ─── Desktop default: vertical sidebar on the right (RTL "start") ─── */
 .navbar {
   position: fixed;
   top: 0;
-  left: 0;
   right: 0;
-  z-index: 100;
-  padding: 0 2rem;
-  height: 72px;
+  bottom: 0;
+  width: 240px;
+  z-index: 200;
+  padding: 1.5rem 1.1rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(10, 14, 24, 0.8);
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  background: rgba(10, 14, 24, 0.98);
   backdrop-filter: blur(20px) saturate(1.2);
-  border-bottom: 1px solid var(--border-dim);
+  border-left: 1px solid var(--border-dim);
   transition: var(--transition-smooth);
+  overflow: hidden;
 }
 
+/* In sidebar mode the "scrolled" state has no extra meaning */
 .navbar.scrolled {
-  background: rgba(10, 14, 24, 0.95);
-  border-bottom-color: var(--border-glow);
+  border-left-color: var(--border-glow);
   box-shadow: var(--glow-soft);
 }
 
@@ -166,6 +169,9 @@ body {
   gap: 12px;
   text-decoration: none;
   color: var(--text-bright);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-dim);
+  flex-shrink: 0;
 }
 
 .nav-logo-icon {
@@ -183,27 +189,37 @@ body {
 .nav-logo-text {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   letter-spacing: -0.02em;
 }
 
 .nav-links {
   display: flex;
-  gap: 0.25rem;
+  flex-direction: column;
+  gap: 0.15rem;
   list-style: none;
-  flex-wrap: wrap;
-  justify-content: center;
+  margin: 0;
+  padding: 0 0 1rem 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
+.nav-links::-webkit-scrollbar { width: 4px; }
+.nav-links::-webkit-scrollbar-thumb { background: var(--border-glow); border-radius: 2px; }
+
 .nav-links a {
+  display: block;
   color: var(--text-secondary);
   text-decoration: none;
-  padding: 0.4rem 0.7rem;
+  padding: 0.6rem 0.85rem;
   border-radius: var(--radius-sm);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-weight: 500;
   transition: var(--transition-fast);
   position: relative;
+  text-align: right;
 }
 
 .nav-links a:hover, .nav-links a.active {
@@ -214,12 +230,14 @@ body {
 .nav-links a.active::after {
   content: '';
   position: absolute;
-  bottom: 2px;
-  right: 1rem;
-  left: 1rem;
-  height: 2px;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  right: 0;
+  left: auto;
+  width: 3px;
+  height: auto;
   background: var(--accent-primary);
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
 .mobile-toggle {
@@ -232,6 +250,11 @@ body {
   cursor: pointer;
   font-size: 1.4rem;
   line-height: 1;
+}
+
+/* Sidebar pushes the main content to the left (RTL) */
+main, .footer {
+  margin-right: 240px;
 }
 
 /* ═══════════════════════════════════════════
@@ -1071,6 +1094,74 @@ button:focus-visible,
 
 /* ─── Responsive: Tablet (1024px) ─── */
 @media (max-width: 1024px) {
+  /* ── Collapse the sidebar back to a top navbar on tablet and below ── */
+  .navbar {
+    inset: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    width: auto;
+    height: 72px;
+    padding: 0 1.5rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    border-left: none;
+    border-bottom: 1px solid var(--border-dim);
+    overflow: visible;
+    background: rgba(10, 14, 24, 0.8);
+  }
+
+  .navbar.scrolled {
+    background: rgba(10, 14, 24, 0.95);
+    border-bottom-color: var(--border-glow);
+    box-shadow: var(--glow-soft);
+  }
+
+  .nav-logo {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .nav-links { display: none; }
+
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 72px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(10, 14, 24, 0.98);
+    border-bottom: 1px solid var(--border-glow);
+    padding: 1rem;
+    overflow-y: auto;
+    z-index: 99;
+  }
+
+  .nav-links a.active::after {
+    top: auto;
+    bottom: 2px;
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+    height: 2px;
+  }
+
+  .nav-links {
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  .mobile-toggle { display: block; }
+
+  main, .footer {
+    margin-right: 0;
+  }
+
   .hero-cards {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
@@ -1088,21 +1179,6 @@ button:focus-visible,
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-
-  .nav-links { display: none; }
-  .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 72px;
-    right: 0;
-    left: 0;
-    background: rgba(10,14,24,0.98);
-    border-bottom: 1px solid var(--border-glow);
-    padding: 1rem;
-  }
-
-  .mobile-toggle { display: block; }
 
   .section { padding: 60px 1rem; }
 
@@ -1323,10 +1399,7 @@ button:focus-visible,
     <li><a href="#best-practices" onclick="showSection('best-practices')" data-section="best-practices">שיטות מומלצות</a></li>
     <li><a href="#faq" onclick="showSection('faq')" data-section="faq">שאלות נפוצות</a></li>
   </ul>
-  <div style="display: flex; align-items: center; gap: 8px;">
-    <a href="https://www.tomhagiladi.com/" target="_blank" rel="noopener"><img src="tom-hagiladi-logo.png" alt="Tom Hagiladi" style="height: 28px; opacity: 0.8;" class="nav-author-logo"></a>
-    <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="תפריט" aria-expanded="false" aria-controls="navLinks">☰</button>
-  </div>
+  <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="תפריט" aria-expanded="false" aria-controls="navLinks">☰</button>
 </nav>
 
 <main id="main-content">
