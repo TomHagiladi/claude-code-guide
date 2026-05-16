@@ -607,7 +607,7 @@ main, .footer {
   background: var(--bg-deep);
   border: 1px solid var(--border-dim);
   border-radius: var(--radius-md);
-  padding: 1rem 1.25rem;
+  padding: 2.75rem 1.25rem 1rem;
   margin: 1rem 0;
   direction: ltr;
   text-align: left;
@@ -616,6 +616,9 @@ main, .footer {
   color: var(--accent-cyan);
   overflow-x: auto;
   position: relative;
+  white-space: pre-wrap;
+  word-break: break-word;
+  unicode-bidi: isolate;
 }
 
 .code-block .code-label {
@@ -1993,31 +1996,27 @@ button:focus-visible,
         <div class="code-block">
           <span class="code-label">PowerShell</span>
           <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-          irm https://claude.ai/install.ps1 | iex
-        </div>
+irm https://claude.ai/install.ps1 | iex</div>
         <p style="font-size:0.85rem; color:var(--text-muted);">מה הפקודה הזו עושה? היא מורידה את סקריפט ההתקנה מאתר Claude ומריצה אותו. כמו ללחוץ "הורד והתקן" — רק בשורת טקסט אחת.</p>
 
         <p><strong>Windows — CMD (שורת הפקודה הישנה):</strong></p>
         <div class="code-block">
           <span class="code-label">CMD</span>
           <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-          curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
-        </div>
+curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd</div>
 
         <p><strong>macOS / Linux:</strong></p>
         <div class="code-block">
           <span class="code-label">Bash</span>
           <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-          curl -fsSL https://claude.ai/install.sh | bash
-        </div>
+curl -fsSL https://claude.ai/install.sh | bash</div>
 
         <p><strong>אפשרות חלופית — Homebrew (macOS/Linux בלבד):</strong></p>
         <p style="font-size:0.85rem; color:var(--text-muted);">Homebrew הוא "חנות אפליקציות" לטרמינל ב-Mac ו-Linux. אם כבר מותקן אצלכם, אפשר להשתמש בו:</p>
         <div class="code-block">
           <span class="code-label">Homebrew</span>
           <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-          brew install --cask claude-code
-        </div>
+brew install --cask claude-code</div>
         <p style="font-size:0.85rem; color:var(--text-muted);">שימו לב: התקנת Homebrew לא מתעדכנת אוטומטית — להריץ <code lang="en" dir="ltr">brew upgrade claude-code</code> מעת לעת.</p>
 
         <p><strong>אפשרות חלופית — WinGet (Windows):</strong></p>
@@ -2025,8 +2024,7 @@ button:focus-visible,
         <div class="code-block">
           <span class="code-label">PowerShell</span>
           <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-          winget install Anthropic.ClaudeCode
-        </div>
+winget install Anthropic.ClaudeCode</div>
         <p style="font-size:0.85rem; color:var(--text-muted);">לעדכון: <code lang="en" dir="ltr">winget upgrade Anthropic.ClaudeCode</code> — התקנת WinGet לא מתעדכנת אוטומטית.</p>
 
         <h4>שלב 2.5 — אם הופיעה אזהרת PATH (חשוב מאוד ל-Windows!)</h4>
@@ -2060,8 +2058,7 @@ $currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
           <li><strong>פתחו PowerShell חדש</strong> ובדקו עם הפקודה:
             <div class="code-block" style="margin-top: 0.5rem;">
               <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-              claude --version
-            </div>
+claude --version</div>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-top: 0.3rem;">אם רואים מספר גרסה (למשל <code lang="en" dir="ltr">2.1.139</code>) — הצליח! 🎉</p>
           </li>
         </ol>
@@ -2076,8 +2073,7 @@ $currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
             <li>בחלון החדש לחצו <strong>New</strong> מימין, ובשורה הריקה הדביקו את הנתיב המלא (להחליף <code lang="en" dir="ltr">YOUR_NAME</code> בשם המשתמש שלכם):
               <div class="code-block" style="margin-top: 0.5rem;">
                 <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-                C:\Users\YOUR_NAME\.local\bin
-              </div>
+C:\Users\YOUR_NAME\.local\bin</div>
               <p style="font-size:0.85rem; color:var(--text-muted); margin-top: 0.3rem;">לא יודעים מה שם המשתמש? הוא רשום בהודעת ההתקנה עצמה — בדוגמה למעלה זה <code lang="en" dir="ltr">PC</code> (כי הנתיב היה <code lang="en" dir="ltr">C:\Users\PC\.local\bin</code>).</p>
             </li>
             <li>לחצו <strong>OK</strong> בשלושת החלונות (מהפנימי לחיצוני).</li>
@@ -2122,8 +2118,7 @@ source ~/.zshrc</div>
             <div class="step-content"><p><strong>נווטו לתיקיית הפרויקט</strong> — כתבו בטרמינל את הפקודה הבאה (שנו את הנתיב לתיקייה שלכם). הפקודה <code lang="en" dir="ltr">cd</code> (קיצור של Change Directory) אומרת למחשב "עבור לתיקייה הזו":</p>
               <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-                cd your-project
-              </div>
+cd your-project</div>
             </div>
           </div>
           <div class="step">
@@ -2131,8 +2126,7 @@ source ~/.zshrc</div>
             <div class="step-content"><p><strong>הפעילו את Claude Code</strong> — כתבו פשוט:</p>
               <div class="code-block">
                 <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-                claude
-              </div>
+claude</div>
               <p style="font-size:0.85rem; color:var(--text-muted);">זהו! מילה אחת והוא מתעורר לחיים.</p>
             </div>
           </div>
@@ -2596,8 +2590,7 @@ source ~/.zshrc</div>
               <div class="code-block">
                 <span class="code-label">PowerShell / Bash</span>
                 <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-                cd Documents/claude-projects/my-first-website
-              </div>
+cd Documents/claude-projects/my-first-website</div>
               <p style="font-size:0.85rem; color:var(--text-muted);">הפקודה <code lang="en" dir="ltr">cd</code> = Change Directory. אתם אומרים למחשב "אני עכשיו עובד מהתיקייה הזו".</p>
             </div>
           </div>
@@ -2608,8 +2601,7 @@ source ~/.zshrc</div>
               <div class="code-block">
                 <span class="code-label">PowerShell / Bash</span>
                 <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-                claude
-              </div>
+claude</div>
               <p style="font-size:0.85rem; color:var(--text-muted);">תראו לוגו ססגוני, ושאלה מי אתם (בפעם הראשונה). אחרי זה — תיבת קלט שמחכה לפרומפט.</p>
             </div>
           </div>
@@ -3502,8 +3494,7 @@ source ~/.zshrc</div>
     <div class="code-block">
       <span class="code-label">הקלידו בתוך Claude Code</span>
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-      /plugin
-    </div>
+/plugin</div>
     <p>
       זה יפתח תפריט עם שלוש לשוניות (כמו טאבים בדפדפן):
     </p>
@@ -3520,8 +3511,7 @@ source ~/.zshrc</div>
     <div class="code-block">
       <span class="code-label">הקלידו בתוך Claude Code</span>
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-      /plugin install frontend-design@claude-plugins-official
-    </div>
+/plugin install frontend-design@claude-plugins-official</div>
     <p>
       בואו נפרק את הפקודה הזו כדי שתבינו מה קורה:
     </p>
@@ -3568,8 +3558,7 @@ source ~/.zshrc</div>
     <div class="code-block">
       <span class="code-label">הקלידו בתוך Claude Code</span>
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-      /plugin marketplace update claude-plugins-official
-    </div>
+/plugin marketplace update claude-plugins-official</div>
     <p>
       מומלץ להריץ את הפקודה הזו פעם בשבוע-שבועיים, כדי לוודא שאתם לא מפספסים פלאגינים חדשים ומעניינים.
     </p>
@@ -4063,7 +4052,7 @@ claude --plugin-dir ./my-plugin</div>
     <div class="code-block">
       <span class="code-label">הקלידו בתוך Claude Code</span>
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-      /init</div>
+/init</div>
     <p>
       הפקודה הזו אומרת ל-Claude: "תסתכל על הפרויקט שלי ותיצור לי קובץ CLAUDE.md מותאם". Claude יסרוק את הקבצים, יבין מה הפרויקט, ויכתוב CLAUDE.md עם הגדרות מתאימות. אחרי זה תוכלו לערוך ולהוסיף העדפות אישיות.
     </p>
@@ -4073,7 +4062,7 @@ claude --plugin-dir ./my-plugin</div>
     <div class="code-block">
       <span class="code-label">הקלידו בתוך Claude Code</span>
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-      /memory</div>
+/memory</div>
     <p>
       זה יפתח את קובץ ה-CLAUDE.md לעריכה. אפשר לכתוב, לשנות, ולשמור — והשינויים ייכנסו לתוקף מיד בשיחה הבאה.
     </p>
@@ -4581,8 +4570,7 @@ See @README.md for project overview and @package.json for available npm commands
           <p><strong>חקירה (Plan Mode פעיל):</strong></p>
           <div class="code-block">
             <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-            תקרא את src/auth ותסביר לי איך אנחנו מנהלים sessions והתחברות. גם תבדוק איך אנחנו מנהלים משתני סביבה לסודות.
-          </div>
+תקרא את src/auth ותסביר לי איך אנחנו מנהלים sessions והתחברות. גם תבדוק איך אנחנו מנהלים משתני סביבה לסודות.</div>
         </div>
       </div>
       <div class="step">
@@ -4591,8 +4579,7 @@ See @README.md for project overview and @package.json for available npm commands
           <p><strong>תכנון (Plan Mode פעיל):</strong></p>
           <div class="code-block">
             <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-            אני רוצה להוסיף התחברות עם Google OAuth. אילו קבצים צריכים להשתנות? איך זרימת ה-session תיראה? תיצור תוכנית מפורטת.
-          </div>
+אני רוצה להוסיף התחברות עם Google OAuth. אילו קבצים צריכים להשתנות? איך זרימת ה-session תיראה? תיצור תוכנית מפורטת.</div>
         </div>
       </div>
       <div class="step">
@@ -4601,8 +4588,7 @@ See @README.md for project overview and @package.json for available npm commands
           <p><strong>יישום (יציאה מ-Plan Mode — לחיצה נוספת על <code lang="en" dir="ltr">Shift+Tab</code>):</strong></p>
           <div class="code-block">
             <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-            תיישם את התוכנית. תכתוב tests ל-callback handler, תריץ אותם, ותתקן כל מה שנכשל.
-          </div>
+תיישם את התוכנית. תכתוב tests ל-callback handler, תריץ אותם, ותתקן כל מה שנכשל.</div>
         </div>
       </div>
       <div class="step">
@@ -4611,8 +4597,7 @@ See @README.md for project overview and @package.json for available npm commands
           <p><strong>קומיט:</strong></p>
           <div class="code-block">
             <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-            תעשה commit עם הודעה תיאורית ותפתח PR
-          </div>
+תעשה commit עם הודעה תיאורית ותפתח PR</div>
         </div>
       </div>
     </div>
@@ -4784,20 +4769,17 @@ See @README.md for project overview and @package.json for available npm commands
     <div class="code-block">
       <span class="code-label">Bash / PowerShell</span>
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-      claude -p "תסביר מה הפרויקט הזה עושה"
-    </div>
+claude -p "תסביר מה הפרויקט הזה עושה"</div>
     <p style="margin-top: 0.5rem;">ופעולות מתקדמות יותר:</p>
     <div class="code-block">
       <span class="code-label">Bash</span>
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-      tail -200 app.log | claude -p "תשלח לי הודעה ב-Slack אם תראה משהו חריג"
-    </div>
+tail -200 app.log | claude -p "תשלח לי הודעה ב-Slack אם תראה משהו חריג"</div>
     <p style="margin-top: 0.5rem;">לרצים מרובים על קבצים — לולאה:</p>
     <div class="code-block">
       <span class="code-label">Bash</span>
       <button class="copy-btn" onclick="copyCode(this)">העתק</button>
-      for file in $(cat files.txt); do claude -p "תהפוך את $file מ-React ל-Vue. החזר OK או FAIL." --allowedTools "Edit,Bash(git commit *)"; done
-    </div>
+for file in $(cat files.txt); do claude -p "תהפוך את $file מ-React ל-Vue. החזר OK או FAIL." --allowedTools "Edit,Bash(git commit *)"; done</div>
   </div>
 
   <!-- 8. טעויות נפוצות -->
