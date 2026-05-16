@@ -2029,6 +2029,91 @@ button:focus-visible,
         </div>
         <p style="font-size:0.85rem; color:var(--text-muted);">לעדכון: <code lang="en" dir="ltr">winget upgrade Anthropic.ClaudeCode</code> — התקנת WinGet לא מתעדכנת אוטומטית.</p>
 
+        <h4>שלב 2.5 — אם הופיעה אזהרת PATH (חשוב מאוד ל-Windows!)</h4>
+        <p>בסוף ההתקנה ב-Windows, אם רואים את ההודעה הצהובה הבאה — <strong>אל תדלגו עליה</strong>:</p>
+        <div class="code-block">
+          <span class="code-label">הודעה שמופיעה אחרי התקנה ב-PowerShell</span>
+          <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+‼ Setup notes:
+  ● Native installation exists but C:\Users\YOUR_NAME\.local\bin is not in your PATH.
+    Add it by opening: System Properties → Environment Variables →
+    Edit User PATH → New → Add the path above. Then restart your terminal.</div>
+
+        <div class="info-box">
+          <p>
+            💡 <strong>מה זה PATH ולמה זה חשוב?</strong> <code lang="en" dir="ltr">PATH</code> זו רשימת תיקיות ש-Windows סורק כשמקלידים פקודה (כמו <code lang="en" dir="ltr">claude</code>). ההתקנה הצליחה ושמה את <code lang="en" dir="ltr">claude.exe</code> בתיקייה <code lang="en" dir="ltr">C:\Users\YOUR_NAME\.local\bin</code>, אבל Windows לא יודע לחפש שם. צריך "ללמד" אותו פעם אחת. בלי זה תקבלו "<code lang="en" dir="ltr">'claude' is not recognized</code>" בכל פעם שתפעילו את Claude.
+          </p>
+        </div>
+
+        <p><strong>פתרון מהיר (מומלץ) — שורה אחת ב-PowerShell:</strong></p>
+        <p>הדביקו את שתי השורות הבאות ב-PowerShell ולחצו Enter. זה מוסיף את התיקייה ל-User PATH לצמיתות:</p>
+        <div class="code-block">
+          <span class="code-label">PowerShell — תיקון קבוע</span>
+          <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
+[Environment]::SetEnvironmentVariable('PATH', "$currentPath;$env:USERPROFILE\.local\bin", 'User')</div>
+        <p style="font-size:0.85rem; color:var(--text-muted);">השורה הראשונה קוראת את ה-PATH הנוכחי. השנייה כותבת אותו חזרה עם תוספת של נתיב הבית שלכם + <code lang="en" dir="ltr">\.local\bin</code>. אין צורך לערוך — Windows יחליף את <code lang="en" dir="ltr">$env:USERPROFILE</code> אוטומטית.</p>
+
+        <p><strong>אחרי הרצת הפקודה — חובה לבצע את שני השלבים הבאים:</strong></p>
+        <ol style="padding-inline-start: 1.5rem; line-height: 2;">
+          <li><strong>סגרו לחלוטין את חלון ה-PowerShell</strong> — לא טאב חדש, חלון חדש. השינוי נכנס לתוקף רק בחלונות חדשים.</li>
+          <li><strong>פתחו PowerShell חדש</strong> ובדקו עם הפקודה:
+            <div class="code-block" style="margin-top: 0.5rem;">
+              <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+              claude --version
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top: 0.3rem;">אם רואים מספר גרסה (למשל <code lang="en" dir="ltr">2.1.139</code>) — הצליח! 🎉</p>
+          </li>
+        </ol>
+
+        <details style="margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(167,139,250,0.05); border: 1px solid rgba(167,139,250,0.2); border-radius: var(--radius-md);">
+          <summary style="cursor: pointer; font-weight: 600; color: var(--accent-secondary);">⚙️ פתרון חלופי — דרך הממשק הגרפי (System Properties)</summary>
+          <p style="margin-top: 0.75rem;">אם אתם מעדיפים לעבוד עם חלונות במקום פקודות, אפשר להוסיף את התיקייה ידנית:</p>
+          <ol style="padding-inline-start: 1.5rem; line-height: 2;">
+            <li>לחצו על מקש <strong>Windows</strong> במקלדת והקלידו <code lang="en" dir="ltr">environment variables</code> (או בעברית: "משתני סביבה").</li>
+            <li>בחרו <strong style="color: var(--accent-primary);">Edit environment variables for your account</strong> — עריכת משתני סביבה עבור החשבון שלכם. <strong style="color: var(--accent-rose);">חשוב:</strong> זו, ולא הגרסה של "System" — לזו אין צורך בהרשאות מנהל.</li>
+            <li>בטבלה העליונה "User variables for [שם המשתמש]" — חפשו את השורה ששמה <strong>Path</strong>, לחצו עליה פעם אחת, ואז על כפתור <strong>Edit...</strong></li>
+            <li>בחלון החדש לחצו <strong>New</strong> מימין, ובשורה הריקה הדביקו את הנתיב המלא (להחליף <code lang="en" dir="ltr">YOUR_NAME</code> בשם המשתמש שלכם):
+              <div class="code-block" style="margin-top: 0.5rem;">
+                <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+                C:\Users\YOUR_NAME\.local\bin
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-top: 0.3rem;">לא יודעים מה שם המשתמש? הוא רשום בהודעת ההתקנה עצמה — בדוגמה למעלה זה <code lang="en" dir="ltr">PC</code> (כי הנתיב היה <code lang="en" dir="ltr">C:\Users\PC\.local\bin</code>).</p>
+            </li>
+            <li>לחצו <strong>OK</strong> בשלושת החלונות (מהפנימי לחיצוני).</li>
+            <li>סגרו את חלון ה-PowerShell, פתחו חדש, ובדקו עם <code lang="en" dir="ltr">claude --version</code>.</li>
+          </ol>
+        </details>
+
+        <div class="info-box" style="background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2); margin-top: 1rem;">
+          <p>
+            ⏱️ <strong>פתרון זמני לסשן הנוכחי בלבד</strong> (במקרה שאתם ממהרים לעבוד עכשיו ותסדרו את ה-PATH הקבוע אחר כך):
+          </p>
+          <div class="code-block" style="margin-top: 0.5rem;">
+            <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+$env:Path += ";$env:USERPROFILE\.local\bin"</div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top: 0.3rem;">הפקודה הזו מוסיפה את התיקייה ל-PATH רק לחלון ה-PowerShell הנוכחי. כשתסגרו אותו — תצטרכו להריץ אותה שוב. לכן מומלץ לעשות את התיקון הקבוע ברגע שיש לכם זמן.</p>
+        </div>
+
+        <h4 style="margin-top: 1.5rem;">⚠️ אם <code lang="en" dir="ltr">claude --version</code> עדיין לא עובד</h4>
+        <ul>
+          <li><strong>בדקו שהקובץ באמת קיים:</strong> הריצו <code lang="en" dir="ltr">Test-Path "$env:USERPROFILE\.local\bin\claude.exe"</code> — אם חוזר <code lang="en" dir="ltr">True</code>, הקובץ קיים והבעיה היא רק PATH.</li>
+          <li><strong>ראו מאיפה Windows מנסה להריץ:</strong> <code lang="en" dir="ltr">where.exe claude</code> — אם זה ריק, PATH עדיין לא נקלט (וצריך לסגור ולפתוח מחדש את החלון).</li>
+          <li><strong>ודאו שהוספתם ל-User PATH, לא ל-System PATH</strong> — System PATH דורש הרשאות מנהל ומשפיע על כל המשתמשים. ברוב המקרים זה מיותר.</li>
+        </ul>
+
+        <div class="info-box" style="background: rgba(52,211,153,0.05); border-color: rgba(52,211,153,0.2);">
+          <p>
+            🍏 <strong>ב-macOS / Linux זה בדרך כלל לא בעיה</strong> — סקריפט ההתקנה מוסיף אוטומטית את <code lang="en" dir="ltr">~/.local/bin</code> ל-PATH דרך עריכת <code lang="en" dir="ltr">~/.zshrc</code> או <code lang="en" dir="ltr">~/.bashrc</code>. אם בכל זאת קיבלתם <code lang="en" dir="ltr">command not found: claude</code>, הריצו:
+          </p>
+          <div class="code-block" style="margin-top: 0.5rem;">
+            <span class="code-label">Bash/Zsh (macOS &amp; Linux)</span>
+            <button class="copy-btn" onclick="copyCode(this)">העתק</button>
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc</div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top: 0.3rem;">ב-Linux החליפו <code lang="en" dir="ltr">~/.zshrc</code> ב-<code lang="en" dir="ltr">~/.bashrc</code>.</p>
+        </div>
+
         <h4>שלב 3 — הפעלה ראשונה</h4>
         <p>ההתקנה הסתיימה! עכשיו בואו נפעיל את Claude Code:</p>
         <div class="steps">
