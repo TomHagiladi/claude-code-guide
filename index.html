@@ -2059,7 +2059,7 @@ $currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
             <div class="code-block" style="margin-top: 0.5rem;">
               <button class="copy-btn" onclick="copyCode(this)">העתק</button>
 claude --version</div>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin-top: 0.3rem;">אם רואים מספר גרסה (למשל <code lang="en" dir="ltr">2.1.139</code>) — הצליח! 🎉</p>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top: 0.3rem;">אם רואים מספר גרסה (למשל <code lang="en" dir="ltr">2.1.195</code>) — הצליח! 🎉</p>
           </li>
         </ol>
 
@@ -2737,7 +2737,7 @@ claude</div>
           <li><strong style="color: var(--accent-tertiary);">Default (ברירת מחדל)</strong> — שואל לפני כל פעולה משמעותית. המצב הכי בטוח, מומלץ למתחילים.</li>
           <li><strong style="color: var(--accent-primary);">Accept Edits (<code lang="en" dir="ltr">acceptEdits</code>)</strong> — מאשר אוטומטית עריכת קבצים ופקודות שמירת קבצים בסיסיות (<code lang="en" dir="ltr">mkdir</code>, <code lang="en" dir="ltr">cp</code>, <code lang="en" dir="ltr">mv</code>), אבל עדיין שואל לפני הרצת פקודות אחרות. <strong>זה המצב היומיומי המומלץ</strong> אחרי שמתרגלים. תראו <code lang="en" dir="ltr">⏵⏵ accept edits on</code> בתחתית.</li>
           <li><strong style="color: var(--accent-warm);">Plan mode</strong> — Claude רק חוקר ומתכנן, בלי לבצע שום שינוי. מצוין לפני שיוצאים למשימה גדולה. גם ב-<code lang="en" dir="ltr">Ctrl+G</code> אפשר לפתוח את התוכנית בעורך טקסט ולערוך אותה לפני שClaud מתחיל.</li>
-          <li><strong style="color: var(--accent-cyan);">Auto mode</strong> — קלאסיפייר חכם ברקע מאשר פעולות שגרתיות אוטומטית, וחוסם רק פעולות חשודות. <strong>לא זמין ב-Pro</strong> — דורש Max / Team / Enterprise / API, וגם דגם Sonnet 4.6 / Opus 4.6 / Opus 4.7. אם זה לא מופיע לכם — זו הסיבה.</li>
+          <li><strong style="color: var(--accent-cyan);">Auto mode</strong> — קלאסיפייר חכם ברקע מאשר פעולות שגרתיות אוטומטית, וחוסם רק פעולות חשודות. <strong>לא זמין ב-Pro</strong> — דורש Max / Team / Enterprise / API, וגם דגם Sonnet/Opus 4.6 ומעלה (כולל Opus 4.8). אם זה לא מופיע לכם — זו הסיבה.</li>
           <li><strong style="color: var(--accent-rose);">Bypass permissions (YOLO)</strong> — הכל אוטומטי, בלי לשאול. <strong>לא מומלץ למתחילים</strong> — סיכון לנזק לקבצים. דורש דגל הפעלה מפורש (<code lang="en" dir="ltr">--permission-mode bypassPermissions</code>) ולא יופיע ב-Shift+Tab בלי זה.</li>
         </ul>
 
@@ -4286,6 +4286,11 @@ See @README.md for project overview and @package.json for available npm commands
         <td>כשהשיחה ארוכה וקשה לסקור שינויים בטרמינל — מעבירים לדסקטופ</td>
       </tr>
       <tr>
+        <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/voice</code></td>
+        <td>מפעילה הקלדה קולית — מדברים במקום להקליד, וClaude ממיר לטקסט (תומך ב-20 שפות כולל עברית)</td>
+        <td>כשנוח יותר לדבר מאשר להקליד — לפרומפטים ארוכים או למי שמקליד לאט</td>
+      </tr>
+      <tr>
         <td style="direction: ltr; text-align: left;"><code lang="en" dir="ltr" style="color: var(--accent-cyan);">/agents</code></td>
         <td>מציגה את רשימת תת-הסוכנים (Subagents) המוגדרים</td>
         <td>כשרוצים להפעיל סוכן מומחה לתחום ספציפי, או לראות מה זמין</td>
@@ -5624,7 +5629,7 @@ for file in $(cat files.txt); do claude -p "תהפוך את $file מ-React ל-Vu
   <p>
     מידע מבוסס על
     <a href="https://code.claude.com/docs" target="_blank" rel="noopener">התיעוד הרשמי של Anthropic</a>
-    · מעודכן למאי 2026
+    · מעודכן ליוני 2026
   </p>
   <p style="margin-top: 0.5rem; font-size: 0.8rem;">
     Claude Code הוא מוצר של
@@ -5671,7 +5676,7 @@ for file in $(cat files.txt); do claude -p "תהפוך את $file מ-React ל-Vu
       <a href="mailto:tomhagiladi@gmail.com" style="color: var(--accent-primary);">tomhagiladi@gmail.com</a>
     </p>
     <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
-      הצהרה זו עודכנה לאחרונה: מרץ 2026
+      הצהרה זו עודכנה לאחרונה: יוני 2026
     </p>
   </div>
 </footer>
