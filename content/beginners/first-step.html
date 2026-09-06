@@ -1,0 +1,437 @@
+<h1>הצעד הראשון שלי</h1>
+<p class="lede">התקנתם את Claude Code - מצוין. עכשיו מה? מדריך צעד-אחר-צעד לשעה הראשונה שלכם - בלי שום ידע מוקדם, בלי לנחש איפה ללחוץ</p>
+
+
+  <div class="content-block">
+    <h2>
+      מפה כללית - מה אתם עומדים לעשות
+    </h2>
+    <p>
+      Claude Code זה לא רק "תיבת צ'אט עם AI". זה כלי שעובד בתוך תיקיית פרויקט אמיתית על המחשב שלכם - קורא קבצים, יוצר קבצים חדשים, מריץ פקודות, מתקן באגים. לכן השעה הראשונה דורשת קצת התמצאות.
+    </p>
+    <p>
+      <strong>בקצרה - מה עומדים לעשות בדקות הקרובות:</strong>
+    </p>
+    <ol>
+      <li><strong>צעד 1:</strong> בוחרים תיקייה לעבוד בה (פרויקט חדש, פרויקט קיים, או ריפוזיטורי GitHub)</li>
+      <li><strong>צעד 2:</strong> פותחים את Claude Code בתוך התיקייה הזו</li>
+      <li><strong>צעד 3:</strong> כותבים את הפרומפט הראשון בעברית רגילה</li>
+      <li><strong>צעד 4:</strong> מבינים איך לאשר/לדחות פעולות שClaude מציע</li>
+      <li><strong>צעד 5:</strong> יודעים איך לעצור, לחזור אחורה, ולהמשיך שיחה</li>
+      <li><strong>צעד 6:</strong> שומרים את העבודה כך שתישאר גם אחרי שתסגרו את המחשב</li>
+    </ol>
+
+    <div class="info-box">
+      <p>
+        <strong>שיטה אחת - שלוש סביבות.</strong> בין אם אתם בטרמינל, ב-VS Code או באפליקציית הדסקטופ - העקרונות זהים. ההבדל הוא רק <em>איפה</em> אתם מקלידים את הפרומפט. כל פקודה שלמדתם בטרמינל תעבוד גם ב-VS Code וגם בדסקטופ - אותה פקודת <code lang="en" dir="ltr">/init</code>, אותה פקודת <code lang="en" dir="ltr">/clear</code>, אותם קיצורי מקלדת.
+      </p>
+    </div>
+  </div>
+
+  <!-- צעד 1: בחירת תיקייה -->
+  <div class="collapsible" id="step-folder">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        צעד 1 - איפה אני עובד? בחירת תיקיית פרויקט
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>
+          <strong>כלל הברזל:</strong> Claude Code עובד בתוך תיקייה אחת ספציפית. כל מה שהוא יקרא, ישנה או יבנה - יקרה בתוך התיקייה הזו. אסור לפתוח אותו מהשולחן עבודה או מתיקיית Downloads - בחרו תיקייה ייעודית.
+        </p>
+
+        <h3>אפשרות א' - פרויקט חדש מאפס (המומלץ למתחילים)</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>החליטו על שם.</strong> משהו תיאורי - "my-first-website", "todo-app", "klaf-bingo". אנגלית עדיפה, ללא רווחים, ללא תווים מיוחדים.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>צרו תיקייה חדשה.</strong> Windows: File Explorer ← לכו ל-Documents ← לחיצה ימנית ← New ← Folder ← שם. Mac: Finder ← Documents ← לחיצה ימנית ← New Folder. הכי קל זה לפתוח את התיקייה ולראות אותה ריקה - זה הקנבס שלכם.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>זה הכל בשלב זה.</strong> אל תיצרו עדיין שום קובץ בפנים - Claude יעשה את זה בשבילכם.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>אפשרות ב' - פרויקט קיים על המחשב</h3>
+        <p>אם כבר יש לכם תיקייה עם קוד - מצוין. דלגו לצעד הבא. Claude יקרא את מה שיש שם ויעבוד בהתאם.</p>
+
+        <h3>אפשרות ג' - לעבוד על ריפוזיטורי מ-GitHub</h3>
+        <p>אם המטרה היא לעבוד על פרויקט ב-GitHub (שלכם או של אחרים) - שתי דרכים:</p>
+        <ul>
+          <li><strong>דרך הדסקטופ / טרמינל / VS Code:</strong> צריך קודם להוריד אותו למחשב (פעולה שנקראת "clone"). Claude יעשה את זה בשבילכם - פשוט אמרו "תוריד לי את הריפו <code lang="en" dir="ltr">github.com/user/repo</code>". הוא יבחר תיקייה, יוריד הכל ויפתח את הסשן בתוכה.</li>
+          <li><strong>דרך הדפדפן (claude.ai/code):</strong> אין צורך להוריד - בוחרים את הריפו ישירות מתוך הממשק. Claude עובד עליו בענן.</li>
+        </ul>
+
+        <div class="info-box">
+          <p>
+            <strong>מה עדיף - Documents או Desktop?</strong> שני המקומות עובדים, אבל המלצה אישית: צרו תיקיית-על אחת בשם <code lang="en" dir="ltr">claude-projects</code> בתוך Documents או בשורש הכונן (C:\) - וכל פרויקט חדש יהיה תת-תיקייה בתוכה. ככה הכל מסודר במקום אחד.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- צעד 2: פתיחה -->
+  <div class="collapsible" id="step-open">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        צעד 2 - פתיחת Claude Code בתוך התיקייה
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>זה השלב שבו אנחנו "מצביעים" ל-Claude איפה לעבוד. שלוש דרכים, לפי הסביבה שלכם:</p>
+
+        <h3>באפליקציית הדסקטופ</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p>פתחו את אפליקציית Claude (מתפריט ההתחלה / Applications).</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p>לחצו על לשונית <strong>Code</strong> בחלק העליון.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p>לחצו על כפתור <strong>"Open Folder"</strong> (פתיחת תיקייה) ובחרו את התיקייה שיצרתם בצעד 1.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content"><p>זהו - Claude טען את התיקייה ומוכן לעבוד. תיבת הקלט בתחתית המסך מחכה לפרומפט שלכם.</p></div>
+          </div>
+        </div>
+
+        <h3>ב-VS Code</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p>פתחו את VS Code.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p>בתפריט העליון: <strong>File ← Open Folder</strong> ← בחרו את התיקייה שיצרתם.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p>אם זו פעם ראשונה שאתם פותחים את התיקייה, VS Code ישאל "Do you trust the authors?" - לחצו <strong>"Yes, I trust the authors"</strong> (אתם המחבר, אז זה בטוח).</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content"><p>לחצו <code lang="en" dir="ltr">Ctrl+Shift+P</code> ← הקלידו <strong>"Claude Code"</strong> ← בחרו <strong>"Open in New Tab"</strong>. תיבת השיחה של Claude תיפתח כלשונית חדשה.</p></div>
+          </div>
+        </div>
+
+        <h3>בטרמינל</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p>פתחו טרמינל (PowerShell ב-Windows / Terminal ב-Mac).</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p>נווטו לתיקייה שלכם. למשל:</p>
+              <div class="code-block">
+                <span class="code-label">PowerShell / Bash</span>
+                <button class="copy-btn">העתק</button>
+cd Documents/claude-projects/my-first-website</div>
+              <p>הפקודה <code lang="en" dir="ltr">cd</code> = Change Directory. אתם אומרים למחשב "אני עכשיו עובד מהתיקייה הזו".</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p>הריצו את Claude:</p>
+              <div class="code-block">
+                <span class="code-label">PowerShell / Bash</span>
+                <button class="copy-btn">העתק</button>
+claude</div>
+              <p>תראו לוגו ססגוני, ושאלה מי אתם (בפעם הראשונה). אחרי זה - תיבת קלט שמחכה לפרומפט.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <p>
+            <strong>טריק שווה זהב:</strong> ב-Windows, פתחו את התיקייה ב-File Explorer, לחצו על שורת הכתובת למעלה, הקלידו <code lang="en" dir="ltr">powershell</code> ולחצו Enter - ייפתח טרמינל שכבר נמצא בתיקייה הנכונה. חוסך את כל ה-<code lang="en" dir="ltr">cd</code>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- צעד 3: הפרומפט הראשון -->
+  <div class="collapsible" id="step-first-prompt">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        צעד 3 - הפרומפט הראשון שלכם
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>זה הרגע. אתם רואים תיבת קלט. מה לכתוב?</p>
+
+        <div class="info-box">
+          <p>
+            <strong>אין סגנון "נכון".</strong> Claude מבין עברית רגילה, אנגלית רגילה, ואפילו "תעשה לי משהו יפה". אבל ככל שתפרטו יותר, התוצאה תהיה קרובה יותר למה שדמיינתם.
+          </p>
+        </div>
+
+        <h3>אם זה פרויקט חדש - דוגמאות לפרומפט פתיחה</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">סוג פרויקט</th>
+              <th scope="col">פרומפט פתיחה לדוגמה</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>אתר תדמית פשוט</td>
+              <td>"תבנה לי דף נחיתה לסטודיו לעיצוב גרפי בשם 'אסטרא'. עברית RTL, צבעים חמים (חרדל וטרקוטה), שלוש סקציות: הסטודיו, שירותים, צור קשר. אחרי שתסיים, פתח את הקובץ בדפדפן ותראה לי."</td>
+            </tr>
+            <tr>
+              <td>אפליקציית משימות</td>
+              <td>"תבנה לי אפליקציית רשימת משימות בעברית. אפשר להוסיף משימה, לסמן כבוצעה, ולמחוק. נשמר ב-localStorage כדי שלא ייעלם. עיצוב נקי, צבע ראשי כחול-טורקיז."</td>
+            </tr>
+            <tr>
+              <td>סקריפט אוטומציה</td>
+              <td>"תכתוב לי סקריפט Python שעובר על כל קבצי ה-CSV בתיקייה הנוכחית, סופר כמה שורות יש בכל אחד, ויוצר דוח HTML יפה עם טבלה וסך-הכל. תריץ אותו אחרי שתכתוב כדי לוודא שזה עובד."</td>
+            </tr>
+            <tr>
+              <td>תיקון באג בקוד קיים</td>
+              <td>"כשאני לוחץ על הכפתור 'שלח' בדף ההזמנה, כלום לא קורה. תבדוק את index.html ו-script.js, תמצא את הבעיה ותתקן. אל תשנה כלום אחר."</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>4 חוקי ברזל לפרומפט טוב</h3>
+        <ol>
+          <li><strong>תהיו ספציפיים.</strong> "תעשה את זה יפה" → "תוסיף הצללה, מרווחים גדולים יותר ופונט Heebo".</li>
+          <li><strong>תנו דוגמה.</strong> אם יש לכם אתר/תמונה/קוד שמוצא חן בעיניכם - צטטו את הקישור או גררו את התמונה לתוך השיחה.</li>
+          <li><strong>בקשו אימות.</strong> "אחרי שתסיים, תפתח את הדף בדפדפן ותראה לי שזה עובד" - שורה אחת שמשנה הכל. עוזרת ל-Claude לתפוס באגים לפני שתגלו אותם.</li>
+          <li><strong>סגרו את הגבולות.</strong> "תיגע רק ב-style.css" / "אל תיצור קבצים חדשים" - חוסכים שינויים לא רצויים.</li>
+        </ol>
+
+        <div class="info-box">
+          <p>
+            <strong>טעות מתחילים נפוצה:</strong> לבקש פרויקט ענק בפרומפט אחד ("תבנה לי רשת חברתית מלאה עם התחברות, צ'אטים, ושיתוף תמונות"). זה לעולם לא יעבוד טוב. במקום זה: <strong>תחילו בקטן.</strong> "תבנה לי דף התחברות" → רואים שזה עובד → "עכשיו תוסיף עמוד פרופיל" → וכן הלאה. כל צעד נבנה על הקודם.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- צעד 4: אישורים -->
+  <div class="collapsible" id="step-approvals">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        צעד 4 - איך לאשר ולדחות פעולות
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>
+          זה החלק שהכי מבלבל בהתחלה. Claude לא סתם כותב טקסט - הוא <strong>עושה</strong> דברים: יוצר קבצים, משנה קבצים, מריץ פקודות. לפני כל פעולה הוא ישאל אתכם.
+        </p>
+
+        <h3>מתי Claude שואל אישור</h3>
+        <ul>
+          <li><strong>יצירת קובץ חדש</strong> - מציג לכם את התוכן ושואל אם לאשר</li>
+          <li><strong>שינוי קובץ קיים</strong> - מציג השוואה לפני/אחרי (סימן + לשורה חדשה, סימן − לשורה שנמחקה)</li>
+          <li><strong>הרצת פקודה בטרמינל</strong> - מציג את הפקודה ושואל "להריץ?"</li>
+          <li><strong>גישה לאינטרנט / שירותים חיצוניים</strong> - תמיד שואל</li>
+        </ul>
+
+        <h3>שלוש האפשרויות שלכם</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">תשובה</th>
+              <th scope="col">מה קורה</th>
+              <th scope="col">מתי להשתמש</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Yes (לאשר)</strong></td>
+              <td>הפעולה תתבצע, Claude ממשיך הלאה</td>
+              <td>כשהשינוי נראה הגיוני</td>
+            </tr>
+            <tr>
+              <td><strong>Yes, and don't ask again</strong></td>
+              <td>הפעולה תתבצע, ופעולות דומות יאושרו אוטומטית בהמשך הסשן</td>
+              <td>כשבוטחים ב-Claude בנושא ספציפי (למשל "אפשר לערוך כל קובץ CSS בלי לשאול")</td>
+            </tr>
+            <tr>
+              <td><strong>No (לדחות)</strong></td>
+              <td>הפעולה לא תתבצע. Claude יחכה שתסבירו מה לעשות אחרת</td>
+              <td>כשהשינוי לא נראה הגיוני, או כשרוצים לכוון אותו אחרת</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>מצבי הרשאה - בחרו לפי רמת הביטחון שלכם</h3>
+        <p>Claude Code מאפשר לכם להגדיר מראש "כמה לסמוך עליו". מחליפים בין המצבים בלחיצה על <code lang="en" dir="ltr">Shift+Tab</code>. מסלול ברירת המחדל: Default → Accept Edits → Plan, וחוזר חלילה.</p>
+        <ul>
+          <li><strong>Default (ברירת מחדל)</strong> - שואל לפני כל פעולה משמעותית. המצב הכי בטוח, מומלץ למתחילים.</li>
+          <li><strong>Accept Edits (<code lang="en" dir="ltr">acceptEdits</code>)</strong> - מאשר אוטומטית עריכת קבצים ופקודות שמירת קבצים בסיסיות (<code lang="en" dir="ltr">mkdir</code>, <code lang="en" dir="ltr">cp</code>, <code lang="en" dir="ltr">mv</code>), אבל עדיין שואל לפני הרצת פקודות אחרות. <strong>זה המצב היומיומי המומלץ</strong> אחרי שמתרגלים. תראו <code lang="en" dir="ltr">⏵⏵ accept edits on</code> בתחתית.</li>
+          <li><strong>Plan mode</strong> - Claude רק חוקר ומתכנן, בלי לבצע שום שינוי. מצוין לפני שיוצאים למשימה גדולה. גם ב-<code lang="en" dir="ltr">Ctrl+G</code> אפשר לפתוח את התוכנית בעורך טקסט ולערוך אותה לפני שClaud מתחיל.</li>
+          <li><strong>Auto mode</strong> - קלאסיפייר חכם ברקע מאשר פעולות שגרתיות אוטומטית, וחוסם רק פעולות חשודות. <strong>זמין בכל המנויים (Pro, Max, Team, Enterprise) וב-API, ומאז 2026 הוא מצב ההתחלה המובנה במנויי Pro, Max ו-Team. דורש מודל Opus 4.6 ומעלה, Sonnet 4.6 ומעלה או Fable. אם הוא לא מופיע לכם - כנראה שמנהל הארגון כיבה אותו.</li>
+          <li><strong>Bypass permissions (YOLO)</strong> - הכל אוטומטי, בלי לשאול. <strong>לא מומלץ למתחילים</strong> - סיכון לנזק לקבצים. דורש דגל הפעלה מפורש (<code lang="en" dir="ltr">--permission-mode bypassPermissions</code>) ולא יופיע ב-Shift+Tab בלי זה.</li>
+        </ul>
+
+        <div class="info-box">
+          <p>
+            <strong>איך לראות איפה אתם עכשיו?</strong> בתחתית המסך כתוב הסטטוס הנוכחי - "default mode", "auto mode" וכו'. אם אתם לא בטוחים - לחצו <code lang="en" dir="ltr">Esc</code> וזה מחזיר אתכם למצב הבסיסי.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- צעד 5: עצירה וחזרה -->
+  <div class="collapsible" id="step-undo">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        צעד 5 - לעצור, לחזור אחורה, ולנקות את השיחה
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>
+          הדבר הכי חשוב למתחילים: <strong>שום דבר לא בלתי הפיך.</strong> Claude יוצר אוטומטית נקודות שמירה (checkpoints) לפני כל פעולה, ואתם יכולים לחזור אחורה לכל רגע - גם אחרי שעות.
+        </p>
+
+        <h3>שלוש פעולות חירום - שעלו לזכור</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">המקרה</th>
+              <th scope="col">הפתרון</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Claude כותב כבר 30 שניות ואני רוצה לעצור אותו</td>
+              <td>לחצו <code lang="en" dir="ltr">Esc</code> - עוצר אותו מיד. השיחה נשמרת - אפשר להמשיך משם.</td>
+            </tr>
+            <tr>
+              <td>Claude עשה שינוי שלא רציתי</td>
+              <td>לחצו <code lang="en" dir="ltr">Esc Esc</code> (פעמיים) או הקלידו <code lang="en" dir="ltr">/rewind</code> - ייפתח תפריט שמראה את כל הנקודות שאפשר לחזור אליהן. בוחרים נקודה, ו-Claude יחזיר את כל הקבצים למצב באותו רגע.</td>
+            </tr>
+            <tr>
+              <td>השיחה בלגן - Claude כבר לא מבין מה אני רוצה</td>
+              <td>הקלידו <code lang="en" dir="ltr">/clear</code> - מנקה את כל ההיסטוריה ומתחיל מאפס. הקבצים נשארים, רק השיחה מתחילה מחדש.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box">
+          <p>
+            <strong>למה <code lang="en" dir="ltr">/clear</code> כל כך חשוב?</strong> Claude זוכר את כל השיחה - כל קובץ שקרא, כל שגיאה שראה, כל בקשה שלכם. ככל שהשיחה ארוכה יותר, ככה "הזיכרון" שלו מתמלא, ובשלב מסוים הוא מתחיל "לשכוח" דברים מההתחלה ולעשות שגיאות. כשמסיימים משימה ועוברים לחדשה - תמיד <code lang="en" dir="ltr">/clear</code>. השוואה לחיים: כמו לפתוח טאב חדש בדפדפן במקום להמשיך לגלול לאחור 200 דפים.
+          </p>
+        </div>
+
+        <h3>הדרכים השונות לבטל</h3>
+        <ul>
+          <li><strong>"תבטל את השינוי האחרון"</strong> - דרך מילולית, עובדת תמיד</li>
+          <li><strong>Esc Esc</strong> או <code lang="en" dir="ltr">/rewind</code> - תפריט ויזואלי של נקודות שמירה</li>
+          <li><strong>Git revert</strong> - אם הפרויקט מחובר ל-Git, אפשר לבקש "תחזיר את כל הקבצים למה שהיו לפני שעה"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- צעד 6: לסיים ולחזור מחר -->
+  <div class="collapsible" id="step-save">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        צעד 6 - לסגור, לשמור, להמשיך מחר
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>
+          חלון השיחה עם Claude נסגר - מה קורה? <strong>הקבצים שלכם בטוחים.</strong> כל מה שClaud כתב לדיסק נשאר. השיחה עצמה נשמרת אוטומטית - אפשר לחזור אליה מחר.
+        </p>
+
+        <h3>איך לחזור לאותה שיחה</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th scope="col">סביבה</th>
+              <th scope="col">איך</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>טרמינל</strong></td>
+              <td>נווטו לתיקייה (<code lang="en" dir="ltr">cd ...</code>) והריצו <code lang="en" dir="ltr">claude --continue</code> כדי להמשיך את השיחה האחרונה, או <code lang="en" dir="ltr">claude --resume</code> כדי לבחור מתוך רשימה של שיחות קודמות.</td>
+            </tr>
+            <tr>
+              <td><strong>VS Code / דסקטופ</strong></td>
+              <td>פתחו את אותה תיקייה - תראו את היסטוריית השיחות בצד. לחיצה על שיחה ממשיכה משם.</td>
+            </tr>
+            <tr>
+              <td><strong>דפדפן (claude.ai/code)</strong></td>
+              <td>תמיד תראו את כל הסשנים הפעילים בדף הראשי - לחיצה אחת כדי לחזור.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>טיפ: תנו שם לסשן</h3>
+        <p>
+          אם אתם עובדים במקביל על כמה משימות באותו פרויקט - הקלידו <code lang="en" dir="ltr">/rename</code> בכל סשן כדי לתת לו שם תיאורי ("רפקטור-עיצוב", "באג-התחברות"). אחר כך קל למצוא אותו.
+        </p>
+
+        <h3>שמירה רשמית עם Git</h3>
+        <p>
+          אם הפרויקט שלכם חשוב - שמרו אותו ב-Git. זה כמו "לחצן שמירה" שמאפשר לחזור לכל גרסה קודמת. הדרך הכי קלה: פשוט תגידו ל-Claude "תשמור עכשיו את כל השינויים שעשית עם הודעה מתאימה" - והוא ידאג להכל. אם אתם רוצים גיבוי בענן, אפשר אחר כך גם "תעלה את זה ל-GitHub כריפוזיטורי פרטי חדש".
+        </p>
+
+        <div class="info-box">
+          <p>
+            <strong>טיפ מתקדם:</strong> תוכלו לסגור את המחשב באמצע משימה ארוכה, להמשיך מהטלפון (Claude iOS app), ואז לחזור למחשב - הסשן נשאר חי. אם התחלתם בדפדפן, אפשר להעביר את הסשן לטרמינל ע"י <code lang="en" dir="ltr">claude --teleport</code>, ובכיוון ההפוך - מטרמינל לדסקטופ ע"י <code lang="en" dir="ltr">/desktop</code>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- סיכום -->
+  <div class="content-block">
+    <h2>
+      סיכום - צ'קליסט להדפסה
+    </h2>
+    <p>שמרו את זה איפשהו עד שתזכרו בעל-פה:</p>
+    <ol>
+      <li>פתחתי תיקיית פרויקט ייעודית</li>
+      <li>אני יודע איך לפתוח את Claude בתוכה (דסקטופ / VS Code / טרמינל)</li>
+      <li>אני יודע לכתוב פרומפט פתיחה ספציפי, עם דוגמה ובקשת אימות</li>
+      <li>אני מבין מתי לאשר ומתי לדחות פעולות</li>
+      <li>אני יודע ש-<code lang="en" dir="ltr">Esc</code> עוצר, <code lang="en" dir="ltr">/rewind</code> חוזר אחורה, <code lang="en" dir="ltr">/clear</code> מנקה</li>
+      <li>אני יודע איך לחזור לשיחה אחרי סגירה</li>
+    </ol>
+    <p>
+      <strong>הצעד הבא:</strong> אחרי שעבדתם קצת, חשוב לעבור למקטע <a href="#/beginners/best-practices">🎯 שיטות עבודה מומלצות</a> - שם תלמדו את הטריקים המתקדמים שיעלו אתכם רמה.
+    </p>
+  </div>

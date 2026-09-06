@@ -1,0 +1,581 @@
+<h1>מדריך התקנה</h1>
+<p class="lede">כל הדרכים להתקין ולהתחיל לעבוד עם Claude Code - בחרו את המתאימה לכם</p>
+
+
+  <!-- Prerequisites -->
+  <div class="content-block">
+    <h2>
+      לפני שמתחילים - דרישות מערכת
+    </h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">דרישה</th>
+          <th scope="col">פרטים</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>מערכת הפעלה</strong></td><td>Windows 10+, macOS 13.0+, Linux (Ubuntu 20.04+)</td></tr>
+        <tr><td><strong>חשבון</strong></td><td>מנוי Claude - Pro ($20/חודש), Max ($100+/חודש), או חשבון API ב-Anthropic Console</td></tr>
+        <tr><td><strong>אינטרנט</strong></td><td>חיבור יציב (Claude רץ בענן)</td></tr>
+        <tr><td><strong>Windows בלבד</strong></td><td>Git for Windows (מומלץ להתקין מראש)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Method 1: Desktop App (recommended) -->
+  <div class="collapsible" id="install-desktop">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        אפליקציית דסקטופ - מומלץ לרוב המשתמשים
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>אפליקציית Claude Desktop היא הדרך הקלה והנוחה ביותר להתחיל לעבוד עם Claude Code. היא כוללת ממשק גרפי ידידותי, ומתאימה במיוחד למי שלא רגילים לעבוד עם טרמינל.</p>
+
+        <div class="info-box">
+          <p>
+            <strong>מה מיוחד באפליקציית הדסקטופ?</strong> האפליקציה מכילה שלוש לשוניות: <strong>Chat</strong> (שיחה רגילה), <strong>Code</strong> (כתיבת קוד - זה בדיוק Claude Code, רק עם ממשק ויזואלי), ו-<strong>Cowork</strong> (סוכן אוטונומי שמבצע משימות ברקע, בסביבה מבודדת). כל מה שאפשר לעשות בטרמינל, אפשר לעשות גם כאן - בלחיצות כפתור.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>הורידו את האפליקציה מהאתר הרשמי של Anthropic:</strong></p>
+              <ul>
+                <li><a href="https://claude.ai/api/desktop/win32/x64/setup/latest/redirect" target="_blank" rel="noopener">הורדה ל-Windows (x64)</a> - מתאים לרוב מחשבי Windows</li>
+                <li><a href="https://claude.ai/api/desktop/win32/arm64/setup/latest/redirect" target="_blank" rel="noopener">הורדה ל-Windows ARM64</a> - למחשבי ARM בלבד (נדיר)</li>
+                <li><a href="https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect" target="_blank" rel="noopener">הורדה ל-macOS</a> - עובד על Intel ו-Apple Silicon</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>התקינו</strong> - הריצו את קובץ ההתקנה ועקבו אחר ההוראות</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>התחברו</strong> - פתחו את האפליקציה, התחברו עם חשבון Claude שלכם (מנוי Pro $20/חודש ומעלה)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p><strong>עברו ללשונית Code</strong> - לחצו על הלשונית "Code" בחלק העליון כדי להתחיל לעבוד עם Claude Code</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>מה אפשר לעשות דרך הממשק הגרפי?</h3>
+        <ul>
+          <li><strong>סקירת שינויים ויזואלית</strong> - רואים בדיוק מה Claude שינה בקבצים, עם סימון צבעוני</li>
+          <li><strong>התקנת פלאגינים בקליק</strong> - חנות פלאגינים מובנית, בלי צורך בפקודות</li>
+          <li><strong>חיבור שירותים (Connectors)</strong> - Gmail, Slack, GitHub, Google Calendar ועוד - הכל בממשק גרפי</li>
+          <li><strong>גלישת סקילים</strong> - לחיצה על <code lang="en" dir="ltr">/</code> או על <code lang="en" dir="ltr">+</code> מציגה את כל הסקילים הזמינים</li>
+          <li><strong>בחירת תיקייה</strong> - בוחרים תיקיית פרויקט בדרך הרגילה, בלי פקודת cd</li>
+          <li><strong>סשנים מרובים</strong> - אפשר לעבוד על כמה פרויקטים במקביל בלשוניות שונות</li>
+          <li><strong>משימות מתוזמנות</strong> - אפשר לקבוע משימות חוזרות דרך ממשק גרפי</li>
+          <li><strong>גרירת קבצים</strong> - גוררים תמונות, PDF או קבצים אחרים ישירות לשיחה</li>
+        </ul>
+
+        <h3>מה זה Cowork?</h3>
+        <p>
+          לשונית <strong>Cowork</strong> היא סוכן אוטונומי שרץ ברקע ומבצע משימות בתוך מכונה וירטואלית מבודדת, עם סביבה משלו, בזמן שאתם ממשיכים לעבוד על דברים אחרים. אפשר להריץ אותה על המחשב שלכם, או על מכונה מנוהלת של Anthropic. Cowork מתאימה במיוחד למשימות שאינן תכנות, ולמי שרוצה להשתמש ביכולות של AI בלי לכתוב קוד.
+        </p>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>הכי קל להתקנה - הורד והתקן</li>
+            <li>ממשק ויזואלי - לא צריך ידע טכני</li>
+            <li>פלאגינים, סקילים וחיבורים דרך הממשק</li>
+            <li>כולל Cowork למשימות שאינן קוד</li>
+            <li>סקירת שינויים ויזואלית נוחה</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>דורש מנוי בתשלום ($20/חודש ומעלה)</li>
+            <li>גרסת לינוקס עדיין בבטא</li>
+            <li>חלק מהפיצ'רים המתקדמים זמינים רק ב-CLI (סקריפטים, אוטומציה)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 2: Terminal -->
+  <div class="collapsible" id="install-terminal">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        התקנה דרך הטרמינל (CLI) - מומלץ למפתחים
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>זו הדרך הרשמית והמלאה ביותר. מתאימה למי שרוצה את כל הפיצ'רים של Claude Code.</p>
+
+        <div class="info-box">
+          <p>
+            <strong>מה זה "טרמינל"?</strong> טרמינל (Terminal) הוא חלון טקסט שבו אפשר לתת פקודות למחשב. במקום ללחוץ על כפתורים, כותבים פקודות טקסט והמחשב מבצע אותן. זה נשמע מאיים, אבל בפועל מדובר בלהעתיק שורה אחת ולהדביק אותה - זה הכל!
+          </p>
+        </div>
+
+        <h3>שלב 0 - איך פותחים טרמינל?</h3>
+        <ul>
+          <li><strong>Windows:</strong> לחצו על מקש Windows במקלדת, הקלידו <code lang="en" dir="ltr">PowerShell</code> ולחצו Enter. ייפתח חלון כחול-כהה - זה הטרמינל שלכם!</li>
+          <li><strong>macOS:</strong> לחצו <code>Cmd+רווח</code>, הקלידו <code lang="en" dir="ltr">Terminal</code> ולחצו Enter.</li>
+          <li><strong>Linux:</strong> לחצו <code>Ctrl+Alt+T</code> - טרמינל ייפתח מיד.</li>
+        </ul>
+
+        <h3>שלב 1 - ב-Windows: התקנת Git for Windows (דרישה מוקדמת)</h3>
+        <p>לפני שמתקינים את Claude Code ב-Windows, צריך להתקין תוכנה בשם <strong>Git</strong>. Git היא תוכנה לניהול גרסאות של קבצים (כמו "שמור גרסה" מתקדם). Claude Code צריך אותה כדי לעבוד כמו שצריך.</p>
+        <ul>
+          <li>גשו לכתובת <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">git-scm.com/downloads/win</a></li>
+          <li>הורידו את הקובץ ולחצו "Next" בכל השלבים עד שההתקנה מסתיימת</li>
+          <li>אם Git כבר מותקן אצלכם - דלגו על שלב זה</li>
+        </ul>
+
+        <h3>שלב 2 - התקנת Claude Code</h3>
+        <p>עכשיו מגיע הרגע המרכזי! פתחו את הטרמינל (כמו שהוסבר למעלה) והעתיקו-הדביקו את הפקודה המתאימה למערכת ההפעלה שלכם:</p>
+
+        <p><strong>Windows - PowerShell:</strong></p>
+        <div class="code-block">
+          <span class="code-label">PowerShell</span>
+          <button class="copy-btn">העתק</button>
+irm https://claude.ai/install.ps1 | iex</div>
+        <p>מה הפקודה הזו עושה? היא מורידה את סקריפט ההתקנה מאתר Claude ומריצה אותו. כמו ללחוץ "הורד והתקן" - רק בשורת טקסט אחת.</p>
+
+        <p><strong>Windows - CMD (שורת הפקודה הישנה):</strong></p>
+        <div class="code-block">
+          <span class="code-label">CMD</span>
+          <button class="copy-btn">העתק</button>
+curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd</div>
+
+        <p><strong>macOS / Linux:</strong></p>
+        <div class="code-block">
+          <span class="code-label">Bash</span>
+          <button class="copy-btn">העתק</button>
+curl -fsSL https://claude.ai/install.sh | bash</div>
+
+        <p><strong>אפשרות חלופית - Homebrew (macOS/Linux בלבד):</strong></p>
+        <p>Homebrew הוא "חנות אפליקציות" לטרמינל ב-Mac ו-Linux. אם כבר מותקן אצלכם, אפשר להשתמש בו:</p>
+        <div class="code-block">
+          <span class="code-label">Homebrew</span>
+          <button class="copy-btn">העתק</button>
+brew install --cask claude-code</div>
+        <p>שימו לב: התקנת Homebrew לא מתעדכנת אוטומטית - להריץ <code lang="en" dir="ltr">brew upgrade claude-code</code> מעת לעת.</p>
+
+        <p><strong>אפשרות חלופית - WinGet (Windows):</strong></p>
+        <p>WinGet הוא מנהל החבילות הרשמי של Microsoft שמגיע מובנה ב-Windows 10/11. נוח אם אתם רגילים אליו:</p>
+        <div class="code-block">
+          <span class="code-label">PowerShell</span>
+          <button class="copy-btn">העתק</button>
+winget install Anthropic.ClaudeCode</div>
+        <p>לעדכון: <code lang="en" dir="ltr">winget upgrade Anthropic.ClaudeCode</code> - התקנת WinGet לא מתעדכנת אוטומטית.</p>
+
+        <h3>שלב 2.5 - אם הופיעה אזהרת PATH (חשוב מאוד ל-Windows!)</h3>
+        <p>בסוף ההתקנה ב-Windows, אם רואים את ההודעה הצהובה הבאה - <strong>אל תדלגו עליה</strong>:</p>
+        <div class="code-block">
+          <span class="code-label">הודעה שמופיעה אחרי התקנה ב-PowerShell</span>
+          <button class="copy-btn">העתק</button>
+‼ Setup notes:
+  ● Native installation exists but C:\Users\YOUR_NAME\.local\bin is not in your PATH.
+    Add it by opening: System Properties → Environment Variables →
+    Edit User PATH → New → Add the path above. Then restart your terminal.</div>
+
+        <div class="info-box">
+          <p>
+            <strong>מה זה PATH ולמה זה חשוב?</strong> <code lang="en" dir="ltr">PATH</code> זו רשימת תיקיות ש-Windows סורק כשמקלידים פקודה (כמו <code lang="en" dir="ltr">claude</code>). ההתקנה הצליחה ושמה את <code lang="en" dir="ltr">claude.exe</code> בתיקייה <code lang="en" dir="ltr">C:\Users\YOUR_NAME\.local\bin</code>, אבל Windows לא יודע לחפש שם. צריך "ללמד" אותו פעם אחת. בלי זה תקבלו "<code lang="en" dir="ltr">'claude' is not recognized</code>" בכל פעם שתפעילו את Claude.
+          </p>
+        </div>
+
+        <p><strong>פתרון מהיר (מומלץ) - שורה אחת ב-PowerShell:</strong></p>
+        <p>הדביקו את שתי השורות הבאות ב-PowerShell ולחצו Enter. זה מוסיף את התיקייה ל-User PATH לצמיתות:</p>
+        <div class="code-block">
+          <span class="code-label">PowerShell - תיקון קבוע</span>
+          <button class="copy-btn">העתק</button>
+$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
+[Environment]::SetEnvironmentVariable('PATH', "$currentPath;$env:USERPROFILE\.local\bin", 'User')</div>
+        <p>השורה הראשונה קוראת את ה-PATH הנוכחי. השנייה כותבת אותו חזרה עם תוספת של נתיב הבית שלכם + <code lang="en" dir="ltr">\.local\bin</code>. אין צורך לערוך - Windows יחליף את <code lang="en" dir="ltr">$env:USERPROFILE</code> אוטומטית.</p>
+
+        <p><strong>אחרי הרצת הפקודה - חובה לבצע את שני השלבים הבאים:</strong></p>
+        <ol>
+          <li><strong>סגרו לחלוטין את חלון ה-PowerShell</strong> - לא טאב חדש, חלון חדש. השינוי נכנס לתוקף רק בחלונות חדשים.</li>
+          <li><strong>פתחו PowerShell חדש</strong> ובדקו עם הפקודה:
+            <div class="code-block">
+              <button class="copy-btn">העתק</button>
+claude --version</div>
+            <p>אם רואים מספר גרסה (למשל <code lang="en" dir="ltr">2.1.195</code>) - הצליח! 🎉</p>
+          </li>
+        </ol>
+
+        <details>
+          <summary>⚙️ פתרון חלופי - דרך הממשק הגרפי (System Properties)</summary>
+          <p>אם אתם מעדיפים לעבוד עם חלונות במקום פקודות, אפשר להוסיף את התיקייה ידנית:</p>
+          <ol>
+            <li>לחצו על מקש <strong>Windows</strong> במקלדת והקלידו <code lang="en" dir="ltr">environment variables</code> (או בעברית: "משתני סביבה").</li>
+            <li>בחרו <strong>Edit environment variables for your account</strong> - עריכת משתני סביבה עבור החשבון שלכם. <strong>חשוב:</strong> זו, ולא הגרסה של "System" - לזו אין צורך בהרשאות מנהל.</li>
+            <li>בטבלה העליונה "User variables for [שם המשתמש]" - חפשו את השורה ששמה <strong>Path</strong>, לחצו עליה פעם אחת, ואז על כפתור <strong>Edit...</strong></li>
+            <li>בחלון החדש לחצו <strong>New</strong> מימין, ובשורה הריקה הדביקו את הנתיב המלא (להחליף <code lang="en" dir="ltr">YOUR_NAME</code> בשם המשתמש שלכם):
+              <div class="code-block">
+                <button class="copy-btn">העתק</button>
+C:\Users\YOUR_NAME\.local\bin</div>
+              <p>לא יודעים מה שם המשתמש? הוא רשום בהודעת ההתקנה עצמה - בדוגמה למעלה זה <code lang="en" dir="ltr">PC</code> (כי הנתיב היה <code lang="en" dir="ltr">C:\Users\PC\.local\bin</code>).</p>
+            </li>
+            <li>לחצו <strong>OK</strong> בשלושת החלונות (מהפנימי לחיצוני).</li>
+            <li>סגרו את חלון ה-PowerShell, פתחו חדש, ובדקו עם <code lang="en" dir="ltr">claude --version</code>.</li>
+          </ol>
+        </details>
+
+        <div class="info-box">
+          <p>
+            <strong>פתרון זמני לסשן הנוכחי בלבד</strong> (במקרה שאתם ממהרים לעבוד עכשיו ותסדרו את ה-PATH הקבוע אחר כך):
+          </p>
+          <div class="code-block">
+            <button class="copy-btn">העתק</button>
+$env:Path += ";$env:USERPROFILE\.local\bin"</div>
+          <p>הפקודה הזו מוסיפה את התיקייה ל-PATH רק לחלון ה-PowerShell הנוכחי. כשתסגרו אותו - תצטרכו להריץ אותה שוב. לכן מומלץ לעשות את התיקון הקבוע ברגע שיש לכם זמן.</p>
+        </div>
+
+        <h3>אם <code lang="en" dir="ltr">claude --version</code> עדיין לא עובד</h3>
+        <ul>
+          <li><strong>בדקו שהקובץ באמת קיים:</strong> הריצו <code lang="en" dir="ltr">Test-Path "$env:USERPROFILE\.local\bin\claude.exe"</code> - אם חוזר <code lang="en" dir="ltr">True</code>, הקובץ קיים והבעיה היא רק PATH.</li>
+          <li><strong>ראו מאיפה Windows מנסה להריץ:</strong> <code lang="en" dir="ltr">where.exe claude</code> - אם זה ריק, PATH עדיין לא נקלט (וצריך לסגור ולפתוח מחדש את החלון).</li>
+          <li><strong>ודאו שהוספתם ל-User PATH, לא ל-System PATH</strong> - System PATH דורש הרשאות מנהל ומשפיע על כל המשתמשים. ברוב המקרים זה מיותר.</li>
+        </ul>
+
+        <div class="info-box">
+          <p>
+            <strong>ב-macOS / Linux זה בדרך כלל לא בעיה</strong> - סקריפט ההתקנה מוסיף אוטומטית את <code lang="en" dir="ltr">~/.local/bin</code> ל-PATH דרך עריכת <code lang="en" dir="ltr">~/.zshrc</code> או <code lang="en" dir="ltr">~/.bashrc</code>. אם בכל זאת קיבלתם <code lang="en" dir="ltr">command not found: claude</code>, הריצו:
+          </p>
+          <div class="code-block">
+            <span class="code-label">Bash/Zsh (macOS &amp; Linux)</span>
+            <button class="copy-btn">העתק</button>
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc</div>
+          <p>ב-Linux החליפו <code lang="en" dir="ltr">~/.zshrc</code> ב-<code lang="en" dir="ltr">~/.bashrc</code>.</p>
+        </div>
+
+        <h3>שלב 3 - הפעלה ראשונה</h3>
+        <p>ההתקנה הסתיימה! עכשיו בואו נפעיל את Claude Code:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p><strong>נווטו לתיקיית הפרויקט</strong> - כתבו בטרמינל את הפקודה הבאה (שנו את הנתיב לתיקייה שלכם). הפקודה <code lang="en" dir="ltr">cd</code> (קיצור של Change Directory) אומרת למחשב "עבור לתיקייה הזו":</p>
+              <div class="code-block">
+                <button class="copy-btn">העתק</button>
+cd your-project</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p><strong>הפעילו את Claude Code</strong> - כתבו פשוט:</p>
+              <div class="code-block">
+                <button class="copy-btn">העתק</button>
+claude</div>
+              <p>זהו! מילה אחת והוא מתעורר לחיים.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p><strong>התחברו לחשבון</strong> - בפעם הראשונה, הדפדפן ייפתח אוטומטית ויבקש מכם להתחבר עם חשבון Claude שלכם (Pro, Max, או API). זה קורה רק פעם אחת.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content"><p><strong>התחילו לעבוד!</strong> - עכשיו אפשר פשוט לכתוב מה שאתם רוצים בשפה רגילה, למשל: "תבנה לי אתר אישי עם העיצוב שלך" - ו-Claude יעשה את הכל בשבילכם.</p></div>
+          </div>
+        </div>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>כל הפיצ'רים זמינים - הגרסה המלאה ביותר</li>
+            <li>מתעדכן אוטומטית (בהתקנה ישירה)</li>
+            <li>עובד עם כל עורך קוד</li>
+            <li>מתאים לאוטומציה ו-CI/CD</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>דורש נוחות עם שורת פקודה</li>
+            <li>אין ממשק גרפי - הכל טקסט</li>
+            <li>ב-Windows - צריך Git for Windows</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 2: VS Code -->
+  <div class="collapsible" id="install-vscode">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        התקנה דרך VS Code - הכי ויזואלי
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <div class="info-box">
+          <p>
+            <strong>מה זה VS Code?</strong> Visual Studio Code (בקיצור VS Code) הוא עורך קוד חינמי שפותח על ידי מיקרוסופט. חשבו עליו כמו Word, אבל במקום מסמכי טקסט - הוא מיועד לכתיבת קוד. הוא העורך הפופולרי ביותר בעולם, והוא חינמי לגמרי. גם אם אתם לא מתכנתים, הוא סביבה נוחה לעבודה עם Claude Code כי הוא מציג את השינויים שClaud עושה בצורה ויזואלית ברורה.
+          </p>
+        </div>
+
+        <h3>שלב א' - התקנת VS Code (אם עוד לא מותקן)</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>הורידו את VS Code</strong> - גשו לכתובת <a href="https://code.visualstudio.com" target="_blank" rel="noopener">code.visualstudio.com</a> ולחצו על כפתור ההורדה הגדול. האתר מזהה אוטומטית את מערכת ההפעלה שלכם.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>התקינו</strong> - הריצו את קובץ ההתקנה שהורדתם. לחצו "Next" בכל השלבים. מומלץ לסמן את האפשרות "Add to PATH" אם היא מופיעה.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>פתחו את VS Code</strong> - לאחר ההתקנה, פתחו אותו מתפריט ההתחלה (Windows) או מ-Applications (Mac).</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>שלב ב' - התקנת תוסף Claude Code בתוך VS Code</h3>
+        <p>עכשיו שVS Code מותקן, נתקין בתוכו את התוסף של Claude Code:</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <p><strong>פתחו את חנות התוספים</strong> - לחצו על הצירוף <code>Ctrl+Shift+X</code> (או <code>Cmd+Shift+X</code> ב-Mac). ייפתח פאנל בצד עם שדה חיפוש. "תוספים" (Extensions) הם כמו אפליקציות קטנות שמוסיפות יכולות ל-VS Code.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <p><strong>חפשו "Claude Code"</strong> - הקלידו בשדה החיפוש. התוצאה הראשונה תהיה התוסף הרשמי של Anthropic.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>לחצו Install</strong> - כפתור כחול ליד שם התוסף. ההתקנה לוקחת כמה שניות.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <p><strong>פתחו את Claude Code</strong> - לחצו <code>Ctrl+Shift+P</code> (פותח את "לוח הפקודות" - כמו שורת חיפוש לכל פעולות VS Code). הקלידו "Claude Code" ובחרו <strong>"Open in New Tab"</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <p><strong>התחברו</strong> - חלון יופיע ויבקש מכם להתחבר עם חשבון Claude שלכם. עקבו אחר ההוראות - זה קורה רק פעם אחת.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>מה מיוחד ב-VS Code?</h3>
+        <ul>
+          <li><strong>תצוגת שינויים ויזואלית (Diffs)</strong> - רואים בדיוק מה Claude שינה בקוד, עם סימוני ירוק/אדום</li>
+          <li><strong>@-mentions</strong> - אפשר לתייג קבצים ספציפיים בשיחה: <code>@src/auth.ts תקן את הבאג כאן</code></li>
+          <li><strong>פאנל צ'אט צדדי</strong> - שיחה עם Claude בצד, תוך כדי עבודה על הקוד</li>
+          <li><strong>אישור/דחייה של שינויים</strong> - ממשק ויזואלי לסקירה ואישור כל שינוי</li>
+        </ul>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>ממשק ויזואלי נוח - לא צריך טרמינל</li>
+            <li>תצוגת שינויים ברורה</li>
+            <li>אינטגרציה מלאה עם VS Code</li>
+            <li>קל למתחילים</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>עובד רק בתוך VS Code</li>
+            <li>פחות גמיש מהטרמינל לאוטומציה</li>
+            <li>עדכונים מגיעים לפעמים מעט מאוחר יותר</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 4: JetBrains -->
+  <div class="collapsible" id="install-jetbrains">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        JetBrains IDEs - למפתחי Java, Python ועוד
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>פלאגין רשמי ל-IntelliJ IDEA, PyCharm, WebStorm ושאר סביבות JetBrains.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p>התקינו קודם את Claude Code דרך הטרמינל (ראו שיטה 1)</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p>פתחו את ה-IDE של JetBrains</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content"><p>גשו ל-Settings → Plugins → Marketplace</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content"><p>חפשו "Claude Code" ולחצו Install</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content"><p>הפעילו מחדש את ה-IDE - חלון Claude Code יופיע</p></div>
+          </div>
+        </div>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>אינטגרציה טובה עם JetBrains</li>
+            <li>תצוגת שינויים אינטראקטיבית</li>
+            <li>עובד עם כל ה-IDEs של JetBrains</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>דורש התקנת CLI נפרדת</li>
+            <li>ה-IDE כבד - Claude מוסיף עומס</li>
+            <li>עדכונים מגיעים בהשהייה</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Method 5: Web -->
+  <div class="collapsible" id="install-web">
+    <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+      <h2>
+        דרך הדפדפן - בלי שום התקנה
+      </h2>
+      <span class="collapsible-arrow">▼</span>
+    </div>
+    <div class="collapsible-body">
+      <div class="collapsible-inner">
+        <p>אפשר להשתמש ב-Claude Code ישירות דרך הדפדפן (Chrome, Edge, Firefox וכו'), בלי להתקין שום דבר על המחשב! זו הדרך הכי מהירה לנסות.</p>
+
+        <div class="info-box">
+          <p>
+            <strong>כן, זה עובד דרך הדפדפן!</strong> Claude Code רץ בענן (על שרתים של Anthropic), כך שאתם לא צריכים להתקין שום דבר. הדפדפן הוא רק הממשק - כל העבודה הכבדה קורית בשרתים. אתם יכולים לפתוח את Claude Code, לתת לו משימה, לסגור את הדפדפן, ולחזור אחר כך לראות את התוצאה!
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content"><p><strong>גשו לכתובת</strong> <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> בדפדפן שלכם</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content"><p><strong>התחברו</strong> עם חשבון Claude שלכם (Pro, Max, או Team)</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <p><strong>התחילו לעבוד!</strong> אפשר להתחיל פרויקט חדש מאפס, או לחבר <strong>ריפוזיטורי (Repository)</strong> קיים מ-<strong>GitHub</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <p>
+            <strong>מה זה GitHub?</strong> GitHub הוא אתר שמשמש כ"ענן לקוד". מתכנתים מעלים אליו את הפרויקטים שלהם כדי לגבות אותם, לשתף עם אחרים, ולעקוב אחרי שינויים. חשבו עליו כמו Google Drive, אבל מיועד לפרויקטי תוכנה.
+          </p>
+          <p>
+            <strong>מה זה ריפוזיטורי (Repository)?</strong> בקיצור "ריפו" - זו תיקייה של פרויקט ב-GitHub. כל ריפו מכיל את כל קבצי הקוד של הפרויקט, את ההיסטוריה של השינויים, ואפשרות לשתף ולעבוד עם אחרים. כשאתם "מחברים ריפו" ל-Claude Code בדפדפן, אתם נותנים ל-Claude גישה לקרוא ולעבוד על הפרויקט הזה.
+          </p>
+        </div>
+
+        <h3>מה מיוחד בגרסת הדפדפן?</h3>
+        <ul>
+          <li><strong>אפס התקנה</strong> - נכנסים לאתר ומתחילים לעבוד, בלי להוריד שום דבר</li>
+          <li><strong>משימות ברקע</strong> - אפשר לשלוח משימה ארוכה, לסגור את הדפדפן, ולחזור אחר כך לבדוק את התוצאה</li>
+          <li><strong>עבודה על ריפוזיטוריז מרוחקים</strong> - אפשר לעבוד על פרויקטים ב-GitHub בלי להוריד אותם למחשב</li>
+          <li><strong>הרצת משימות מרובות</strong> - אפשר לפתוח כמה לשוניות ולעבוד על כמה דברים במקביל</li>
+          <li><strong>עובד מכל מקום</strong> - גם מהטלפון (אפליקציית Claude ב-iOS) וגם ממחשב אחר</li>
+        </ul>
+
+        <div class="pros-cons">
+          <ul class="pros-list">
+            <div class="list-title">✓ יתרונות</div>
+            <li>אפס התקנה - עובד מיד</li>
+            <li>אפשר לעבוד מכל מכשיר</li>
+            <li>משימות רצות גם כשסוגרים את הדפדפן</li>
+          </ul>
+          <ul class="cons-list">
+            <div class="list-title">✗ חסרונות</div>
+            <li>פחות שליטה מאשר בהתקנה מקומית</li>
+            <li>תלות בחיבור אינטרנט יציב</li>
+            <li>לא כל הפיצ'רים זמינים</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Which to choose -->
+  <div class="content-block">
+    <h2>
+      אז מה מתאים לי?
+    </h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">אם אתם...</th>
+          <th scope="col">השיטה המומלצת</th>
+          <th scope="col">למה?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>מתחילים לגמרי / לא מתכנתים</td>
+          <td><strong>אפליקציית דסקטופ</strong></td>
+          <td>ממשק גרפי ידידותי, כולל Cowork למשימות שאינן קוד</td>
+        </tr>
+        <tr>
+          <td>עובדים ב-VS Code</td>
+          <td><strong>תוסף VS Code</strong></td>
+          <td>אינטגרציה מושלמת עם העורך</td>
+        </tr>
+        <tr>
+          <td>מתכנתים מנוסים</td>
+          <td><strong>טרמינל (CLI)</strong></td>
+          <td>כל הפיצ'רים, שליטה מלאה</td>
+        </tr>
+        <tr>
+          <td>רוצים לנסות לפני התקנה</td>
+          <td><strong>דפדפן</strong></td>
+          <td>אפס התקנה, מיידי</td>
+        </tr>
+        <tr>
+          <td>עובדים עם JetBrains</td>
+          <td><strong>פלאגין JetBrains</strong></td>
+          <td>נשאר בסביבה המוכרת</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

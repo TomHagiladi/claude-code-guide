@@ -1,0 +1,430 @@
+<h1>שיטות עבודה מומלצות</h1>
+<p class="lede">הכללים הזהובים מהמדריך הרשמי של Anthropic - איך להפיק את המקסימום מ-Claude Code אחרי שכבר התרגלתם לבסיס</p>
+
+
+  <div class="content-block">
+    <h2>
+      למה זה חשוב?
+    </h2>
+    <p>
+      Claude Code שונה מ-ChatGPT. הוא לא צ'אטבוט שעונה על שאלות - הוא <strong>סוכן</strong> שקורא קבצים, מריץ פקודות, ופועל בעצמו. זה אומר שהפרודוקטיביות שלכם תלויה פחות ב"מה אתם שואלים" ויותר ב<strong>איך אתם מבנים את הסביבה והעבודה</strong>.
+    </p>
+    <p>
+      המקטע הזה מתמצת את התובנות החשובות ביותר מהמדריך הרשמי של Anthropic. כל אחת מהן מבוססת על מה שעובד בפועל בצוותים של Anthropic ואצל מהנדסים שמשתמשים ב-Claude Code יום-יום.
+    </p>
+    <div class="info-box">
+      <p>
+        <strong>חוקי האגודל הם נקודת התחלה - לא חוקים מקודשים.</strong> לפעמים שווה לסטות מהם בכוונה. המטרה היא לפתח אינטואיציה, לא להיצמד למתכון. ככל שתעבדו יותר, תזהו מתי איזה כלל חשוב.
+      </p>
+    </div>
+  </div>
+
+  <!-- 1. אימות -->
+  <div class="content-block">
+    <h2>
+      1. תנו ל-Claude דרך לאמת את עצמו - הכלל הכי חשוב
+    </h2>
+    <p>
+      <strong>הדבר היחיד בעל ההשפעה הגדולה ביותר על איכות התוצאה.</strong> Claude עובד הרבה יותר טוב כשהוא יכול להריץ בדיקות בעצמו, להשוות צילומי מסך, ולוודא שהתוצאה אכן נכונה.
+    </p>
+    <p>
+      בלי קריטריון להצלחה, Claude עלול לייצר משהו ש<em>נראה</em> נכון אבל בפועל לא עובד - ואתם הופכים להיות הלולאה היחידה שבודקת. כל באג דורש את תשומת הלב שלכם.
+    </p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">השיטה</th>
+          <th scope="col">פרומפט חלש</th>
+          <th scope="col">פרומפט חזק</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>תנו קריטריוני בדיקה</strong></td>
+          <td>"תכתוב פונקציה שמאמתת כתובות מייל"</td>
+          <td>"תכתוב פונקציה validateEmail. מקרי בדיקה: user@example.com → true, invalid → false, user@.com → false. תריץ את הבדיקות אחרי שתכתוב."</td>
+        </tr>
+        <tr>
+          <td><strong>אמתו שינויי UI ויזואלית</strong></td>
+          <td>"תעשה את הדאשבורד יפה יותר"</td>
+          <td>"[צילום מסך מצורף] תיישם את העיצוב הזה. צלם screenshot של התוצאה והשווה לתמונה. רשום הבדלים ותקן אותם."</td>
+        </tr>
+        <tr>
+          <td><strong>תקנו שורש, לא תסמין</strong></td>
+          <td>"הבנייה נכשלת"</td>
+          <td>"הבנייה נכשלת עם השגיאה הזו: [הדבק]. תקן ותוודא שהבנייה מצליחה. תפנה לסיבת השורש, אל תכסה את השגיאה."</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <p>
+        <strong>צורות אימות אחרות:</strong> מערכת בדיקות (tests), כלי לבדיקת תקינות קוד (linter), פקודה בטרמינל שמדפיסה תוצאה. ככל שלכלי האימות שלכם יש פחות "רעש" - Claude מתפקד טוב יותר. שיפור בכלי האימות הוא תמיד השקעה משתלמת.
+      </p>
+    </div>
+  </div>
+
+  <!-- 2. Plan mode -->
+  <div class="content-block">
+    <h2>
+      2. חקרו תחילה, תכננו, ואז קודו (Plan Mode)
+    </h2>
+    <p>
+      להניח ל-Claude לקפוץ ישר לקוד יכול לייצר פתרון לבעיה הלא נכונה. השתמשו ב-<strong>Plan Mode</strong> כדי להפריד חקירה מביצוע.
+    </p>
+    <p>
+      <strong>איך נכנסים ל-Plan Mode?</strong> לחיצה כפולה על <code lang="en" dir="ltr">Shift+Tab</code>. תראו את הסטטוס "plan mode" בתחתית - Claude לא יבצע שום שינוי, רק יחקור, יקרא קבצים, ויבנה תוכנית.
+    </p>
+
+    <h3>תהליך עבודה מומלץ - 4 שלבים</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <p><strong>חקירה (Plan Mode פעיל):</strong></p>
+          <div class="code-block">
+            <button class="copy-btn">העתק</button>
+תקרא את src/auth ותסביר לי איך אנחנו מנהלים sessions והתחברות. גם תבדוק איך אנחנו מנהלים משתני סביבה לסודות.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <p><strong>תכנון (Plan Mode פעיל):</strong></p>
+          <div class="code-block">
+            <button class="copy-btn">העתק</button>
+אני רוצה להוסיף התחברות עם Google OAuth. אילו קבצים צריכים להשתנות? איך זרימת ה-session תיראה? תיצור תוכנית מפורטת.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <p><strong>יישום (יציאה מ-Plan Mode - לחיצה נוספת על <code lang="en" dir="ltr">Shift+Tab</code>):</strong></p>
+          <div class="code-block">
+            <button class="copy-btn">העתק</button>
+תיישם את התוכנית. תכתוב tests ל-callback handler, תריץ אותם, ותתקן כל מה שנכשל.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <p><strong>קומיט:</strong></p>
+          <div class="code-block">
+            <button class="copy-btn">העתק</button>
+תעשה commit עם הודעה תיאורית ותפתח PR</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <p>
+        <strong>מתי לדלג על Plan Mode?</strong> לתיקון קטן וברור (typo, שינוי שם משתנה, תוספת לוג) - לכו ישר לביצוע. Plan מתאים כשאתם לא בטוחים בגישה, כששינוי נוגע במספר קבצים, או כשאתם לא מכירים את הקוד. כלל אצבע: אם תוכלו לתאר את ה-diff במשפט אחד - דלגו על התכנון.
+      </p>
+    </div>
+  </div>
+
+  <!-- 3. הקשר ספציפי -->
+  <div class="content-block">
+    <h2>
+      3. תנו הקשר ספציפי בפרומפט
+    </h2>
+    <p>
+      ככל שההוראות מדויקות יותר - כך תצטרכו לתקן פחות. Claude מסיק כוונות, אבל הוא לא קורא מחשבות. הצביעו על קבצים ספציפיים, ציינו אילוצים, והפנו לדפוסים קיימים.
+    </p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">שיטה</th>
+          <th scope="col">לפני</th>
+          <th scope="col">אחרי</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>תחמו את המשימה</strong></td>
+          <td>"תוסיף tests ל-foo.py"</td>
+          <td>"תכתוב test ל-foo.py למקרה הקצה שבו המשתמש לא מחובר. אל תשתמש ב-mocks."</td>
+        </tr>
+        <tr>
+          <td><strong>הצביעו על מקור</strong></td>
+          <td>"למה ל-ExecutionFactory יש API מוזר?"</td>
+          <td>"תעבור על ההיסטוריה של ExecutionFactory ב-git ותסביר איך ה-API שלו התפתח."</td>
+        </tr>
+        <tr>
+          <td><strong>הפנו לדפוסים קיימים</strong></td>
+          <td>"תוסיף widget לוח שנה"</td>
+          <td>"תסתכל איך widgets קיימים מיושמים בדף הבית. HotDogWidget.php הוא דוגמה טובה. תעקוב אחרי אותו דפוס ותיישם widget לוח שנה. בלי ספריות חיצוניות חדשות."</td>
+        </tr>
+        <tr>
+          <td><strong>תארו את התסמין</strong></td>
+          <td>"תתקן את הבאג בהתחברות"</td>
+          <td>"משתמשים מדווחים שהתחברות נכשלת אחרי session timeout. תבדוק את זרימת ה-auth ב-src/auth/, במיוחד את ה-token refresh. תכתוב test שמשחזר את הבעיה, אז תתקן."</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>דרכים להעשיר את ההקשר</h3>
+    <ul>
+      <li><strong>הצביעו על קבצים עם <code lang="en" dir="ltr">@</code></strong> - במקום לתאר איפה הקוד, כתבו <code lang="en" dir="ltr">@src/auth.ts</code> - Claude יקרא את הקובץ לפני שיענה</li>
+      <li><strong>הדביקו תמונות ישירות</strong> - Ctrl+V או גרירה לתוך השיחה</li>
+      <li><strong>תנו URLs</strong> - לתיעוד, ל-API references, לאתר עם דוגמה. השתמשו ב-<code lang="en" dir="ltr">/permissions</code> כדי לאפשר דומיינים שכיחים מראש</li>
+      <li><strong>"צינור" נתונים</strong> - בטרמינל: <code lang="en" dir="ltr">cat error.log | claude</code> שולח את תוכן הקובץ ישירות</li>
+      <li><strong>תנו ל-Claude לחפש לבד</strong> - "תמצא בעצמך את הקובץ הרלוונטי" עובד טוב כשאתם לא בטוחים איפה הקוד</li>
+    </ul>
+  </div>
+
+  <!-- 4. ניהול חלון ההקשר -->
+  <div class="content-block">
+    <h2>
+      4. נהלו את חלון ההקשר באגרסיביות
+    </h2>
+    <p>
+      רוב המלכודות בעבודה עם Claude Code נובעות ממגבלה אחת: <strong>חלון ההקשר מתמלא מהר, והביצועים יורדים ככל שהוא מתמלא.</strong>
+    </p>
+    <p>
+      "חלון ההקשר" של Claude מחזיק את כל השיחה - כל הודעה, כל קובץ שקרא, כל פלט פקודה. סשן debug ארוך אחד יכול לצרוך עשרות אלפי טוקנים. ככל שהוא יותר מלא, ככה Claude יותר "שוכח" הוראות מההתחלה ועושה יותר טעויות.
+    </p>
+
+    <h3>אסטרטגיות יעילות</h3>
+    <ul>
+      <li><strong>/clear בין משימות לא קשורות</strong> - הכלל הכי חשוב. סיימתם משימה? לפני שעוברים למשימה הבאה - <code lang="en" dir="ltr">/clear</code>. תמיד.</li>
+      <li><strong>/compact כשהשיחה ארוכה מדי</strong> - Claude מסכם את עצמו, שומר את החשוב ומשחרר זיכרון.</li>
+      <li><strong>/compact &lt;הוראה&gt; לדחיסה ממוקדת</strong> - למשל "/compact תשמור רק את השינויים ב-API".</li>
+      <li><strong>/btw לשאלות צדדיות</strong> - הקלידו <code lang="en" dir="ltr">/btw מה זה useEffect?</code> והתשובה תופיע בחלון חולף, בלי להיכנס להיסטוריית השיחה. מצוין להבהרות מהירות.</li>
+      <li><strong>תת-סוכנים (Subagents) לחקירות</strong> - במקום שClaud יקרא 30 קבצים בעצמו ויצרוך את כל ההקשר, תגידו "תשתמש בתת-סוכן כדי לחקור איך המערכת מטפלת ב-X". הוא יחקור בחלון נפרד ויחזור עם סיכום קצר.</li>
+    </ul>
+
+    <div class="info-box">
+      <p>
+        <strong>סימני אזהרה שההקשר מתחיל להיות בעייתי:</strong> Claude עונה בשגיאה על שאלה שכבר ענה עליה נכון; חוזר על אותו תיקון פעמיים; "שוכח" משתנים שהגדרתם בתחילת השיחה; הפלט מתחיל להיות לא קשור לבקשה. כשרואים שניים מאלה - <code lang="en" dir="ltr">/clear</code> מיידי.
+      </p>
+    </div>
+  </div>
+
+  <!-- 5. תיקון מוקדם -->
+  <div class="content-block">
+    <h2>
+      5. תקנו מסלול מוקדם ולעיתים קרובות
+    </h2>
+    <p>
+      התוצאות הטובות ביותר באות מ<strong>לולאת משוב הדוקה</strong>. ככל שתתקנו את Claude מהר יותר כשהוא יוצא ממסלול - כך תקבלו תוצאה טובה יותר במהירות.
+    </p>
+    <ul>
+      <li><strong>Esc</strong> - עוצר את Claude באמצע פעולה. ההקשר נשמר, אפשר להפנות אותו.</li>
+      <li><strong>Esc Esc</strong> או <code lang="en" dir="ltr">/rewind</code> - פותח תפריט חזרה לנקודות שמירה. אפשר לבחור: רק שיחה, רק קוד, או שניהם.</li>
+      <li><strong>"תבטל את זה"</strong> - דרך מילולית פשוטה לחזור אחורה.</li>
+      <li><strong>/clear</strong> - אחרי שתי תיקונים על אותה בעיה - תנקו ותתחילו עם פרומפט יותר מדויק שמשלב את מה שלמדתם.</li>
+    </ul>
+
+    <div class="info-box">
+      <p>
+        <strong>כלל זהב:</strong> אם תיקנתם את Claude יותר מפעמיים על אותה בעיה - ההקשר זוהם בגישות שנכשלו. סשן נקי עם פרומפט מדויק יותר תמיד יביא תוצאה טובה יותר מסשן ארוך עם תיקונים מצטברים.
+      </p>
+    </div>
+  </div>
+
+  <!-- 6. סשנים מקבילים -->
+  <div class="content-block">
+    <h2>
+      6. הריצו סשנים מקבילים - כדי להכפיל את הפלט
+    </h2>
+    <p>
+      ברגע שאתם יעילים עם Claude אחד, אפשר להכפיל את הפלט שלכם עם <strong>סשנים מקבילים</strong>:
+    </p>
+    <ul>
+      <li><strong>Git Worktrees</strong> - סשנים נפרדים על אותו פרויקט בעותקים מבודדים. שינויים לא מתנגשים.</li>
+      <li><strong>אפליקציית הדסקטופ</strong> - מנהלת כמה סשנים מקומיים ויזואלית, כל אחד בעותק משלו.</li>
+      <li><strong>Claude Code on the Web</strong> - סשנים על תשתית הענן של Anthropic, ב-VMs מבודדות.</li>
+      <li><strong>צוותי סוכנים (Agent Teams)</strong> - תזמור אוטומטי של כמה סשנים עם מטלות משותפות, הודעות, וראש צוות.</li>
+    </ul>
+
+    <h3>תבנית "כותב/סוקר" - שני Claude מבקרים זה את זה</h3>
+    <p>
+      טיפ עוצמתי: השתמשו בסשן אחד כדי לכתוב קוד, ובסשן <strong>שני נקי</strong> כדי לסקור אותו. הסוקר לא משוחד כי הוא לא כתב את הקוד.
+    </p>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">סשן A (כותב)</th>
+          <th scope="col">סשן B (סוקר)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"תיישם rate limiter ל-API endpoints"</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>"תסקור את היישום ב-@src/middleware/rateLimiter.ts. תחפש מקרי קצה, race conditions, ועקביות עם דפוסים קיימים."</td>
+        </tr>
+        <tr>
+          <td>"הנה משוב הסקירה: [תוצר מסשן B]. תטפל בנקודות האלה."</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7. מצב לא-אינטראקטיבי -->
+  <div class="content-block">
+    <h2>
+      7. מצב לא-אינטראקטיבי - לסקריפטים ואוטומציה
+    </h2>
+    <p>
+      רוצים להריץ את Claude כחלק מ-CI, hook לפני קומיט, או סקריפט שעובד על מאות קבצים? השתמשו ב-<code lang="en" dir="ltr">claude -p "פרומפט"</code> - זה מריץ את Claude בלי סשן, בלי ממשק.
+    </p>
+    <div class="code-block">
+      <span class="code-label">Bash / PowerShell</span>
+      <button class="copy-btn">העתק</button>
+claude -p "תסביר מה הפרויקט הזה עושה"</div>
+    <p>ופעולות מתקדמות יותר:</p>
+    <div class="code-block">
+      <span class="code-label">Bash</span>
+      <button class="copy-btn">העתק</button>
+tail -200 app.log | claude -p "תשלח לי הודעה ב-Slack אם תראה משהו חריג"</div>
+    <p>לרצים מרובים על קבצים - לולאה:</p>
+    <div class="code-block">
+      <span class="code-label">Bash</span>
+      <button class="copy-btn">העתק</button>
+for file in $(cat files.txt); do claude -p "תהפוך את $file מ-React ל-Vue. החזר OK או FAIL." --allowedTools "Edit,Bash(git commit *)"; done</div>
+  </div>
+
+  <!-- 8. טעויות נפוצות -->
+  <div class="content-block">
+    <h2>
+      8. טעויות נפוצות - וכיצד להימנע מהן
+    </h2>
+    <p>אלה הטעויות שכמעט כל מתחיל עושה. זיהוי מוקדם חוסך שעות:</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">הטעות</th>
+          <th scope="col">איך לזהות</th>
+          <th scope="col">הפתרון</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>"סשן הכל-באחד"</strong></td>
+          <td>התחלתם משימה אחת, עברתם למשהו לא קשור, חזרתם. ההקשר מלא ברעש.</td>
+          <td><code lang="en" dir="ltr">/clear</code> בין משימות לא קשורות.</td>
+        </tr>
+        <tr>
+          <td><strong>"מתקנים ושוב מתקנים"</strong></td>
+          <td>Claude טועה, מתקנים, עדיין טועה, מתקנים שוב. ההקשר מזוהם בגישות שנכשלו.</td>
+          <td>אחרי שני תיקונים - <code lang="en" dir="ltr">/clear</code> וכתבו פרומפט יותר טוב שמשלב מה שלמדתם.</td>
+        </tr>
+        <tr>
+          <td><strong>CLAUDE.md "כמו רומן"</strong></td>
+          <td>הקובץ ארוך מדי. Claude מתעלם מחצי מההוראות כי כללים חשובים אבדו ברעש.</td>
+          <td>גזרו ללא רחמים. אם Claude עושה משהו נכון בלי ההוראה - מחקו את ההוראה. הפכו דברים שצריכים לקרות "תמיד" ל-hooks.</td>
+        </tr>
+        <tr>
+          <td><strong>"אמון בלי אימות"</strong></td>
+          <td>Claude מייצר משהו שנראה נכון, אבל לא מטפל במקרי קצה. אתם מגלים את זה רק בפרודקשן.</td>
+          <td>תמיד תנו אמצעי אימות (tests, סקריפט, screenshot). אם אי אפשר לאמת - אל תשלחו.</td>
+        </tr>
+        <tr>
+          <td><strong>"חקירה אינסופית"</strong></td>
+          <td>ביקשתם "לחקור" משהו בלי לתחם. Claude קרא 200 קבצים ומילא את כל ההקשר.</td>
+          <td>תחמו חקירה במפורש או השתמשו בתת-סוכן (Subagent) שיחקור בחלון נפרד.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 9. פיצ'רים מתקדמים -->
+  <div class="content-block">
+    <h2>
+      9. פיצ'רים מתקדמים שכדאי להכיר
+    </h2>
+    <p>אלה דברים חדשים יחסית שמופיעים בתיעוד הרשמי - לא חובה למתחילים, אבל מאוד שווים אחרי שהבסיס בידיים:</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">הפיצ'ר</th>
+          <th scope="col">מה זה</th>
+          <th scope="col">מתי שווה להשתמש</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Routines</strong></td>
+          <td>משימות מתוזמנות שרצות על תשתית הענן של Anthropic - גם כשהמחשב שלכם כבוי</td>
+          <td>סקירת PRs כל בוקר, ניתוח כשלי CI בלילה, audit שבועי של תלויות</td>
+        </tr>
+        <tr>
+          <td><strong>Remote Control</strong></td>
+          <td>מאפשר להמשיך סשן מקומי דרך הטלפון או דפדפן אחר</td>
+          <td>קמתם מהשולחן, רוצים לראות מה Claude עשה תוך כדי קפה</td>
+        </tr>
+        <tr>
+          <td><strong>Dispatch</strong></td>
+          <td>שולחים משימה מהטלפון, נפתחת סשן Desktop על המחשב</td>
+          <td>חשבתם על משימה בדרכים - שולחים מ-iOS, חוזרים הביתה והכל מוכן</td>
+        </tr>
+        <tr>
+          <td><strong>Channels</strong></td>
+          <td>קלט אירועים מ-Telegram, Discord, iMessage או webhooks משלכם לתוך סשן</td>
+          <td>בוט שעונה לכם בטלגרם על שאלות בקוד, או webhook מ-Stripe שמפעיל סקריפט</td>
+        </tr>
+        <tr>
+          <td><strong>Claude in Chrome</strong></td>
+          <td>תוסף לכרום שמאפשר ל-Claude לפתוח טאבים, לבדוק UI, ולשפר עד שעובד</td>
+          <td>בנייה של דפי web - Claude רואה את התוצאה בעצמו ומשפר עד שזה נכון</td>
+        </tr>
+        <tr>
+          <td><strong>Slack Integration</strong></td>
+          <td>תיוג <code lang="en" dir="ltr">@Claude</code> בערוץ Slack - מקבלים PR בחזרה</td>
+          <td>צוותים שעובדים מ-Slack - באג מדווח, Claude פותח PR אוטומטית</td>
+        </tr>
+        <tr>
+          <td><strong>GitHub Actions / Code Review</strong></td>
+          <td>סקירת PR אוטומטית על כל commit, או אוטומציה של triage</td>
+          <td>פרויקטים פתוחים, צוותים גדולים, ביקורת איכות עקבית</td>
+        </tr>
+        <tr>
+          <td><strong>Hooks</strong></td>
+          <td>סקריפטים שרצים אוטומטית בנקודות בעבודה של Claude (לפני/אחרי edit, לפני commit)</td>
+          <td>לפורמט קוד אחרי כל עריכה, להריץ lint לפני commit, לחסום כתיבה לתיקיות מסוכנות</td>
+        </tr>
+        <tr>
+          <td><strong>MCP Servers</strong></td>
+          <td>חיבור Claude לכלים חיצוניים (Notion, Figma, Database, Jira)</td>
+          <td>למשוך תיעוד מ-Notion, לסגור tickets ב-Jira, לקרוא נתונים מהבסיס נתונים</td>
+        </tr>
+        <tr>
+          <td><strong>Sandbox Mode</strong></td>
+          <td>בידוד ברמת מערכת הפעלה - Claude לא יכול לגעת בקבצים מחוץ לתיקייה</td>
+          <td>הרצת קוד לא מוכר או ניסויים מסוכנים בלי דאגה לשאר המערכת</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 10. סיכום -->
+  <div class="content-block">
+    <h2>
+      פיתוח האינטואיציה שלכם
+    </h2>
+    <p>
+      הדפוסים במדריך הזה הם <strong>נקודת התחלה - לא חוקים מקודשים</strong>. הם עובדים טוב בכלל, אבל לא בהכרח אופטימליים לכל מצב.
+    </p>
+    <p>
+      לפעמים <em>כדאי</em> לתת להקשר להצטבר כי אתם עמוק בבעיה מסובכת אחת וההיסטוריה חשובה. לפעמים כדאי לדלג על תכנון ולתת ל-Claude לחקור - כי המשימה עצמה אקספלורטיבית. לפעמים פרומפט מעורפל הוא בדיוק הנכון - כי אתם רוצים לראות איך Claude יפרש את הבעיה לפני שתצמצמו.
+    </p>
+    <p>
+      <strong>שימו לב למה שעובד.</strong> כשClaud מייצר תוצאה מצוינת - שאלו את עצמכם: מה עשיתי נכון? איך בניתי את הפרומפט? איזה הקשר נתתי? באיזה מצב הייתי? כשClaud נכשל - שאלו למה. האם ההקשר היה רועש מדי? הפרומפט עמום מדי? המשימה גדולה מדי לפעימה אחת?
+    </p>
+    <p>
+      עם הזמן תפתחו אינטואיציה ששום מדריך לא יכול ללכוד. תדעו מתי להיות ספציפיים ומתי פתוחים, מתי לתכנן ומתי לחקור, מתי לנקות הקשר ומתי לתת לו להצטבר.
+    </p>
+    <p>
+      <strong>מקורות:</strong> מקטע זה מבוסס על המדריך הרשמי של Anthropic - <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">code.claude.com/docs/en/best-practices</a>. כדאי לחזור אליו מדי פעם - הוא מתעדכן.
+    </p>
+  </div>

@@ -1,0 +1,312 @@
+<h1>מה זה Claude Code?</h1>
+<p class="lede">הבנה מלאה של הכלי - מה הוא עושה, איך הוא עובד, ואיפה הוא עומד מול המתחרים</p>
+
+
+  <!-- What is it -->
+  <div class="content-block">
+    <h2>
+      בקצרה - מה זה בכלל?
+    </h2>
+    <p>
+      <strong>Claude Code</strong> הוא כלי תוכנה שפותח על ידי חברת <strong>Anthropic</strong> (החברה שיצרה את Claude).
+      בניגוד לצ'אטבוט רגיל שרק עונה על שאלות, Claude Code הוא <strong>סוכן (Agent)</strong> - כלומר, הוא לא רק מדבר, אלא גם <strong>עושה דברים</strong>:
+    </p>
+    <ul>
+      <li><strong>קורא את כל הקבצים בפרויקט שלך</strong> - הוא מבין את המבנה, את הקוד, ואת ההקשר הכללי</li>
+      <li><strong>כותב ועורך קוד</strong> - יוצר קבצים חדשים, מתקן באגים, מוסיף פיצ'רים</li>
+      <li><strong>מריץ פקודות בטרמינל</strong> - בדיקות, בניית פרויקט, ניהול Git ועוד</li>
+      <li><strong>מחפש באינטרנט</strong> - מוצא תיעוד, מידע עדכני ופתרונות</li>
+      <li><strong>מתחבר לכלים חיצוניים</strong> - Slack, GitHub, Google Drive ועוד דרך MCP</li>
+    </ul>
+    <div class="info-box">
+      <p>
+        <strong>במילים פשוטות:</strong> תארו לעצמכם מתכנת מנוסה שיושב לידכם ויכול לקרוא את כל הפרויקט שלכם, לכתוב קוד, להריץ בדיקות ולתקן בעיות - כל זה רק על ידי שאתם מסבירים לו מה אתם רוצים בשפה רגילה. זה Claude Code.
+      </p>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="content-block">
+    <h2>
+      איך זה עובד? - הלולאה האגנטית
+    </h2>
+    <p>
+      כשנותנים ל-Claude Code משימה, הוא עובד בשלושה שלבים שחוזרים על עצמם עד שהמשימה מושלמת:
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <p><strong>איסוף הקשר (Context Gathering)</strong></p>
+          <p>Claude קורא קבצים, מחפש בפרויקט, ומבין מה קורה בקוד. הוא לא רואה רק את הקובץ הפתוח - הוא יכול לנווט בכל הפרויקט.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <p><strong>ביצוע פעולה (Taking Action)</strong></p>
+          <p>Claude כותב קוד, עורך קבצים, מריץ פקודות, או מבצע כל פעולה שנדרשת.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <p><strong>בדיקה ואימות (Verification)</strong></p>
+          <p>Claude מריץ בדיקות, בודק שהקוד עובד, ומתקן בעיות שהוא מוצא - עד שהתוצאה תקינה.</p>
+        </div>
+      </div>
+    </div>
+    <p>
+      תהליך זה נקרא <strong>"הלולאה האגנטית" (Agentic Loop)</strong>.
+      Claude ממשיך לחזור על הצעדים האלה, לפעמים עשרות פעמים, עד שהמשימה מושלמת. ובכל שלב אפשר לעצור אותו ולתת לו כיוון אחר.
+    </p>
+  </div>
+
+  <!-- Where it runs -->
+  <div class="content-block">
+    <h2>
+      איפה אפשר להשתמש ב-Claude Code?
+    </h2>
+    <p>Claude Code זמין במגוון סביבות - כולן מתחברות לאותו מנוע מאחורי הקלעים:</p>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">סביבה</th>
+          <th scope="col">תיאור</th>
+          <th scope="col">למי מתאים?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>טרמינל (CLI)</strong></td>
+          <td>שורת פקודה עם כל הפיצ'רים</td>
+          <td>מתכנתים, משתמשים מתקדמים</td>
+        </tr>
+        <tr>
+          <td><strong>VS Code</strong></td>
+          <td>תוסף עם ממשק ויזואלי בתוך העורך</td>
+          <td>מתכנתים שעובדים ב-VS Code</td>
+        </tr>
+        <tr>
+          <td><strong>JetBrains</strong></td>
+          <td>פלאגין ל-IntelliJ, PyCharm ועוד</td>
+          <td>מפתחי Java, Python ועוד</td>
+        </tr>
+        <tr>
+          <td><strong>אפליקציית דסקטופ</strong></td>
+          <td>אפליקציה עם ממשק גרפי - כוללת Code, Chat ו-Cowork</td>
+          <td>כל אחד - הדרך המומלצת למתחילים ולמי שלא מתכנתים</td>
+        </tr>
+        <tr>
+          <td><strong>דפדפן (Web)</strong></td>
+          <td>שימוש דרך claude.ai/code ללא התקנה</td>
+          <td>מי שרוצה לנסות מהר</td>
+        </tr>
+        <tr>
+          <td><strong>Slack</strong></td>
+          <td>שליחת משימות ל-Claude דרך צ'אט הצוות</td>
+          <td>צוותים בארגונים</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      <strong>בנוסף - שכבת אינטגרציה נוספת</strong> שמרחיבה את הסביבות הללו (לא דורשת התקנה נפרדת, אבל שווה להכיר):
+    </p>
+    <p>הטבלה המלאה - עשרה פיצ'רים, מה כל אחד עושה ומתי שווה להשתמש בו - נמצאת במקום אחד: <a href="#/beginners/best-practices#9-פיצרים-מתקדמים-שכדאי-להכיר">פיצ'רים מתקדמים שכדאי להכיר, בפרק "שיטות מומלצות"</a>.</p>
+  </div>
+
+  <!-- Competitors -->
+  <div class="content-block">
+    <h2>
+      השוואה למתחרים
+    </h2>
+    <p>Claude Code הוא לא הכלי היחיד בתחום. הנה השוואה לכלים הפופולריים ביותר:</p>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th scope="col">כלי</th>
+          <th scope="col">סוג</th>
+          <th scope="col">מחיר</th>
+          <th scope="col">נקודת חוזק</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Claude Code</strong></td>
+          <td>סוכן בטרמינל / IDE</td>
+          <td>$20-$200/חודש</td>
+          <td>הכי טוב במשימות מורכבות ורב-קבציות</td>
+        </tr>
+        <tr>
+          <td><strong lang="en" dir="ltr">Codex (OpenAI)</strong></td>
+          <td>סוכן בטרמינל (קוד פתוח)</td>
+          <td>חינם (+ מנוי ChatGPT או API)</td>
+          <td>מהירות גבוהה, קוד פתוח, פעולה אוטונומית</td>
+        </tr>
+        <tr>
+          <td><strong>GitHub Copilot</strong></td>
+          <td>תוסף ל-IDE</td>
+          <td>$0-$39/חודש</td>
+          <td>השלמת קוד אוטומטית תוך כדי כתיבה</td>
+        </tr>
+        <tr>
+          <td><strong>Cursor</strong></td>
+          <td>עורך קוד עצמאי</td>
+          <td>$0-$40/חודש</td>
+          <td>חוויית עריכה מתקדמת עם AI</td>
+        </tr>
+        <tr>
+          <td><strong>Windsurf</strong></td>
+          <td>עורך קוד עצמאי</td>
+          <td>$0-$35/חודש</td>
+          <td>ממשק ידידותי, תוכנית חינמית נדיבה</td>
+        </tr>
+        <tr>
+          <td><strong>Amazon Q</strong></td>
+          <td>תוסף + CLI</td>
+          <td>$0-$19/חודש</td>
+          <td>אינטגרציה עם שירותי AWS</td>
+        </tr>
+        <tr>
+          <td><strong>Aider</strong></td>
+          <td>CLI (קוד פתוח)</td>
+          <td>חינם (+ מפתח API)</td>
+          <td>קוד פתוח, גמישות מלאה</td>
+        </tr>
+        <tr>
+          <td><strong>Cline</strong></td>
+          <td>תוסף ל-VS Code</td>
+          <td>חינם (+ מפתח API)</td>
+          <td>קוד פתוח, עובד עם כל מודל</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warning-box">
+      <span class="warning-icon">⚠️</span>
+      <p>
+        <strong>שימו לב:</strong> המחירים בטבלה מעודכנים למרץ 2026 ועשויים להשתנות. מומלץ לבדוק את האתר הרשמי של כל כלי למחירים עדכניים.
+      </p>
+    </div>
+    <div class="info-box">
+      <p>
+        <strong>טיפ:</strong> הרבה מפתחים משתמשים בשני כלים במקביל - Claude Code למשימות מורכבות ו-Copilot או Cursor להשלמת קוד מהירה תוך כדי עבודה.
+      </p>
+    </div>
+  </div>
+
+  <!-- Advantages -->
+  <div class="content-block">
+    <h2>
+      יתרונות Claude Code
+    </h2>
+    <ul>
+      <li><strong>הבנה עמוקה של פרויקטים שלמים</strong> - Claude Code קורא ומבין את כל הקבצים בפרויקט, לא רק את הקובץ הפתוח. הוא מזהה קשרים בין רכיבים ויכול לעבוד על כמה קבצים במקביל.</li>
+      <li><strong>עבודה אוטונומית</strong> - נותנים לו משימה והוא עובד לבד: מתכנן, כותב, בודק ומתקן. לא צריך להגיד לו צעד-צעד מה לעשות.</li>
+      <li><strong>ללא נעילה לעורך מסוים</strong> - עובד בטרמינל, אז אפשר להשתמש בו עם כל עורך קוד (VS Code, Neovim, JetBrains ועוד).</li>
+      <li><strong>איכות חשיבה גבוהה</strong> - המודל של Claude נחשב מהחזקים בעולם בהבנת קוד, דיבאגינג, ופתרון בעיות מורכבות.</li>
+      <li><strong>זיכרון בין-שיחתי</strong> - דרך קבצי CLAUDE.md ו-Auto Memory, הוא זוכר העדפות, מוסכמות וסטנדרטים של הפרויקט.</li>
+      <li><strong>הרחבה אינסופית</strong> - אפשר לחבר כלים חיצוניים (MCP), ליצור סקילים מותאמים, Hooks ותת-סוכנים.</li>
+      <li><strong>שקיפות בעלויות</strong> - רואים בדיוק כמה טוקנים (tokens) נצרכו ומה העלות.</li>
+      <li><strong>מתאים גם ללא-מתכנתים</strong> - אפשר לבנות אתרים, לנהל קבצים, לנתח נתונים ולאוטמט משימות - בלי לדעת לכתוב שורת קוד אחת.</li>
+    </ul>
+  </div>
+
+  <!-- Disadvantages -->
+  <div class="content-block">
+    <h2>
+      חסרונות ומגבלות
+    </h2>
+    <ul>
+      <li><strong>עלות גבוהה יחסית</strong> - מנוי Pro ($20/חודש) כולל גישה ל-Claude Code עם מגבלות שימוש. לשימוש אינטנסיבי צריך Max ($100-$200/חודש). בשימוש דרך API, עלות יומית ממוצעת של $6 למפתח, שיכולה להגיע ל-$12+ בימים אינטנסיביים.</li>
+      <li><strong>עקומת למידה בטרמינל</strong> - הממשק העיקרי הוא שורת פקודה. למי שלא רגיל לטרמינל, זה יכול להיות מאיים בהתחלה (אבל אפשר גם דרך VS Code או אפליקציית דסקטופ).</li>
+      <li><strong>אין השלמה אוטומטית בזמן אמת</strong> - בניגוד ל-Copilot, Claude Code לא מציע הצעות תוך כדי כתיבה. צריך לבקש ממנו במפורש.</li>
+      <li><strong>דורש חיבור לאינטרנט</strong> - Claude רץ בענן. אי אפשר לעבוד איתו אופליין.</li>
+      <li><strong>הקשר מוגבל (Context Window)</strong> - בפרויקטים מאוד גדולים, Claude עלול לאבד מידע משיחות ארוכות. צריך לנהל את ההקשר בחכמה.</li>
+      <li><strong>לא תמיד מדויק</strong> - כמו כל AI, הוא יכול לטעות, להמציא דברים (הזיות / Hallucinations), או לכתוב קוד שנראה נכון אבל מכיל באגים עדינים.</li>
+    </ul>
+  </div>
+
+  <!-- Dangers -->
+  <div class="content-block">
+    <h2>
+      סיכונים וסכנות - מה חשוב לדעת
+    </h2>
+    <p>שימוש בכלי AI לכתיבת קוד מגיע עם סיכונים שחשוב להכיר:</p>
+
+    <h3>אבטחה</h3>
+    <ul>
+      <li><strong>הרצת פקודות לא בטוחות</strong> - Claude Code יכול להריץ כל פקודה בטרמינל. במצב "אישור אוטומטי" הסיכון גדל. תמיד כדאי לבדוק מה הוא מתכוון להריץ.</li>
+      <li><strong>פגיעויות אבטחה בקוד</strong> - AI יכול לכתוב קוד עם חולשות אבטחה (SQL Injection, XSS וכו'). מחקר של סטנפורד מצא שמפתחים שהשתמשו ב-AI כתבו קוד פחות מאובטח.</li>
+      <li><strong>חשיפת מידע רגיש</strong> - הקוד שלכם נשלח לשרתים של Anthropic לעיבוד. לארגונים עם קוד רגיש, זה דורש שיקול.</li>
+      <li><strong>מאגרי קוד זדוניים</strong> - בפברואר 2026 התגלו פגיעויות קריטיות: פתיחת פרויקט זדוני יכלה להוביל להרצת קוד זדוני ולגניבת מפתחות API.</li>
+    </ul>
+
+    <h3>תלות ולמידה</h3>
+    <ul>
+      <li><strong>אובדן מיומנויות</strong> - הסתמכות יתר על AI עלולה למנוע פיתוח (או לגרום לאיבוד) של יכולת לדבג, לכתוב ולהבין קוד באופן עצמאי.</li>
+      <li><strong>ביטחון מופרז</strong> - AI נותן הסברים בביטחון מלא, גם כשהוא טועה. זה יכול להוביל מתחילים לסמוך על קוד שהם לא באמת מבינים.</li>
+    </ul>
+
+    <h3>משפטי וזכויות יוצרים</h3>
+    <ul>
+      <li><strong>זכויות יוצרים</strong> - מודלי AI אומנו על קוד פתוח. יש תביעות משפטיות בנוגע לשימוש בקוד שעלול להפר רישיונות.</li>
+      <li><strong>עלות בלתי צפויה</strong> - במיוחד עם תשלום לפי טוקנים, משימה לא מוגדרת היטב יכולה לצרוך הרבה כסף.</li>
+    </ul>
+
+    <div class="warning-box">
+      <span class="warning-icon">⚠️</span>
+      <p>
+        <strong>שורה תחתונה:</strong> Claude Code הוא כלי חזק מאוד, אבל הוא לא מושלם. תמיד כדאי לבדוק את הקוד שהוא כותב, לא לאשר פקודות בעיניים עצומות, ולשמור על גיבויים. חשבו עליו כעוזר חכם שצריך פיקוח - לא כמתכנת אוטונומי שאפשר לסמוך עליו ב-100%.
+      </p>
+    </div>
+  </div>
+
+  <!-- Pricing -->
+  <div class="content-block">
+    <h2>
+      תמחור ועלויות
+    </h2>
+    <p>Claude Code זמין במספר תוכניות מנוי:</p>
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <div class="plan-name">Pro</div>
+        <div class="price">$20<span>/חודש</span></div>
+        <ul>
+          <li>גישה ל-Claude באתר ובאפליקציה</li>
+          <li>כולל Claude Code עם מגבלות שימוש</li>
+          <li>מתאים למתחילים ושימוש קל</li>
+        </ul>
+      </div>
+      <div class="pricing-card popular">
+        <div class="plan-name">Max 5x</div>
+        <div class="price">$100<span>/חודש</span></div>
+        <ul>
+          <li>כולל Claude Code מלא</li>
+          <li>פי 5 יותר שימוש מ-Pro</li>
+          <li>עדיפות גבוהה בתור</li>
+          <li>מומלץ לרוב המשתמשים</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Max 20x</div>
+        <div class="price">$200<span>/חודש</span></div>
+        <ul>
+          <li>כולל Claude Code מלא</li>
+          <li>פי 20 יותר שימוש מ-Pro</li>
+          <li>עדיפות מקסימלית</li>
+          <li>לשימוש אינטנסיבי</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">API</div>
+        <div class="price">לפי שימוש</div>
+        <ul>
+          <li>תשלום לפי טוקנים</li>
+          <li>ממוצע ~$6 ליום</li>
+          <li>$100-200 לחודש למפתח</li>
+          <li>שליטה מלאה בעלויות</li>
+        </ul>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,122 @@
+/* ============================================================
+   legacy.css - the old guide's component classes, re-expressed
+   on the new tokens. One accent, no rainbow, no glow. Every
+   colour here is a token; every size sits on the 8px grid.
+   ============================================================ */
+.lede{color:var(--muted);font-size:var(--t-lg);max-width:var(--measure);margin-top:var(--sp-2)}
+
+/* content blocks: flat surface containers */
+.content-block{background:var(--raise);border:1px solid var(--rule);border-radius:var(--r-lg);
+  padding:var(--sp-6);margin:var(--sp-6) 0}
+article .content-block h2{font-size:var(--t-lg);font-weight:500;margin:0 0 var(--sp-3);padding:0;border:0}
+article .content-block h3,article .collapsible-inner h3{font-size:var(--t-base);font-weight:600;margin:var(--sp-6) 0 var(--sp-2);color:var(--ink)}
+.content-block>*+*{margin-top:var(--sp-3)}
+.content-block ul,.content-block ol,.collapsible-inner ul,.collapsible-inner ol{padding-inline-start:1.4em}
+.content-block li+li,.collapsible-inner li+li{margin-top:var(--sp-1)}
+.content-block li::marker,.collapsible-inner li::marker{color:var(--muted)}
+
+/* tags */
+.tag{display:inline-block;font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.04em;
+  padding:0 var(--sp-2);border:1px solid var(--rule);border-radius:var(--r-sm);color:var(--muted);
+  margin-inline-start:var(--sp-1);line-height:1.6;direction:ltr;unicode-bidi:isolate}
+.tag-pro{color:var(--ok);border-color:var(--ok)} .tag-con{color:var(--brand-red);border-color:var(--brand-red)}
+.tag-warning{color:var(--warn);border-color:var(--warn)}
+
+/* pros / cons */
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);margin-top:var(--sp-4)}
+.pros-list,.cons-list{list-style:none;margin:0;padding:var(--sp-4);border-radius:var(--r-md);border:1px solid var(--rule);background:var(--paper)}
+.list-title{font-weight:700;margin-bottom:var(--sp-2)}
+.pros-list .list-title{color:var(--ok)} .cons-list .list-title{color:var(--brand-red)}
+.pros-list li::before{content:'✓ ';color:var(--ok);font-weight:700}
+.cons-list li::before{content:'✗ ';color:var(--brand-red);font-weight:700}
+
+/* code blocks (div-based in the old guide) */
+.code-block{position:relative;font-family:var(--f-mono);font-size:var(--t-sm);background:var(--paper);
+  border:1px solid var(--rule);border-radius:var(--r-md);padding:var(--sp-8) var(--sp-4) var(--sp-4);
+  margin:var(--sp-4) 0;direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word;
+  unicode-bidi:isolate;color:var(--accent);line-height:1.6}
+.code-block .code-label{position:absolute;top:var(--sp-2);right:var(--sp-3);font-family:var(--f-body);
+  font-size:var(--t-xs);color:var(--muted);direction:rtl;white-space:normal}
+.code-block .copy-btn{position:absolute;top:var(--sp-1);left:var(--sp-1);min-height:32px;padding:0 var(--sp-3);
+  font:inherit;font-family:var(--f-body);font-size:var(--t-xs);color:var(--muted);background:var(--raise);
+  border:1px solid var(--rule);border-radius:var(--r-sm);cursor:pointer;direction:rtl}
+.code-block .copy-btn:hover{background:color-mix(in srgb,var(--ink) 8%,var(--raise))}
+.code-block .copy-btn.done{color:var(--ok);border-color:var(--ok)}
+
+/* steps */
+.steps{margin:var(--sp-4) 0;display:flex;flex-direction:column;gap:var(--sp-3)}
+.step{display:flex;gap:var(--sp-3);align-items:flex-start}
+.step-num{flex:0 0 32px;height:32px;border:1.5px solid var(--brand);border-radius:50%;display:flex;
+  align-items:center;justify-content:center;font-family:var(--f-mono);font-size:var(--t-sm);color:var(--accent);margin-top:2px}
+.step-content{flex:1;min-width:0}
+.step-content>*+*{margin-top:var(--sp-2)}
+
+/* tables (wrapped in .tbl by the engine) */
+.comparison-table{border-collapse:collapse;width:100%;font-size:var(--t-sm)}
+.comparison-table th,.comparison-table td{text-align:right;vertical-align:top;padding:var(--sp-2) var(--sp-3);border-bottom:1px solid var(--rule)}
+.comparison-table th{font-weight:700;background:var(--paper);white-space:nowrap}
+.comparison-table tr:last-child td{border-bottom:0}
+
+/* collapsibles: a proper disclosure */
+.collapsible{margin:var(--sp-3) 0;border:1px solid var(--rule);border-radius:var(--r-md);background:var(--raise)}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);
+  padding:var(--sp-3) var(--sp-4);min-height:56px;cursor:pointer;user-select:none;border-radius:var(--r-md)}
+.collapsible-header:hover{background:color-mix(in srgb,var(--ink) 6%,var(--raise))}
+article .collapsible-header h2{font-size:var(--t-base);font-weight:500;margin:0;padding:0;border:0}
+.collapsible-arrow{color:var(--muted);font-size:var(--t-xs);transition:transform .2s cubic-bezier(.2,0,0,1)}
+.collapsible.open .collapsible-arrow{transform:rotate(180deg)}
+.collapsible-body{display:none}
+.collapsible.open .collapsible-body{display:block}
+.collapsible-inner{padding:0 var(--sp-4) var(--sp-4);border-top:1px solid var(--rule);padding-top:var(--sp-4)}
+.collapsible-inner>*+*{margin-top:var(--sp-3)}
+
+
+/* inspiration board: one accent, category as an eyebrow */
+.filter-bar{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:var(--sp-6) 0}
+.filter-btn{min-height:40px;padding:0 var(--sp-4);font:inherit;font-size:var(--t-sm);color:var(--muted);
+  background:transparent;border:1px solid var(--rule);border-radius:999px;cursor:pointer}
+.filter-btn:hover{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink)}
+.filter-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.inspiration-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:var(--sp-4)}
+.inspiration-card{background:var(--raise);border:1px solid var(--rule);border-radius:var(--r-lg);padding:var(--sp-4);
+  display:flex;flex-direction:column;gap:var(--sp-2)}
+.inspiration-card[hidden]{display:none}
+.inspiration-category{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);direction:ltr;text-align:right}
+article .inspiration-card h2{font-size:var(--t-base);font-weight:600;margin:0;padding:0;border:0}
+.inspiration-card p{font-size:var(--t-sm);color:var(--muted);flex:1;max-width:none}
+.inspiration-link{font-size:var(--t-sm);text-decoration:none;min-height:40px;display:inline-flex;align-items:center}
+
+/* callouts: the old .info-box / .warning-box are promoted to the Mintlify
+   taxonomy (.callout.note / .tip / .warning) by the engine at render time */
+.info-box,.warning-box{border-radius:var(--r-md);padding:var(--sp-4) var(--sp-6);margin:var(--sp-4) 0}
+.warning-box .warning-icon{display:none}
+.info-box p,.warning-box p{max-width:none}
+
+/* pricing */
+.pricing-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:var(--sp-3);margin:var(--sp-4) 0}
+.pricing-card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-md);padding:var(--sp-4);text-align:right}
+.pricing-card.popular{border-color:var(--brand)}
+.pricing-card .plan-name{font-weight:700}
+.pricing-card .price{font-family:var(--f-display);font-size:var(--t-2xl);font-weight:300;margin:var(--sp-2) 0;direction:ltr;text-align:right}
+.pricing-card .price span{font-size:var(--t-sm);color:var(--muted)}
+.pricing-card ul{list-style:none;padding:0;margin:var(--sp-2) 0 0;font-size:var(--t-sm);color:var(--muted)}
+.pricing-card li::before{content:'✓ ';color:var(--ok)}
+
+/* deep-track "in plain words" callout (raw HTML inside the markdown) */
+.plain-language{background:var(--accent-soft);border-radius:var(--r-md);padding:var(--sp-4) var(--sp-6);margin:var(--sp-6) 0}
+.plain-language h4{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 var(--sp-2)}
+.plain-language p{max-width:none}
+.plain-language p+p{margin-top:var(--sp-2)}
+
+/* deep-track markdown extras */
+article pre code{font:inherit;color:var(--ink);background:none;padding:0}
+article a{text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+article a:hover{border-bottom-color:var(--accent)}
+article img{max-width:100%;height:auto;border-radius:var(--r-md);border:1px solid var(--rule)}
+article table code,article li code{white-space:nowrap}
+
+@media (max-width:600px){
+  .pros-cons{grid-template-columns:1fr}
+  .content-block{padding:var(--sp-4)}
+  .inspiration-grid{grid-template-columns:1fr}
+}

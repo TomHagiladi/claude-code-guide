@@ -1,0 +1,81 @@
+/* ============================================================
+   Claude Code Guide - design tokens (site build, brand pass 4.9.2026)
+   Palette derived from Tom's logo: green #75b743 (wordmark),
+   charcoal #4a4845 (mono tagline), red #af242a (hollow frames).
+   The logo's own tagline is monospace - so the bilingual signature
+   (English literal = mono + green) IS the logo's language.
+   --brand is the exact logo green: fills and motif only. Text on light
+   paper uses --accent, a deepened logo green that passes WCAG AA
+   (4.68:1). In dark mode the exact logo green is the accent (7.1:1).
+   Fonts load from Google Fonts in index.html.
+   ============================================================ */
+:root{
+  /* light */
+  --paper:#fbfbfa; --raise:#ffffff; --ink:#35342f; --muted:#6b6965;
+  --rule:#e4e2dd; --accent:#477f26; --accent-soft:#eef5e6;
+  --brand:#75b743; --on-brand:#1b1a18; --brand-red:#af242a;
+  --warn:#8a5a12; --warn-soft:#fbf3e4; --ok:#477f26; --ok-soft:#eef5e6;
+  --f-display:'Heebo','Assistant','Segoe UI',sans-serif;
+  --f-body:'Assistant','Segoe UI',sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+  /* type scale, 1.25 ratio, tuned for Hebrew leading */
+  --t-xs:.75rem; --t-sm:.875rem; --t-base:1.0625rem; --t-lg:1.25rem;
+  --t-xl:1.5rem; --t-2xl:1.9rem; --t-3xl:2.5rem;
+  --lh-body:1.75; --lh-tight:1.2;
+  --measure:34rem;
+  --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem;
+  --sp-6:1.5rem; --sp-8:2rem; --sp-12:3rem;
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-full:999px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){ --paper:#1b1a18; --raise:#242320; --ink:#ece9e3; --muted:#a09d97;
+    --rule:#37352f; --accent:#75b743; --accent-soft:#243320;
+    --brand:#75b743; --on-brand:#1b1a18; --brand-red:#e0575d;
+    --warn:#d8a55a; --warn-soft:#2b2418; --ok:#75b743; --ok-soft:#243320; color-scheme:dark; }
+}
+:root[data-theme="dark"]{ --paper:#1b1a18; --raise:#242320; --ink:#ece9e3; --muted:#a09d97;
+  --rule:#37352f; --accent:#75b743; --accent-soft:#243320;
+  --brand:#75b743; --on-brand:#1b1a18; --brand-red:#e0575d;
+  --warn:#d8a55a; --warn-soft:#2b2418; --ok:#75b743; --ok-soft:#243320; color-scheme:dark; }
+:root[data-theme="light"]{ --paper:#fbfbfa; --raise:#ffffff; --ink:#35342f; --muted:#6b6965;
+  --rule:#e4e2dd; --accent:#477f26; --accent-soft:#eef5e6;
+  --brand:#75b743; --on-brand:#1b1a18; --brand-red:#af242a;
+  --warn:#8a5a12; --warn-soft:#fbf3e4; --ok:#477f26; --ok-soft:#eef5e6; color-scheme:light; }
+*{box-sizing:border-box}
+html{direction:rtl;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);
+  font-size:var(--t-base);line-height:var(--lh-body);-webkit-text-size-adjust:100%}
+/* headings: the logo is a thin geometric wordmark - headings follow, light weight, no serif */
+h1,h2,h3{font-family:var(--f-display);line-height:var(--lh-tight);text-wrap:balance;margin:0}
+h1{font-size:var(--t-3xl);font-weight:300;letter-spacing:-.005em}
+h2{font-size:var(--t-xl);font-weight:400}
+h3{font-size:var(--t-lg);font-weight:500}
+p{margin:0}
+/* --- THE SIGNATURE --- typeface alone, no chip, no padding --- */
+.lit{font-family:var(--f-mono);font-size:.88em;font-weight:500;color:var(--accent);
+  direction:ltr;unicode-bidi:isolate}
+.eyebrow{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);direction:ltr;text-align:right;margin:0}
+/* --- the brand motif: a hollow tilted frame, from the logo. decoration only, never text --- */
+.frame{display:inline-block;width:.55em;height:.55em;border:1.5px solid var(--brand-red);
+  border-radius:1px;transform:rotate(14deg);vertical-align:middle;margin-inline-end:.45em}
+.frame.green{border-color:var(--brand)}
+.muted{color:var(--muted)}
+pre{font-family:var(--f-mono);font-size:var(--t-sm);background:var(--raise);
+  border:1px solid var(--rule);border-radius:var(--r-md);padding:var(--sp-4);
+  direction:ltr;text-align:left;overflow-x:auto;line-height:1.6;margin:0}
+.card{background:var(--raise);border:1px solid var(--rule);border-radius:var(--r-md);
+  padding:var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-2)}
+.stack{display:flex;flex-direction:column;gap:var(--sp-4)}
+.row{display:flex;gap:var(--sp-3);flex-wrap:wrap;align-items:center}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+/* theme-aware logo swap. Rules only ever HIDE (never set display), so they
+   can't fight the element's own display value; specificity (0,2,1) beats
+   any single-class or tag rule that gives the image display:block. */
+:root[data-theme="light"] .only-dark{display:none}
+:root[data-theme="dark"] .only-light{display:none}
+@media (prefers-color-scheme:light){ :root:not([data-theme="dark"]) .only-dark{display:none} }
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .only-light{display:none} }
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

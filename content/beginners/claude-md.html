@@ -1,0 +1,205 @@
+<h1>CLAUDE.md - קובץ ההגדרות האישי</h1>
+<p class="lede">איך ללמד את Claude לזכור את ההעדפות שלכם - פעם אחת ולתמיד</p>
+
+
+  <!-- What is CLAUDE.md -->
+  <div class="content-block">
+    <h2>
+      מה זה CLAUDE.md?
+    </h2>
+    <p>
+      דמיינו שאתם מגיעים לבית קפה חדש כל בוקר ואומרים: "אמריקנו עם חלב שקדים, לא חם מדי, עם שני סוכרים". כל בוקר אותו הדבר. מעצבן, נכון? עכשיו דמיינו שיש פתק שתלוי על הקיר עם כל ההעדפות שלכם - הבריסטה רק מסתכל על הפתק ומכין בדיוק מה שאתם אוהבים.
+    </p>
+    <p>
+      <strong>CLAUDE.md הוא בדיוק הפתק הזה.</strong> זה קובץ טקסט פשוט שבו אתם כותבים הוראות, העדפות וכללים - ו-Claude קורא אותו <strong>אוטומטית בתחילת כל שיחה</strong>. ככה הוא תמיד יודע מה הסגנון שלכם, מה הכללים של הפרויקט, ומה חשוב לכם.
+    </p>
+    <p>
+      השם <code lang="en" dir="ltr">CLAUDE.md</code> מורכב מ"CLAUDE" (שם הבינה המלאכותית) ו-".md" (סוג קובץ שנקרא Markdown - פורמט טקסט פשוט שקל לכתוב ולקרוא).
+    </p>
+  </div>
+
+  <!-- Why do you need it -->
+  <div class="content-block">
+    <h2>
+      למה צריך CLAUDE.md?
+    </h2>
+    <p>בלי CLAUDE.md, כל שיחה עם Claude מתחילה מאפס - הוא לא יודע כלום עליכם או על הפרויקט. עם CLAUDE.md:</p>
+    <ul>
+      <li>
+        <strong>Claude יזכור את ההעדפות שלכם</strong> - "תמיד תכתוב בעברית", "תשתמש בלוגו שלי", "תסביר כל דבר בשפה פשוטה". אתם כותבים את זה פעם אחת, ו-Claude יעשה את זה בכל שיחה.
+      </li>
+      <li>
+        <strong>Claude יכיר את הפרויקט</strong> - "הפרויקט הזה הוא אתר אישי", "אנחנו משתמשים ב-React", "מסד הנתונים הוא PostgreSQL". במקום להסביר מחדש כל פעם.
+      </li>
+      <li>
+        <strong>Claude יימנע מטעויות</strong> - "אל תמחק קבצים בלי לשאול", "אל תשנה את הקובץ הראשי", "תמיד תגבה לפני שינויים". כמו לשים שלט "זהירות רצפה רטובה".
+      </li>
+      <li>
+        <strong>תחסכו זמן בכל שיחה</strong> - במקום 5 דקות של הסברים בתחילת כל שיחה, Claude כבר יודע הכל. אתם נכנסים ומתחילים לעבוד.
+      </li>
+    </ul>
+  </div>
+
+  <!-- Three levels of CLAUDE.md -->
+  <div class="content-block">
+    <h2>
+      שלושה סוגים של CLAUDE.md - איפה לשים אותו?
+    </h2>
+    <p>
+      אפשר ליצור CLAUDE.md בשלושה מקומות שונים, כל אחד עם תפקיד אחר. חשבו על זה כמו שכבות של הוראות:
+    </p>
+
+    <table class="comparison-table">
+      <tr>
+        <th scope="col">סוג</th>
+        <th scope="col">מיקום</th>
+        <th scope="col">מה זה עושה - בשפה פשוטה</th>
+        <th scope="col">דוגמה למה לכתוב שם</th>
+      </tr>
+      <tr>
+        <td><strong>גלובלי (אישי)</strong></td>
+        <td>~/.claude/CLAUDE.md</td>
+        <td>הוראות שחלות על <strong>כל הפרויקטים</strong> שלכם. זה כמו ההעדפות הכלליות שלכם.</td>
+        <td>"תמיד תכתוב בעברית", "תסביר בשפה פשוטה", "השם שלי הוא תום"</td>
+      </tr>
+      <tr>
+        <td><strong>פרויקט</strong></td>
+        <td>project/CLAUDE.md</td>
+        <td>הוראות ספציפיות <strong>לפרויקט מסוים</strong>. כל מי שעובד על הפרויקט יקבל אותן.</td>
+        <td>"האתר הזה בנוי ב-React", "תמיד תריץ בדיקות לפני שמירה"</td>
+      </tr>
+      <tr>
+        <td><strong>מקומי (פרטי)</strong></td>
+        <td>project/CLAUDE.local.md</td>
+        <td>הוראות <strong>רק בשבילכם</strong> בפרויקט ספציפי. הוסיפו את הקובץ ל-<code lang="en" dir="ltr">.gitignore</code> כדי שלא ישותף עם הצוות.</td>
+        <td>"הפורט שלי הוא 3001", "אני עובד על מערכת Windows"</td>
+      </tr>
+    </table>
+    <p>
+      <strong>טיפ:</strong> רוב המשתמשים צריכים רק את הסוג הראשון (גלובלי). התחילו עם זה, ואם תעבדו על פרויקטים ספציפיים - הוסיפו CLAUDE.md ברמת הפרויקט.
+    </p>
+  </div>
+
+  <!-- How to create -->
+  <div class="content-block">
+    <h2>
+      איך יוצרים CLAUDE.md? - שלוש דרכים
+    </h2>
+
+    <h3>דרך 1: לבקש מ-Claude (הכי קל!)</h3>
+    <p>פשוט פתחו את Claude Code והקלידו:</p>
+    <div class="code-block">
+      <span class="code-label">הקלידו בתוך Claude Code</span>
+      <button class="copy-btn">העתק</button>
+/init</div>
+    <p>
+      הפקודה הזו אומרת ל-Claude: "תסתכל על הפרויקט שלי ותיצור לי קובץ CLAUDE.md מותאם". Claude יסרוק את הקבצים, יבין מה הפרויקט, ויכתוב CLAUDE.md עם הגדרות מתאימות. אחרי זה תוכלו לערוך ולהוסיף העדפות אישיות.
+    </p>
+
+    <h3>דרך 2: דרך תפריט ההגדרות</h3>
+    <p>הקלידו:</p>
+    <div class="code-block">
+      <span class="code-label">הקלידו בתוך Claude Code</span>
+      <button class="copy-btn">העתק</button>
+/memory</div>
+    <p>
+      זה יפתח את קובץ ה-CLAUDE.md לעריכה. אפשר לכתוב, לשנות, ולשמור - והשינויים ייכנסו לתוקף מיד בשיחה הבאה.
+    </p>
+
+    <h3>דרך 3: ליצור ידנית (למי שאוהב שליטה)</h3>
+    <p>פשוט צרו קובץ טקסט חדש בשם <code lang="en" dir="ltr">CLAUDE.md</code> בתיקייה הנכונה וכתבו בו את ההוראות שלכם.</p>
+  </div>
+
+  <!-- Example -->
+  <div class="content-block">
+    <h2>
+      דוגמה ל-CLAUDE.md - מה כותבים בפנים?
+    </h2>
+    <p>הנה דוגמה לקובץ CLAUDE.md אמיתי, עם הסברים:</p>
+    <div class="code-block">
+      <span class="code-label">CLAUDE.md - דוגמה מלאה</span>
+      <button class="copy-btn">העתק</button>
+# About Me
+- My name is Tom
+- I'm a non-technical user who is learning
+- Always explain everything in simple terms
+
+# Communication
+- Write in English (Hebrew doesn't display well in terminal)
+- Use analogies and real-world examples
+- Every session is both a work session AND a learning session
+
+# My Projects
+- Logo file: shared-assets/tom-hagiladi-logo.png
+- Use my logo on all websites we build
+- Add credit: "Built by Tom Hagiladi using Claude Code"
+
+# Rules
+- Never delete files without asking first
+- Always explain what you're doing and why
+- When making changes, describe what changed
+
+# Tech Stack
+- I usually build HTML/CSS/JS websites
+- I prefer dark themes with blue accents
+- Use Hebrew fonts: Heebo for headings, Noto Sans Hebrew for body</div>
+    <p>
+      <strong>שימו לב:</strong> הקובץ כתוב באנגלית כי Claude מבין אנגלית הכי טוב. אבל אפשר לכתוב גם בעברית - Claude מבין את שתי השפות.
+    </p>
+    <p>
+      כל שורה שמתחילה ב-<code lang="en" dir="ltr">#</code> היא כותרת (כמו כותרת של פרק). שורות שמתחילות ב-<code lang="en" dir="ltr">-</code> הן פריטים ברשימה. זהו! לא צריך שום פורמט מיוחד.
+    </p>
+  </div>
+
+  <!-- What to include -->
+  <div class="content-block">
+    <h2>
+      מה כדאי לכלול ב-CLAUDE.md?
+    </h2>
+    <p>הנה צ'קליסט של דברים שכדאי לחשוב עליהם:</p>
+    <ul>
+      <li><strong>מי אתם</strong> - שם, רמת ניסיון, האם אתם מתכנתים או לא</li>
+      <li><strong>שפת תקשורת</strong> - באיזו שפה אתם רוצים שClaude ידבר, האם להסביר מונחים טכניים</li>
+      <li><strong>כללי עבודה</strong> - מה Claude מותר/אסור לעשות (למחוק קבצים? לדחוף קוד ל-GitHub?)</li>
+      <li><strong>העדפות עיצוב</strong> - ערכת צבעים, גופנים, סגנון עיצוב מועדף</li>
+      <li><strong>מידע על הפרויקט</strong> - איזה טכנולוגיות בשימוש, מבנה התיקיות, כללים מיוחדים</li>
+      <li><strong>קבצים חשובים</strong> - נתיבים ללוגו, תמונות, קבצי הגדרות שClaude צריך לדעת עליהם</li>
+      <li><strong>חיבורים חיצוניים</strong> - API keys, שמות משתמש, כתובות שרתים</li>
+    </ul>
+    <p>
+      <strong>אל תדאגו לכתוב הכל מההתחלה.</strong> הקובץ הזה גדל עם הזמן - כל פעם שתגלו שאתם חוזרים על אותו הסבר, הוסיפו אותו ל-CLAUDE.md ולא תצטרכו לחזור עליו שוב.
+    </p>
+  </div>
+
+  <!-- @imports & rules -->
+  <div class="content-block">
+    <h2>
+      טיפים מתקדמים - ייבוא קבצים וכללים ממוקדי-קבצים
+    </h2>
+
+    <h3>ייבוא של קבצים נוספים עם <code lang="en" dir="ltr">@path</code></h3>
+    <p>
+      אם CLAUDE.md שלכם תופח - אפשר לפצל אותו לקבצים קטנים יותר ולייבא אותם בעזרת התחביר <code lang="en" dir="ltr">@path/to/file.md</code>:
+    </p>
+    <div class="code-block">
+      <span class="code-label">CLAUDE.md - דוגמה לייבוא</span>
+      <button class="copy-btn">העתק</button>
+See @README.md for project overview and @package.json for available npm commands.
+
+# Additional Instructions
+- Git workflow: @docs/git-instructions.md
+- Personal overrides: @~/.claude/my-project-instructions.md</div>
+    <p>
+      ככה אתם שומרים את ה-CLAUDE.md הראשי קצר וקריא, וכל ה"כללים העמוקים" יושבים בקבצים נפרדים שמיובאים לפי הצורך.
+    </p>
+
+    <h3>כללים ממוקדי-קבצים בתיקיית <code lang="en" dir="ltr">.claude/rules/</code></h3>
+    <p>
+      בנוסף ל-CLAUDE.md הגלובלי, אפשר לשים כללים בתיקייה <code lang="en" dir="ltr">.claude/rules/</code> ולציין בפרונטמטר של הקובץ <code lang="en" dir="ltr">paths:</code> - אילו קבצים יטענו את הכלל. למשל, כלל ל-TypeScript בלבד יטען רק כשעובדים על קובצי <code lang="en" dir="ltr">.ts</code>. ככה החלון מתמלא רק כשרלוונטי.
+    </p>
+    <div class="info-box">
+      <p>
+        <strong>כלל אצבע של Anthropic:</strong> שמרו את ה-CLAUDE.md מתחת ל-200 שורות. כשגדלים מעבר לזה - העבירו תוכן רפרנס לסקילים (שנטענים על פי דרישה), והעבירו כללים ספציפיים-לקבצים ל-<code lang="en" dir="ltr">.claude/rules/</code>.
+      </p>
+    </div>
+  </div>

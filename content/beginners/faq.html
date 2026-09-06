@@ -1,0 +1,651 @@
+<h1>שאלות נפוצות</h1>
+<p class="lede">תשובות לשאלות שכולם שואלים - לפני שמתחילים ואחרי שמתחילים</p>
+
+
+  <!-- Security & Privacy -->
+  <div class="content-block">
+    <h2>
+      אבטחה ופרטיות
+    </h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם הקוד שלי נשלח לענן? האם Anthropic רואה את הקבצים שלי?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+        <p>כן. Claude Code רץ על המחשב שלכם, אבל כל מה שהוא קורא כדי לעבוד - הודעות, תוכן קבצים, תוצאות פקודות - נשלח לשרתי Anthropic מוצפן בדרך.</p>
+        <p><strong>מה קורה שם תלוי בסוג החשבון.</strong> בחשבון פרטי (Pro / Max) המידע יכול לשמש לאימון המודלים ולהישמר חמש שנים, אלא אם כיביתם את המתג בהגדרות הפרטיות; בחשבון ארגוני (Team / Enterprise / API) אין אימון, והשמירה היא 30 יום. הפרטים המלאים, עם מקורות:</p>
+        <p><a href="#/beginners/privacy-security">פרטי או ארגוני: מה מגן על המידע שלך</a></p>
+        <p>טיפ: קבצים רגישים (סיסמאות, מפתחות API, מידע אישי) שמרו בקובץ <code>.env</code> נפרד ואל תבקשו מ-Claude לקרוא אותם.</p>
+      </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם Claude יכול למחוק לי קבצים בטעות?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+        <p>כן - לשנות, ליצור ולמחוק קבצים זו אחת היכולות שלו. בדיוק בגלל זה יש <strong>בורר מצב</strong> שקובע אם הוא עוצר לשאול אותך לפני כל פעולה. במצב ברירת המחדל הוא שואל; במצב תכנון הוא לא נוגע בכלום.</p>
+        <p>המצבים מוסברים פעם אחת, בשני מקומות משלימים:</p>
+        <ul>
+          <li><a href="#/beginners/desktop-tour#1-בורר-המצב---כמה-חופש-יש-לקלוד">בורר המצב באפליקציית הדסקטופ</a> - טבלת המצבים ומה לבחור כשמתחילים</li>
+          <li><a href="#/beginners/first-step#צעד-4---איך-לאשר-ולדחות-פעולות">צעד 4 בפרק "הצעד הראשון"</a> - איך מאשרים ודוחים פעולות בפועל</li>
+        </ul>
+        <p>ורשת הביטחון: <code>/rewind</code> מחזיר קבצים למצב קודם, ופרויקט ב-Git מאפשר לשחזר כל דבר.</p>
+      </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם בטוח להשתמש ב-Claude Code לפרויקטים של לקוחות?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            זה תלוי ברמת הרגישות. לרוב הפרויקטים - כן, זה בטוח. אבל כדאי לשים לב:
+          </p>
+          <ul>
+            <li>אל תשתפו מידע רפואי, פיננסי או מזהה אישי של לקוחות דרך Claude</li>
+            <li>אל תדביקו סיסמאות, מפתחות API או credentials בשיחה</li>
+            <li>בדקו את <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">מדיניות הפרטיות של Anthropic</a> אם אתם עובדים עם מידע רגיש</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Costs & Limits -->
+  <div class="content-block">
+    <h2>
+      עלויות ומגבלות
+    </h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>כמה עולה Claude Code?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+        <p>Claude Code כלול בכל מנויי Claude - Pro, Max ו-Team - וגם זמין בתשלום לפי צריכה דרך ה-API. המחירים והמכסות המלאים, עם המלצה למי מתאים כל מסלול, נמצאים במקום אחד:</p>
+        <p><a href="#/beginners/what-is#תמחור-ועלויות">תמחור ועלויות, בפרק "מה זה Claude Code"</a></p>
+      </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>מה קורה כשנגמרת לי המכסה?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            כשמגיעים למגבלת השימוש, Claude Code ממשיך לעבוד אבל <strong>יעבור למודל קטן יותר (Haiku)</strong> שהוא מהיר יותר אבל פחות חכם. עדיין אפשר לעבוד, אבל המשימות המורכבות עלולות להיות פחות טובות.
+          </p>
+          <p>
+            המכסה מתאפסת בתחילת כל חודש. אפשר גם לשדרג לתכנית גבוהה יותר באמצע החודש.
+          </p>
+          <p>
+            <strong>טיפ:</strong> השתמשו בפקודה <code lang="en" dir="ltr">/cost</code> כדי לעקוב אחרי הצריכה שלכם.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>מה זה "טוקנים"?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            טוקנים הם <strong>יחידות המדידה של Claude</strong>. חשבו על זה ככה: כמו שמונה מים ליטרים וחשמל בקילוואט - Claude מודד שימוש בטוקנים.
+          </p>
+          <p>
+            בערך: <strong>1 טוקן ≈ ¾ מילה באנגלית</strong>. אז 1,000 טוקנים זה בערך 750 מילים - כמו עמוד וחצי של טקסט.
+          </p>
+          <p>
+            כל הודעה שאתם שולחים צורכת טוקנים (הקלט), וגם התשובה של Claude צורכת טוקנים (הפלט). ככל שהשיחה ארוכה יותר והקבצים גדולים יותר - נצרכים יותר טוקנים.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Storage, Devices & Team Access -->
+  <div class="content-block">
+    <h2>
+      איפה הכל נשמר, איך עובדים מכמה מחשבים, ומה לגבי צוותים
+    </h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>איפה Claude Code "יושב" במחשב שלי? מה נשמר ואיפה?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong>המוח של Claude לא נמצא במחשב שלכם.</strong> במחשב יושבת רק "תוכנת לקוח" קטנה (~50-100MB) שעושה שני דברים: שולחת את הבקשות שלכם לשרתים של Anthropic, ומבצעת על הקבצים שלכם את מה שClaud מחליט (קריאה, כתיבה, הרצת פקודות). החשיבה עצמה - הבנת השפה, הגנרציה של קוד - קורית בענן של Anthropic.
+          </p>
+          <p>
+            הנה כל מה שנשמר לוקאלית במחשב שלכם:
+          </p>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col">מה</th>
+                <th scope="col">איפה (Windows)</th>
+                <th scope="col">איפה (macOS / Linux)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>הבינארי עצמו</strong></td>
+                <td><code lang="en" dir="ltr">%USERPROFILE%\.local\bin\claude.exe</code></td>
+                <td><code lang="en" dir="ltr">~/.local/bin/claude</code></td>
+              </tr>
+              <tr>
+                <td><strong>הגדרות אישיות</strong></td>
+                <td><code lang="en" dir="ltr">%USERPROFILE%\.claude\</code></td>
+                <td><code lang="en" dir="ltr">~/.claude/</code></td>
+              </tr>
+              <tr>
+                <td><strong>אישורי כניסה (Credentials)</strong></td>
+                <td><code lang="en" dir="ltr">%USERPROFILE%\.claude\.credentials.json</code></td>
+                <td>macOS: Keychain מוצפן. Linux: <code lang="en" dir="ltr">~/.claude/.credentials.json</code> (הרשאות 0600)</td>
+              </tr>
+              <tr>
+                <td><strong>היסטוריית שיחות (Sessions)</strong></td>
+                <td><code lang="en" dir="ltr">%USERPROFILE%\.claude\projects\&lt;פרויקט&gt;\&lt;session-id&gt;.jsonl</code></td>
+                <td><code lang="en" dir="ltr">~/.claude/projects/&lt;פרויקט&gt;/&lt;session-id&gt;.jsonl</code></td>
+              </tr>
+              <tr>
+                <td><strong>סקילים, הוקים, פלאגינים אישיים</strong></td>
+                <td colspan="2"><code lang="en" dir="ltr">~/.claude/skills/</code>, <code lang="en" dir="ltr">~/.claude/agents/</code>, <code lang="en" dir="ltr">~/.claude/plugins/</code></td>
+              </tr>
+              <tr>
+                <td><strong>CLAUDE.md של הפרויקט</strong></td>
+                <td colspan="2">בתוך תיקיית הפרויקט עצמה - כקובץ רגיל. נשמר ב-git ועובר עם הפרויקט.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="info-box">
+            <p>
+              <strong>נקודה חשובה לאבטחה:</strong> קבצי ה-Sessions ב-<code lang="en" dir="ltr">~/.claude/projects/</code> נשמרים <strong>בטקסט פתוח (plaintext)</strong>, כולל קוד שClaude קרא ותגובות שלו. הם נמחקים אוטומטית אחרי 30 ימים (אפשר לשנות עם <code lang="en" dir="ltr">cleanupPeriodDays</code> ב-settings). אם זה מטריד אתכם - הצפינו את הדיסק שלכם (BitLocker ב-Windows, FileVault ב-Mac, LUKS ב-Linux).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>מה רץ מקומית ומה רץ בענן?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col">פעולה</th>
+                <th scope="col">איפה רצה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>הבנת השפה, חשיבה, יצירת קוד</td>
+                <td><strong>בענן של Anthropic</strong> - המודל עצמו לא רץ במחשב שלכם</td>
+              </tr>
+              <tr>
+                <td>קריאת הקבצים שלכם</td>
+                <td><strong>מקומית</strong>, אבל תוכן הקובץ נשלח לענן כחלק מהפרומפט</td>
+              </tr>
+              <tr>
+                <td>הרצת פקודות בטרמינל</td>
+                <td><strong>מקומית</strong> במחשב שלכם - Claude שולח את הפקודה, המחשב מבצע</td>
+              </tr>
+              <tr>
+                <td>עריכת קבצים</td>
+                <td><strong>מקומית</strong> - השינויים קורים ישירות בדיסק שלכם</td>
+              </tr>
+              <tr>
+                <td>חיפוש באינטרנט (WebFetch)</td>
+                <td><strong>מעורב</strong> - הבקשה יוצאת מהמחשב שלכם, אבל לפני זה Anthropic בודק אם הדומיין בטוח</td>
+              </tr>
+              <tr>
+                <td>Claude Code on the Web (claude.ai/code)</td>
+                <td><strong>הכל בענן</strong> - הקוד מועתק ל-VM מבודד אצל Anthropic ומורץ שם</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="info-box">
+            <p>
+              <strong>איך הנתונים מועברים?</strong> כל תקשורת בין המחשב שלכם לשרתי Anthropic מוצפנת ב-TLS 1.2+ (אותה הצפנה כמו בנקאות אונליין). על השרתים - הצפנה ב-AES-256.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם אני יכול לגשת לעבודה ב-Claude Code ממחשב אחר?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong>תשובה קצרה:</strong> ההיסטוריה של השיחות נשמרת <strong>רק במחשב שבו עבדתם</strong>. הקבצים של הפרויקט - תלוי איפה הם.
+          </p>
+          <p>
+            בואו נפרק את זה:
+          </p>
+          <ul>
+            <li><strong>המנוי (Pro / Max / Team) - חוצה מכשירים.</strong> אתם נכנסים לחשבון מכל מחשב, ויש לכם גישה. <code lang="en" dir="ltr">/login</code> במחשב חדש = יש לכם Claude Code שם.</li>
+            <li><strong>הקבצים של הפרויקט - תלוי.</strong> אם הפרויקט מחובר ל-GitHub (או דרופבוקס/iCloud), הוא נגיש מכל מחשב. אם הוא בתיקייה מקומית בלבד - רק במחשב הזה.</li>
+            <li><strong>היסטוריית השיחות - מקומית!</strong> ה-JSONL files של ה-sessions ב-<code lang="en" dir="ltr">~/.claude/projects/</code> נשמרים רק במחשב שיצרתם בו את הסשן. <code lang="en" dir="ltr">--continue</code> ו-<code lang="en" dir="ltr">--resume</code> עובדים רק מקומית.</li>
+          </ul>
+
+          <h3>3 דרכים לעבוד "מכל מחשב"</h3>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col">הדרך</th>
+                <th scope="col">איך</th>
+                <th scope="col">המגבלות</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Git + Claude Code בכל מחשב</strong></td>
+                <td>שמרו את הפרויקט ב-GitHub. בכל מחשב חדש: <code lang="en" dir="ltr">git clone</code> + <code lang="en" dir="ltr">claude</code>. CLAUDE.md, סקילים פר-פרויקט והוקים נכנסים אוטומטית.</td>
+                <td>היסטוריית שיחות לא עוברת - תתחילו סשן חדש בכל מחשב.</td>
+              </tr>
+              <tr>
+                <td><strong>2. Claude Code on the Web</strong></td>
+                <td>נכנסים ל-<a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a> מכל דפדפן. הקוד רץ ב-VM של Anthropic. ההיסטוריה נשמרת בענן ומסונכרנת בין מכשירים.</td>
+                <td>לא נוגעים בקבצים על המחשב המקומי - צריך לחבר GitHub. פחות גמיש מ-CLI.</td>
+              </tr>
+              <tr>
+                <td><strong>3. Remote Control / --teleport</strong></td>
+                <td>אתם מתחילים סשן במחשב הראשי, ושולטים בו מהטלפון או מדפדפן ממחשב אחר.</td>
+                <td>המחשב המקורי חייב להיות דולק ומחובר לאינטרנט.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="info-box">
+            <p>
+              <strong>פתרון פרקטי לרוב המשתמשים:</strong> שילוב של שתי הראשונות - שמרו את הקוד ב-GitHub (גישה מכל מחשב), והחזיקו <code lang="en" dir="ltr">CLAUDE.md</code> חזק. אם אתם רוצים לראות גם את הסשן הקודם - צריך לעבוד דרך Web בלבד או להישאר על אותו מחשב.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>כמה אנשים יכולים להשתמש באותו מנוי? מה לגבי שיתוף פרויקטים בצוות?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong>מנוי Pro או Max הוא אישי לחלוטין - לאדם אחד.</strong> זה לא רק עניין של רישיון אלא של איך המערכת עובדת: כל היסטוריית השיחות, ההעדפות וההגדרות שלכם קשורות לחשבון. שיתוף סיסמה בין כמה אנשים מפר את תנאי השימוש של Anthropic, ובנוסף יוצר בלגן (כולכם רואים את ההיסטוריה של כולם, מנגנון הזיכרון מתערבב, הגבולות נחתכים מהר יותר).
+          </p>
+
+          <h3>אז מה הפתרון לצוותים?</h3>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col">תוכנית</th>
+                <th scope="col">מתאים ל...</th>
+                <th scope="col">מה כולל</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Claude for Teams</strong></td>
+                <td>צוותים של 2-50 איש</td>
+                <td>כל אחד מקבל <strong>מושב (seat)</strong> ולוגין משלו. חיוב מאוחד דרך המנהל. גישה גם ל-Claude Code וגם ל-Claude in browser/desktop.</td>
+              </tr>
+              <tr>
+                <td><strong>Claude for Enterprise</strong></td>
+                <td>ארגונים גדולים</td>
+                <td>כל מה שיש ב-Teams + SSO (כניסה דרך Google Workspace / Microsoft / Okta), הרשאות לפי תפקיד, מדיניות מנוהלת, ו-<strong>Zero Data Retention</strong> (Anthropic לא שומרת כלום בשרתים).</td>
+              </tr>
+              <tr>
+                <td><strong>Claude Console API</strong></td>
+                <td>צוותי פיתוח שמעדיפים תשלום לפי שימוש</td>
+                <td>המנהל מזמין משתמשים דרך Console. שני תפקידים: "Claude Code" (יוצר מפתחות API ל-Claude Code בלבד) או "Developer" (כל סוג מפתח). חיוב לפי טוקנים.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>איך מנהלים גישת צוות?</h3>
+          <p>השלבים הבסיסיים - אותו דבר בכל תוכנית:</p>
+          <ol>
+            <li><strong>בעל המנוי קונה את התוכנית</strong> (Teams / Enterprise / Console) ומקבל לוח ניהול.</li>
+            <li><strong>מזמינים חברי צוות במייל</strong> מהדשבורד.</li>
+            <li><strong>כל חבר מתקין Claude Code על המחשב שלו</strong> ועושה <code lang="en" dir="ltr">claude</code> + <code lang="en" dir="ltr">/login</code> עם המייל שאליו הוזמן.</li>
+            <li><strong>שיתוף פרויקטים - דרך GitHub/GitLab</strong>. ה-CLAUDE.md, הסקילים פר-פרויקט וההוקים נשמרים ב-repo ועוברים לכל מי שעושה <code lang="en" dir="ltr">clone</code>.</li>
+          </ol>
+          <div class="info-box">
+            <p>
+              <strong>חשוב להבין:</strong> "שיתוף מנוי" ו-"שיתוף פרויקט" הם שני דברים נפרדים. <strong>המנוי</strong> נצמד לאדם - כל אחד צריך seat משלו. <strong>הפרויקט</strong> נצמד למקור הקוד - כל מי שיש לו גישה לקוד דרך git יכול לעבוד עליו עם המנוי שלו.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם הקוד שלי נשמר אצל Anthropic לאימון המודלים?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+        <p>התשובה המלאה, עם כל ההבדלים בין חשבון פרטי לארגוני ועם מקורות: <a href="#/beginners/privacy-security">פרטי או ארגוני: מה מגן על המידע שלך</a>.</p>
+          <p>
+            <strong>זה תלוי בסוג המנוי</strong> - וההבחנה הזו חשובה במיוחד אם אתם עובדים עם קוד של לקוחות או IP רגיש.
+          </p>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col">סוג מנוי</th>
+                <th scope="col">ברירת מחדל לאימון</th>
+                <th scope="col">תקופת שמירה</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Pro / Max (אישי)</strong></td>
+                <td><strong>יש בחירה - צריך לבדוק את ההגדרה.</strong> אם אישרתם - הקוד שלכם <strong>כן</strong> ישמש לאימון. אם לא אישרתם - לא.</td>
+                <td>אם אישרתם אימון: 5 שנים. אם לא: 30 ימים.</td>
+              </tr>
+              <tr>
+                <td><strong>Teams / Enterprise / API</strong></td>
+                <td><strong>לא משמש לאימון בשום צורה</strong> - אלא אם המנהל הסכים במפורש לתוכנית Development Partner.</td>
+                <td>30 ימים (ברירת מחדל). Enterprise יכול להפעיל <strong>Zero Data Retention</strong> - בלי שמירה בכלל.</td>
+              </tr>
+              <tr>
+                <td><strong>Bedrock / Vertex / Foundry</strong></td>
+                <td><strong>לא משמש לאימון.</strong> המידע נשמר אצל ספק הענן שלכם בלבד.</td>
+                <td>לפי המדיניות של ספק הענן.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <strong>לשנות את ההגדרה במנוי Pro/Max:</strong> גשו ל-<a href="https://claude.ai/settings/data-privacy-controls" target="_blank" rel="noopener">claude.ai/settings/data-privacy-controls</a> ובחרו אם לאפשר שימוש בנתונים לאימון.
+          </p>
+          <div class="info-box">
+            <p>
+              <strong>אם אתם עובדים עם קוד של לקוחות:</strong> מומלץ Teams לפחות - כי שם ברירת המחדל היא "לא לאמן". במנוי Pro תצטרכו לבדוק ידנית את ההגדרה ולוודא שכיביתם אותה. אם המידע סופר-רגיש - חפשו Enterprise + ZDR.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>אילו סיכוני אבטחה צריך להכיר?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>הנה תמצית הסיכונים שכדאי להיות מודעים אליהם, ומה אפשר לעשות נגד כל אחד:</p>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col">הסיכון</th>
+                <th scope="col">מה לעשות</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>הקוד שלכם יוצא מהמחשב</strong> - כל קובץ שClaud קורא נשלח לשרתי Anthropic.</td>
+                <td>לפרויקטים סופר-רגישים - Enterprise + ZDR. למידע אישי/סיסמאות - שמרו ב-<code lang="en" dir="ltr">.env</code> ואל תבקשו מ-Claude לקרוא אותו.</td>
+              </tr>
+              <tr>
+                <td><strong>היסטוריית שיחות בטקסט פתוח על הדיסק</strong> - קבצי JSONL ב-<code lang="en" dir="ltr">~/.claude/projects/</code>.</td>
+                <td>הצפינו את הדיסק (BitLocker / FileVault / LUKS). או הפחיתו את שמירת ההיסטוריה: <code lang="en" dir="ltr">cleanupPeriodDays: 7</code> בהגדרות.</td>
+              </tr>
+              <tr>
+                <td><strong>Claude יכול להריץ פקודות מסוכנות</strong> - בעיקר במצב <code lang="en" dir="ltr">bypassPermissions</code> (YOLO).</td>
+                <td>אל תשתמשו ב-YOLO. השתמשו ב-Auto mode עם classifier, או ב-<code lang="en" dir="ltr">/sandbox</code> להפעלת הוק שמבודד את הקבצים. ראו את שכבת ההרשאות בסעיף "צעד 4".</td>
+              </tr>
+              <tr>
+                <td><strong>פלאגין זדוני יכול לעשות נזק</strong> - פלאגין הוא קוד שמשתלב בעבודה של Claude.</td>
+                <td>התקינו רק פלאגינים רשמיים (Anthropic, או חברות גדולות מוכרות). למפתחים עצמאיים - קראו את התיאור והקוד לפני התקנה.</td>
+              </tr>
+              <tr>
+                <td><strong>שיתוף credentials = בלגן והפרת ToS</strong> - מספר אנשים על אותו <code lang="en" dir="ltr">.credentials.json</code>.</td>
+                <td>אם יש צוות - Teams plan. כל אחד עם לוגין משלו.</td>
+              </tr>
+              <tr>
+                <td><strong>מפתח API ישן ב-env vars</strong> - <code lang="en" dir="ltr">ANTHROPIC_API_KEY</code> שנשאר ממקום עבודה קודם דורס את המנוי החדש.</td>
+                <td>בדקו עם <code lang="en" dir="ltr">/status</code> איזה auth פעיל. אם רואים מפתח API שאתם לא צריכים - <code lang="en" dir="ltr">Remove-Item Env:\ANTHROPIC_API_KEY</code> ב-PowerShell, או הסירו מ-<code lang="en" dir="ltr">~/.bashrc</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>הזרקת פרומפט (Prompt Injection)</strong> - קובץ זדוני שClaud קורא יכול להכיל הוראות מתחזות.</td>
+                <td>אל תאשרו אוטומטית פעולות שClaud מציע אחרי שהוא קרא קוד ממקור לא מהימן. בדקו ידנית פעולות שנראות מוזרות.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="info-box">
+            <p>
+              <strong>פעולות אבטחה בסיסיות שכדאי לעשות פעם אחת:</strong>
+            </p>
+            <ol>
+              <li>הצפינו את הדיסק שלכם (BitLocker / FileVault / LUKS) - מגן על קבצי credentials ועל היסטוריית השיחות.</li>
+              <li>במנוי Pro/Max: בדקו את הגדרת הפרטיות ב-<a href="https://claude.ai/settings/data-privacy-controls" target="_blank" rel="noopener">claude.ai/settings/data-privacy-controls</a>.</li>
+              <li>הריצו <code lang="en" dir="ltr">/status</code> פעם אחת ובדקו איזה auth פעיל.</li>
+              <li>הוסיפו <code lang="en" dir="ltr">.env</code> ל-<code lang="en" dir="ltr">.gitignore</code> בכל פרויקט עם סודות.</li>
+              <li>אל תאשרו פלאגין שאתם לא סומכים על מקורו.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technical Questions -->
+  <div class="content-block">
+    <h2>
+      שאלות טכניות
+    </h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם Claude Code עובד בלי אינטרנט?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong>לא.</strong> Claude Code חייב חיבור לאינטרנט כדי לעבוד. "המוח" של Claude נמצא בשרתים של Anthropic, וכל שיחה דורשת תקשורת עם השרתים האלה. בלי אינטרנט, Claude Code לא יכול לקבל בקשות או לענות.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>על אילו מערכות הפעלה Claude Code עובד?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>Claude Code עובד על:</p>
+          <ul>
+            <li><strong>macOS</strong> - תמיכה מלאה</li>
+            <li><strong>Linux</strong> - תמיכה מלאה</li>
+            <li><strong>Windows</strong> - תמיכה מלאה. עובד ישירות ב-PowerShell וב-CMD ללא צורך ב-WSL. מומלץ להתקין Git for Windows מראש.</li>
+          </ul>
+          <p>
+            בנוסף, אפשר להשתמש ב-Claude Code דרך <strong>VS Code</strong> (כתוסף), דרך <strong>אפליקציית שולחן העבודה</strong>, או דרך <strong>הדפדפן</strong> בכתובת claude.ai/code - כל האפשרויות עובדות על כל מערכת הפעלה.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם Claude Code יכול לגשת לכל הקבצים במחשב שלי?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            Claude Code רואה את <strong>התיקייה שבה הפעלתם אותו</strong> ואת כל התיקיות שבתוכה. הוא לא יכול לגשת אוטומטית לכל הדיסק - רק לאזור שבו אתם עובדים.
+          </p>
+          <p>
+            אם אתם רוצים שClaude יעבוד על קבצים ממקום אחר, תצטרכו לתת לו את הנתיב המלא לקובץ, או לפתוח את Claude Code מהתיקייה הנכונה.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>מה ההבדל בין Claude Code ל-ChatGPT? ול-Cursor?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong>ChatGPT</strong> - צ'אטבוט כללי שיכול לעזור עם הרבה דברים (כתיבה, שאלות, תכנות). הוא <strong>לא יכול לגשת ישירות לקבצים שלכם</strong> או להריץ פקודות על המחשב. אתם צריכים להעתיק ולהדביק קוד.
+          </p>
+          <p>
+            <strong>Claude Code</strong> - עובד <strong>ישירות על המחשב שלכם</strong>. הוא קורא, כותב ומריץ קבצים. הוא רואה את כל הפרויקט ויכול לעשות שינויים בכמה קבצים במקביל. זה ההבדל העיקרי - הוא לא רק "מייעץ", הוא גם "עושה".
+          </p>
+          <p>
+            <strong>Cursor</strong> - עורך קוד (כמו VS Code) עם בינה מלאכותית מובנית. הוא דומה ל-Claude Code בזה שהוא עובד ישירות על הקבצים, אבל הוא משתמש במודלים שונים ויש לו ממשק של עורך קוד ולא של טרמינל.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>Claude "שכח" מה דיברנו עליו - למה?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            ל-Claude יש <strong>"חלון זיכרון" מוגבל</strong> (נקרא Context Window). חשבו על זה כמו שולחן עבודה - אפשר לשים עליו כמות מסוימת של דפים. כשהשולחן מתמלא, הדפים הישנים נופלים מהקצה.
+          </p>
+          <p>
+            כשהשיחה ארוכה מאוד, Claude "שוכח" את ההודעות הראשונות. הנה מה לעשות:
+          </p>
+          <ul>
+            <li><strong>השתמשו ב-<code lang="en" dir="ltr">/compact</code></strong> - זה גורם ל-Claude לסכם את השיחה ולפנות מקום</li>
+            <li><strong>שמרו הוראות חשובות ב-CLAUDE.md</strong> - מה שנמצא שם תמיד זמין, לא משנה כמה ארוכה השיחה</li>
+            <li><strong>התחילו שיחה חדשה</strong> - לפעמים עדיף להתחיל מחדש עם הקשר ברור מאשר לגרור שיחה ארוכה</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>Claude עשה שגיאה / כתב קוד שלא עובד - מה עושים?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            זה קורה! Claude הוא מרשים אבל לא מושלם. הנה מה לעשות:
+          </p>
+          <ul>
+            <li><strong>פשוט אמרו לו:</strong> "זה לא עובד, אני מקבל שגיאה כזו: [הדביקו את השגיאה]". Claude ילמד מהשגיאה ויתקן.</li>
+            <li><strong>תנו לו את הפלט:</strong> אם משהו לא עובד, העתיקו את הודעת השגיאה ושלחו ל-Claude. הוא בדרך כלל מבין מה הבעיה.</li>
+            <li><strong>בקשו גישה אחרת:</strong> "הפתרון הזה לא עובד, תנסה דרך אחרת".</li>
+            <li><strong>חזרו אחורה:</strong> "תבטל את כל השינויים האחרונים ותתחיל מחדש".</li>
+          </ul>
+          <p>
+            <strong>זכרו:</strong> Claude לומד מהמשוב שלכם. ככל שתהיו יותר ספציפיים בתיאור הבעיה, ככה הפתרון יהיה יותר מדויק.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- General Questions -->
+  <div class="content-block">
+    <h2>
+      שאלות כלליות
+    </h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם צריך לדעת תכנות כדי להשתמש ב-Claude Code?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong>לא!</strong> זה בדיוק הקסם של Claude Code. אתם מדברים בשפה רגילה - "תבנה לי אתר", "תתקן את הבאג הזה", "תסביר לי מה הקוד הזה עושה" - ו-Claude עושה את העבודה הטכנית.
+          </p>
+          <p>
+            כמובן, ככל שתלמדו יותר - תוכלו לתת הוראות מדויקות יותר ולקבל תוצאות טובות יותר. אבל אפשר להתחיל מאפס מוחלט.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>מה Claude Code יכול לעשות שאי אפשר לעשות ב-ChatGPT רגיל?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>הנה הדברים העיקריים:</p>
+          <ul>
+            <li><strong>לקרוא ולכתוב קבצים</strong> - ישירות על המחשב שלכם, בלי העתק-הדבק</li>
+            <li><strong>להריץ פקודות</strong> - להתקין תוכנות, להריץ בדיקות, להפעיל סקריפטים</li>
+            <li><strong>לראות פרויקט שלם</strong> - לא רק קובץ אחד, אלא את כל מבנה הפרויקט</li>
+            <li><strong>לעבוד עם Git</strong> - לשמור גרסאות, לדחוף ל-GitHub, לנהל שינויים</li>
+            <li><strong>לתקן שגיאות בזמן אמת</strong> - אם קוד נכשל, Claude רואה את השגיאה ומתקן מיד</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" tabindex="0" role="button" aria-expanded="false">
+        <h2>האם Claude Code מתאים לילדים / מתחילים?</h2>
+        <span class="collapsible-arrow">▼</span>
+      </div>
+      <div class="collapsible-body">
+        <div class="collapsible-inner">
+          <p>
+            <strong>בהחלט!</strong> בעצם, מתחילים הם הקהל שנהנה מ-Claude Code הכי הרבה. למה?
+          </p>
+          <ul>
+            <li>אפשר לבנות דברים אמיתיים (אתרים, משחקים, כלים) בלי ידע קודם</li>
+            <li>Claude מסביר מה הוא עושה ולמה - אתם לומדים תוך כדי</li>
+            <li>אם משהו לא עובד, פשוט אומרים "זה לא עובד" ו-Claude מתקן</li>
+            <li>אפשר להתקין את הפלאגין <strong>explanatory-output-style</strong> שגורם ל-Claude להסביר כל צעד בפירוט</li>
+          </ul>
+          <p>
+            <strong>טיפ להורים:</strong> Claude Code הוא כלי מעולה ללמד ילדים (ומבוגרים!) חשיבה לוגית ובניית דברים דיגיטליים. זה כמו לגו דיגיטלי - אומרים מה רוצים לבנות ורואים את זה מתגשם.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
